@@ -290,7 +290,6 @@ function hydratePage() {
     const statCards = document.querySelectorAll('.stat-card .counter');
     if (statCards.length >= 4) {
         if (data.profile.systemsDelivered) statCards[0].dataset.target = data.profile.systemsDelivered;
-        if (data.profile.happyClients) statCards[1].dataset.target = data.profile.happyClients;
         if (data.profile.yearsExp) statCards[2].dataset.target = data.profile.yearsExp;
         if (data.profile.avgRating) statCards[3].dataset.target = data.profile.avgRating;
     }
@@ -334,7 +333,6 @@ function hydratePage() {
     if (servicesGrid && data.services && data.services.length) {
         servicesGrid.innerHTML = data.services.map((svc, i) => `
             <div class="service-detail-card reveal-up visible" style="--delay: ${i * 0.1}s">
-                <div class="service-card-glow ${i % 2 === 1 ? 'blue-glow' : ''}"></div>
                 <div class="service-card-header">
                     <div class="service-header-left">
                         <div class="service-badge-cat ${i % 2 === 1 ? 'blue-cat' : ''}">${svc.category}</div>
@@ -424,7 +422,6 @@ function hydratePage() {
     if (awardsList && data.awards && data.awards.length) {
         awardsList.innerHTML = data.awards.map((aw, i) => `
             <div class="award-card reveal-up visible" style="--delay: ${i * 0.1}s">
-                <div class="award-card-glow ${i % 2 === 1 ? 'blue-glow' : ''}"></div>
                 <div class="award-layout">
                     <div class="award-visual">
                         <div class="award-trophy-badge ${i % 2 === 1 ? 'icon-blue' : ''}">

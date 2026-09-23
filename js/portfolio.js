@@ -60,11 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!data || !lightboxModal) return;
 
         // Clone visual background gradient and icon from thumbnail
-        const bgGradient = thumb.style.getPropertyValue('--thumb-gradient') || 'linear-gradient(135deg, #ff6b35 0%, #00b4d8 100%)';
         const innerIcon = thumb.querySelector('.portfolio-thumb-inner') ? thumb.querySelector('.portfolio-thumb-inner').innerHTML : '';
 
-        lightboxImage.style.background = bgGradient;
-        lightboxImage.style.display = 'flex';
+                lightboxImage.style.display = 'flex';
         lightboxImage.style.alignItems = 'center';
         lightboxImage.style.justifyContent = 'center';
         lightboxImage.innerHTML = `<div style="transform: scale(1.6); opacity: 0.85;">${innerIcon}</div>`;

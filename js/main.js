@@ -45,20 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ─── SPOTLIGHT CARD HOVER EFFECT (LINEAR / RAYCAST FEEL) ───
-    const interactiveCards = document.querySelectorAll('.spotlight-card, .stat-card, .service-card, .project-card, .service-detail-card, .award-card, .direct-contact-card');
-    
-    interactiveCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
-    });
-
-
     // ─── SCROLL REVEAL ANIMATIONS ───
     const revealElements = document.querySelectorAll('.reveal-up');
 

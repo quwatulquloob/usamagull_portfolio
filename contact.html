@@ -7,14 +7,13 @@
     <meta name="description" content="Initiate a technical consultation or project engagement with Usama Gul — AI/ML Engineer specializing in Agentic LLM systems, 60fps Computer Vision, and MLOps.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/contact.css">
 </head>
 <body>
 
     <!-- ===== ARCHITECTURAL BACKGROUND ===== -->
-    <div class="ambient-bg" aria-hidden="true"></div>
 
     <!-- ===== NAVIGATION ===== -->
     <header class="nav-header scrolled" id="navbar">
@@ -22,7 +21,6 @@
             <a href="index.html" class="nav-logo" aria-label="Usama Gul Home">
                 <span class="logo-mark">UG</span>
                 <span class="logo-text">Usama Gul</span>
-                <span class="logo-badge">AI / ML</span>
             </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html" class="nav-link">Home</a></li>
@@ -33,7 +31,7 @@
                 <li><a href="contact.html" class="nav-link active">Contact</a></li>
             </ul>
             <a href="contact.html" class="nav-cta-btn">
-                <span>Let's Talk</span>
+                <span>Get in touch</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
@@ -46,9 +44,8 @@
     <section class="page-hero">
         <div class="container">
             <div class="page-hero-content reveal-up">
-                <span class="section-tag">Direct Engineering Channel</span>
                 <h1 class="page-hero-title">
-                    Initiate an <span class="text-gradient">Engagement</span>
+                    Start a project
                 </h1>
                 <p class="page-hero-subtitle">Whether you need an autonomous agentic LLM architecture, a 60 FPS edge computer vision pipeline, or full-stack MLOps infrastructure, I am ready to engineer a production solution.</p>
             </div>
@@ -133,56 +130,57 @@
                 <!-- Right Column: Interactive Consultation Form -->
                 <div class="contact-form-col spotlight-card reveal-up" style="--delay: 0.1s">
                     <div class="form-header">
-                        <h3>Project Scoping Inquiry</h3>
+                        <h3>Tell me about your project</h3>
                         <p>Fill out the technical requirements below and receive a detailed feasibility breakdown within 24 hours.</p>
                     </div>
 
                     <form id="contactForm" class="inquiry-form">
-                        <div id="formStatus" class="form-status" style="display: none; padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; margin-bottom: 16px;"></div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="userName" class="form-label">Full Name *</label>
-                                <input type="text" id="userName" name="name" class="form-input" placeholder="e.g. Alex Mercer" required>
+                                <label for="name" class="form-label">Full name</label>
+                                <input type="text" id="name" name="name" class="form-input" placeholder="e.g. Alex Mercer" required>
                             </div>
                             <div class="form-group">
-                                <label for="userEmail" class="form-label">Work Email *</label>
-                                <input type="email" id="userEmail" name="email" class="form-input" placeholder="e.g. alex@company.com" required>
+                                <label for="email" class="form-label">Work email</label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="e.g. alex@company.com" required>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="projectType" class="form-label">Primary Specialization</label>
-                                <select id="projectType" name="projectType" class="form-select">
-                                    <option value="Agentic AI & LLMs">Agentic AI & LLMs</option>
-                                    <option value="Computer Vision">Computer Vision & Edge 60 FPS</option>
-                                    <option value="Voice AI Assistants">Voice AI Assistants (Sub-800ms)</option>
-                                    <option value="MLOps & Deployment">MLOps & Production Deployment</option>
-                                    <option value="Architecture Consulting">Architecture Audit & Technical Advisory</option>
+                                <label for="serviceSelect" class="form-label">Service</label>
+                                <select id="serviceSelect" name="service" class="form-select">
+                                    <option value="agentic-ai">Agentic AI & Multi-Agent LLMs</option>
+                                    <option value="computer-vision">Computer Vision & Edge 60 FPS</option>
+                                    <option value="voice-ai">Voice AI Assistants (Sub-800ms)</option>
+                                    <option value="mlops">MLOps & Production Deployment</option>
+                                    <option value="advisory">Architecture Audit & Technical Advisory</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="projectBudget" class="form-label">Estimated Budget</label>
-                                <select id="projectBudget" name="budget" class="form-select">
-                                    <option value="$1,500 – $3,000">$1,500 – $3,000</option>
-                                    <option value="$3,000 – $5,000">$3,000 – $5,000</option>
-                                    <option value="$5,000 – $10,000">$5,000 – $10,000</option>
-                                    <option value="$10,000+ Enterprise Scope">$10,000+ Enterprise Scope</option>
+                                <label for="budget" class="form-label">Budget</label>
+                                <select id="budget" name="budget" class="form-select">
+                                    <option value="1500-3000">$1,500 – $3,000</option>
+                                    <option value="3000-5000">$3,000 – $5,000</option>
+                                    <option value="5000-10000">$5,000 – $10,000</option>
+                                    <option value="enterprise">$10,000+ Enterprise Scope</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="userMessage" class="form-label">System Requirements & Context *</label>
-                            <textarea id="userMessage" name="message" class="form-textarea" placeholder="Describe the problem, existing stack, expected latency or throughput thresholds, and timeline targets..." required></textarea>
+                            <label for="message" class="form-label">Project details</label>
+                            <textarea id="message" name="message" class="form-textarea" placeholder="Describe the problem, existing stack, expected latency or throughput thresholds, and timeline targets..." required></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
-                            <span>Submit Technical Inquiry</span>
+                            <span>Send inquiry</span>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </button>
 
-                        <p class="form-footer-note">🔒 All technical inquiries and system specifications are kept strictly confidential under mutual NDA upon request.</p>
+                        <div id="formStatus" class="form-status" role="status" aria-live="polite" hidden></div>
+
+                        <p class="form-footer-note">All technical inquiries and system specifications are kept strictly confidential under mutual NDA upon request.</p>
                     </form>
                 </div>
 
@@ -198,7 +196,6 @@
                     <a href="index.html" class="nav-logo">
                         <span class="logo-mark">UG</span>
                         <span class="logo-text">Usama Gul</span>
-                        <span class="logo-badge">AI / ML</span>
                     </a>
                     <p class="footer-tagline">Architecting production-scale AI systems that scale reliably in enterprise and public-sector operations.</p>
                     <div class="footer-socials">
@@ -228,7 +225,6 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 Usama Gul. All rights reserved. &bull; <a href="admin/index.html" style="opacity: 0.55; color: inherit; text-decoration: underline; text-underline-offset: 3px;">Admin Portal</a></p>
-                <p class="footer-credit">Handcrafted with precision</p>
             </div>
         </div>
     </footer>

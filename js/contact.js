@@ -1,123 +1,59 @@
-/* ============================================
-   CONTACT PAGE — Formspree Integration
-   - URL Query Parameter pre-selection
-   - Real form submission via Formspree
-   ============================================ */
-
+/* Contact form — validates, then posts to Formspree.
+   Field ids match contact.html (name, email, serviceSelect, budget, message). */
 (function () {
     'use strict';
-
-    // ⚠️ REPLACE THIS with your real Formspree form ID
-    // Go to https://formspree.io → Create form → Copy the ID
     var FORMSPREE_ID = 'mvkgrzvj';
 
-    function initContact() {
-        // ─── PRE-SELECT SERVICE FROM URL QUERY ───
-        var urlParams = new URLSearchParams(window.location.search);
-        var serviceParam = urlParams.get('service');
-        var projectTypeSelect = document.getElementById('projectType');
+    function init() {
+        var form = document.getElementById('contactForm');
+        var btn = document.getElementById('submitBtn');
+        var status = document.getElementById('formStatus');
+        var service = document.getElementById('serviceSelect');
+        if (!form || !btn || !status) return;
 
-        if (serviceParam && projectTypeSelect) {
-            var paramMap = {
-                'agentic-ai': 'Agentic AI & LLMs',
-                'computer-vision': 'Computer Vision',
-                'voice-ai': 'Voice AI Assistants',
-                'mlops-deployment': 'MLOps & Deployment'
-            };
-            var targetValue = paramMap[serviceParam];
-            if (targetValue) {
-                for (var i = 0; i < projectTypeSelect.options.length; i++) {
-                    if (projectTypeSelect.options[i].value === targetValue) {
-                        projectTypeSelect.options[i].selected = true;
-                        break;
-                    }
-                }
-            }
+        // Pre-select service from ?service=… (ids like "mlops-deployment" also match "mlops")
+        var param = new URLSearchParams(location.search).get('service');
+        if (param && service) {
+            var match = Array.prototype.find.call(service.options, function (o) {
+                return o.value === param || param.indexOf(o.value) === 0;
+            });
+            if (match) service.value = match.value;
         }
 
-        // ─── FORM SUBMISSION VIA FORMSPREE ───
-        var contactForm = document.getElementById('contactForm');
-        var submitBtn = document.getElementById('submitBtn');
-        var formStatus = document.getElementById('formStatus');
+        function show(text, type) {
+            status.className = 'form-status ' + type;
+            status.textContent = text;
+            status.hidden = false;
+            status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
 
-        if (!contactForm || !submitBtn || !formStatus) return;
-
-        contactForm.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function (e) {
             e.preventDefault();
-            e.stopPropagation();
+            var v = function (id) { return (document.getElementById(id).value || '').trim(); };
+            var name = v('name'), email = v('email'), message = v('message');
+            if (!name || !email || !message) return show('Fill in your name, email and project details.', 'error');
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return show('Enter a valid email address.', 'error');
 
-            var name = (document.getElementById('userName') || {}).value || '';
-            var email = (document.getElementById('userEmail') || {}).value || '';
-            var projectType = (document.getElementById('projectType') || {}).value || '';
-            var budget = (document.getElementById('projectBudget') || {}).value || '';
-            var message = (document.getElementById('userMessage') || {}).value || '';
+            var label = btn.innerHTML;
+            btn.disabled = true;
+            btn.querySelector('span').textContent = 'Sending…';
 
-            if (!name.trim() || !email.trim() || !projectType || !budget || !message.trim()) {
-                showStatus('Please fill in all required fields.', 'error');
-                return;
-            }
-
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(email.trim())) {
-                showStatus('Please provide a valid email address.', 'error');
-                return;
-            }
-
-            // Button loading state
-            var originalBtnHTML = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span>Sending Message...</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin-icon"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="10"/></svg>';
-
-            // Send to Formspree
             fetch('https://formspree.io/f/' + FORMSPREE_ID, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
-                    name: name.trim(),
-                    email: email.trim(),
-                    projectType: projectType,
-                    budget: budget,
-                    message: message.trim()
+                    name: name, email: email, message: message,
+                    service: service.options[service.selectedIndex].text,
+                    budget: document.getElementById('budget').value
                 })
-            })
-            .then(function (response) {
-                if (response.ok) {
-                    showStatus(
-                        'Thank you, <strong>' + escapeHtml(name.trim()) + '</strong>! Your inquiry regarding <strong>' + escapeHtml(projectType) + '</strong> has been sent successfully. Usama will respond to <strong>' + escapeHtml(email.trim()) + '</strong> within 24 hours.',
-                        'success'
-                    );
-                    contactForm.reset();
-                } else {
-                    showStatus('Something went wrong. Please try again or email directly.', 'error');
-                }
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnHTML;
-            })
-            .catch(function () {
-                showStatus('Network error. Please check your connection and try again.', 'error');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnHTML;
-            });
+            }).then(function (r) {
+                if (!r.ok) throw new Error('bad status');
+                show('Thanks, ' + name + '. Your inquiry is in and I\u2019ll reply to ' + email + ' within 24 hours.', 'success');
+                form.reset();
+            }).catch(function () {
+                show('Your message didn\u2019t send. Check your connection and try again, or email me directly.', 'error');
+            }).then(function () { btn.disabled = false; btn.innerHTML = label; });
         });
-
-        function showStatus(msg, type) {
-            if (!formStatus) return;
-            formStatus.className = 'form-status ' + type;
-            formStatus.innerHTML = msg;
-            formStatus.style.display = 'block';
-            formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        function escapeHtml(text) {
-            var div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
     }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initContact);
-    } else {
-        initContact();
-    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
