@@ -1,0 +1,377 @@
+/* ============================================
+   SERVICES PAGE — Styles
+   Extends base design system (style.css)
+   ============================================ */
+
+/* ---------- PAGE HERO ---------- */
+.page-hero {
+    position: relative;
+    padding: 160px 0 60px;
+    text-align: center;
+    z-index: var(--z-content);
+}
+
+.page-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroContentIn 1s var(--ease-out-expo) 0.2s forwards;
+}
+
+.page-hero-title {
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+}
+
+.page-hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+
+/* ---------- DETAILED SERVICES SECTION ---------- */
+.services-detail-section {
+    position: relative;
+    padding: 40px 0 var(--section-padding);
+    z-index: var(--z-content);
+}
+
+.services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Service Detail Card */
+.service-detail-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    padding: 40px 48px;
+    transition: transform 0.45s var(--ease-out-expo), 
+                border-color 0.4s ease, 
+                box-shadow 0.45s var(--ease-out-expo);
+    overflow: hidden;
+}
+
+.service-card-glow {
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, var(--accent-orange-glow) 0%, transparent 70%);
+    filter: blur(50px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.service-card-glow.blue-glow {
+    background: radial-gradient(circle, var(--accent-blue-glow) 0%, transparent 70%);
+}
+
+.service-detail-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--border-light);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45),
+                0 0 35px rgba(255, 107, 53, 0.06);
+}
+
+.service-detail-card:hover .service-card-glow {
+    opacity: 0.6;
+}
+
+/* Header */
+.service-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.service-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.service-badge-cat {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255, 107, 53, 0.1);
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-orange);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.service-badge-cat.blue-cat {
+    background: rgba(0, 180, 216, 0.1);
+    border-color: rgba(0, 180, 216, 0.2);
+    color: var(--accent-blue);
+}
+
+.service-icon-box {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: rgba(255, 107, 53, 0.12);
+    color: var(--accent-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.service-icon-box.icon-blue {
+    background: rgba(0, 180, 216, 0.12);
+    color: var(--accent-blue);
+}
+
+.service-detail-card:hover .service-icon-box {
+    transform: scale(1.08);
+}
+
+/* Pricing Pill */
+.service-pricing-pill {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.price-prefix {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+}
+
+.price-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    color: var(--accent-orange);
+    line-height: 1;
+}
+
+.service-pricing-pill.blue-pill .price-value {
+    color: var(--accent-blue);
+}
+
+.price-suffix {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Card Body */
+.service-card-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.service-card-description {
+    font-size: 1.02rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 24px;
+}
+
+/* Deliverables */
+.service-deliverables {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+}
+
+.deliverables-heading {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.deliverables-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 24px;
+}
+
+.deliverables-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.deliverables-list li svg {
+    color: var(--accent-orange);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.service-detail-card:nth-child(even) .deliverables-list li svg {
+    color: var(--accent-blue);
+}
+
+/* Card Footer */
+.service-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 10px;
+}
+
+.tech-stack-mini {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tech-stack-mini .tag {
+    padding: 4px 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+}
+
+
+/* ---------- PROCESS SECTION ---------- */
+.process-section {
+    position: relative;
+    padding: var(--section-padding) 0;
+    z-index: var(--z-content);
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.process-step {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 18px;
+    padding: 32px 24px;
+    position: relative;
+    transition: transform 0.4s var(--ease-out-expo), border-color 0.3s ease;
+}
+
+.process-step:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-light);
+}
+
+.step-num {
+    font-size: 2.2rem;
+    font-weight: 900;
+    font-family: var(--font-mono);
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    line-height: 1;
+}
+
+.step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.step-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+
+/* ---------- RESPONSIVE BREAKPOINTS ---------- */
+@media (max-width: 1024px) {
+    .service-detail-card {
+        padding: 32px 32px;
+    }
+
+    .deliverables-list {
+        grid-template-columns: 1fr;
+    }
+
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .page-hero {
+        padding: 130px 0 40px;
+    }
+
+    .service-detail-card {
+        padding: 28px 20px;
+    }
+
+    .service-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .service-card-title {
+        font-size: 1.35rem;
+    }
+
+    .service-pricing-pill {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .service-card-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .service-card-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .process-grid {
+        grid-template-columns: 1fr;
+    }
+}

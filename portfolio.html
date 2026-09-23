@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio — Usama Gul | AI/ML Engineer</title>
+    <meta name="description" content="Explore Usama Gul's portfolio of production AI systems — from Agentic AI & LLMs to Computer Vision and ML Platforms.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/portfolio.css">
+</head>
+<body>
+
+    <!-- ===== AMBIENT BACKGROUND ===== -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+        <div class="ambient-orb orb-4"></div>
+        <div class="ambient-orb orb-5"></div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <header class="nav-header scrolled" id="navbar">
+        <nav class="navbar container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-bracket">&lt;</span>
+                <span class="logo-text">UG</span>
+                <span class="logo-bracket">/&gt;</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+                <li><a href="awards.html" class="nav-link">Awards</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <a href="contact.html" class="nav-cta-btn">Let's Talk
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <span class="section-tag">My Work</span>
+                <h1 class="page-hero-title">
+                    Project <span class="text-gradient">Portfolio</span>
+                </h1>
+                <p class="page-hero-subtitle">A curated collection of AI systems I've designed, built, and deployed into production — each solving a real business problem.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FILTER TABS ===== -->
+    <section class="portfolio-section" id="portfolio">
+        <div class="container">
+            <div class="filter-tabs reveal-up">
+                <button class="filter-tab active" data-filter="all">
+                    <span class="tab-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    </span>
+                    All Projects
+                    <span class="tab-count">12</span>
+                </button>
+                <button class="filter-tab" data-filter="agentic">
+                    <span class="tab-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </span>
+                    Agentic AI & LLM Systems
+                    <span class="tab-count">4</span>
+                </button>
+                <button class="filter-tab" data-filter="vision">
+                    <span class="tab-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </span>
+                    Computer Vision & Real-Time AI
+                    <span class="tab-count">4</span>
+                </button>
+                <button class="filter-tab" data-filter="platforms">
+                    <span class="tab-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    </span>
+                    ML Platforms & Data Products
+                    <span class="tab-count">4</span>
+                </button>
+            </div>
+
+            <!-- ===== PROJECT GRID ===== -->
+            <div class="portfolio-grid" id="portfolioGrid">
+
+                <!-- ── AGENTIC AI & LLM SYSTEMS ── -->
+                <div class="portfolio-card reveal-up" data-category="agentic" data-index="0">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #ff6b35 0%, #f7931e 40%, #ffad33 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">Agentic AI & LLMs</span>
+                        <h3 class="portfolio-card-title">Enterprise RAG Pipeline</h3>
+                        <p class="portfolio-card-desc">Built a retrieval-augmented generation system for internal knowledge management, reducing search time by 60%.</p>
+                    </div>
+                    <!-- Lightbox data -->
+                    <div class="lightbox-data" hidden>
+                        <h3>Enterprise RAG Pipeline</h3>
+                        <span class="lb-cat">Agentic AI & LLM Systems</span>
+                        <div class="lb-details">
+                            <p>Designed and deployed a production RAG pipeline integrating vector databases, semantic search, and GPT-4 for a Fortune 500 company's internal knowledge base. The system indexes over 200K documents and serves contextual answers with source citations in under 2 seconds.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> Fortune 500 Enterprise</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, LangChain, Pinecone, FastAPI, AWS</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 60% reduction in search time, 4x faster onboarding</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 3 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card reveal-up" data-category="agentic" data-index="1">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">Agentic AI & LLMs</span>
+                        <h3 class="portfolio-card-title">Multi-Agent Orchestration Framework</h3>
+                        <p class="portfolio-card-desc">Designed an autonomous multi-agent system that orchestrates complex business workflows with zero human intervention.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>Multi-Agent Orchestration Framework</h3>
+                        <span class="lb-cat">Agentic AI & LLM Systems</span>
+                        <div class="lb-details">
+                            <p>Architected a multi-agent orchestration framework where specialized AI agents collaborate to handle end-to-end business processes — from data extraction and validation to report generation and stakeholder notification. Built with fault tolerance, human-in-the-loop checkpoints, and real-time observability.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> FinTech Startup</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, AutoGen, CrewAI, Redis, Docker</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 90% automation of manual review workflows</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 4 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card reveal-up" data-category="agentic" data-index="2">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #fb923c 0%, #f59e0b 50%, #fbbf24 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">Agentic AI & LLMs</span>
+                        <h3 class="portfolio-card-title">AI Customer Support Agent</h3>
+                        <p class="portfolio-card-desc">Developed an LLM-powered support agent that autonomously resolves 85% of customer queries without human escalation.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>AI Customer Support Agent</h3>
+                        <span class="lb-cat">Agentic AI & LLM Systems</span>
+                        <div class="lb-details">
+                            <p>Built an intelligent customer support agent powered by fine-tuned LLMs with access to product documentation, order history, and ticketing systems. The agent understands context, handles multi-turn conversations, and seamlessly escalates edge cases to human agents with full conversation summaries.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> SupportAI (SaaS)</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, GPT-4, LangChain, PostgreSQL, Next.js</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 85% autonomous resolution, 40% cost reduction</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 2.5 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card reveal-up" data-category="agentic" data-index="3">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #e11d48 0%, #f43f5e 50%, #fb7185 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">Agentic AI & LLMs</span>
+                        <h3 class="portfolio-card-title">Code Review Copilot</h3>
+                        <p class="portfolio-card-desc">Built an AI code review assistant integrated with CI/CD pipelines, catching bugs and suggesting improvements automatically.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>Code Review Copilot</h3>
+                        <span class="lb-cat">Agentic AI & LLM Systems</span>
+                        <div class="lb-details">
+                            <p>Developed an AI-powered code review tool that integrates directly into GitHub pull request workflows. It analyzes diffs for bugs, security vulnerabilities, performance issues, and style violations — providing inline suggestions with explanations. Trained on internal coding standards for context-aware reviews.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> DevOps Platform Startup</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, GPT-4, GitHub API, FastAPI, Docker</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 35% fewer production bugs, 50% faster reviews</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 3 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── COMPUTER VISION & REAL-TIME AI ── -->
+                <div class="portfolio-card reveal-up" data-category="vision" data-index="4">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #00b4d8 0%, #0077b6 50%, #023e8a 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">Computer Vision</span>
+                        <h3 class="portfolio-card-title">Real-Time Object Detection System</h3>
+                        <p class="portfolio-card-desc">Deployed a 60fps edge-optimized detection system for manufacturing quality assurance on embedded hardware.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>Real-Time Object Detection System</h3>
+                        <span class="lb-cat">Computer Vision & Real-Time AI</span>
+                        <div class="lb-details">
+                            <p>Engineered a real-time object detection pipeline running at 60fps on NVIDIA Jetson edge devices for a manufacturing plant. The system identifies defects on assembly lines with 98.5% accuracy, triggering automated rejection and alerting. Includes a web dashboard for monitoring detection metrics and historical trends.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> VisionTech Manufacturing</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, YOLOv8, TensorRT, NVIDIA Jetson, MQTT</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 98.5% accuracy, 70% fewer defects reaching customers</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 4 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card reveal-up" data-category="vision" data-index="5">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #0ea5e9 0%, #2563eb 50%, #4f46e5 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">Computer Vision</span>
+                        <h3 class="portfolio-card-title">Medical Image Analysis Platform</h3>
+                        <p class="portfolio-card-desc">Built a diagnostic imaging AI for radiology achieving 96% accuracy in detecting anomalies across chest X-rays.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>Medical Image Analysis Platform</h3>
+                        <span class="lb-cat">Computer Vision & Real-Time AI</span>
+                        <div class="lb-details">
+                            <p>Developed a deep learning platform for automated radiology analysis, capable of detecting pneumonia, nodules, and other anomalies in chest X-rays. The system provides heatmap visualizations for explainability and integrates with hospital PACS systems. Trained on 100K+ annotated medical images with rigorous clinical validation.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> HealthAI Diagnostics</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, PyTorch, ResNet, Grad-CAM, DICOM, Flask</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 96% accuracy, 3x faster preliminary reads</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 5 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card reveal-up" data-category="vision" data-index="6">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #0e7490 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">Computer Vision</span>
+                        <h3 class="portfolio-card-title">Smart Surveillance Analytics</h3>
+                        <p class="portfolio-card-desc">Real-time video analytics with anomaly detection, people counting, and zone-based alerting for retail spaces.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>Smart Surveillance Analytics</h3>
+                        <span class="lb-cat">Computer Vision & Real-Time AI</span>
+                        <div class="lb-details">
+                            <p>Built an intelligent video analytics platform processing 50+ camera feeds simultaneously. Features include real-time people counting, heat mapping, zone intrusion detection, and behavioral anomaly alerts. The system reduced security incidents by 45% and provided actionable footfall analytics for retail optimization.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> Retail Chain (NDA)</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, YOLOv8, DeepSORT, OpenCV, Kafka, Grafana</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 45% fewer incidents, real-time analytics for 50+ feeds</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 3.5 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card reveal-up" data-category="vision" data-index="7">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="M9 15l3-3 3 3"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">Computer Vision</span>
+                        <h3 class="portfolio-card-title">Document OCR & Extraction Engine</h3>
+                        <p class="portfolio-card-desc">Intelligent document processing system that extracts structured data from invoices, receipts, and forms with 99% accuracy.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>Document OCR & Extraction Engine</h3>
+                        <span class="lb-cat">Computer Vision & Real-Time AI</span>
+                        <div class="lb-details">
+                            <p>Developed an intelligent document processing pipeline combining OCR, layout analysis, and NER to extract structured data from unstructured documents. Handles invoices, receipts, contracts, and government forms with configurable extraction templates. Processes 1000+ documents per hour with human-in-the-loop validation for edge cases.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> NeuralWorks (FinTech)</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, Tesseract, LayoutLM, spaCy, FastAPI</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 99% extraction accuracy, 80% less manual data entry</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 2 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── ML PLATFORMS & DATA PRODUCTS ── -->
+                <div class="portfolio-card reveal-up" data-category="platforms" data-index="8">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">ML Platforms</span>
+                        <h3 class="portfolio-card-title">Predictive Analytics Engine</h3>
+                        <p class="portfolio-card-desc">End-to-end ML platform for demand forecasting, reducing inventory costs by 25% for an e-commerce client.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>Predictive Analytics Engine</h3>
+                        <span class="lb-cat">ML Platforms & Data Products</span>
+                        <div class="lb-details">
+                            <p>Built a comprehensive demand forecasting platform that ingests sales data, market signals, and seasonal patterns to predict product demand 90 days ahead. Features automated model retraining, A/B testing for model versions, and an executive dashboard with drill-down analytics. Reduced overstock by 25% and stockouts by 40%.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> E-commerce Platform</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, XGBoost, Prophet, Airflow, Snowflake, Streamlit</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 25% inventory cost reduction, 92% forecast accuracy</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 4 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card reveal-up" data-category="platforms" data-index="9">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #34d399 0%, #22c55e 50%, #16a34a 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">ML Platforms</span>
+                        <h3 class="portfolio-card-title">Recommendation Engine</h3>
+                        <p class="portfolio-card-desc">Hybrid recommendation system serving 1M+ daily personalized predictions for a content streaming platform.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>Recommendation Engine</h3>
+                        <span class="lb-cat">ML Platforms & Data Products</span>
+                        <div class="lb-details">
+                            <p>Designed a hybrid recommendation engine combining collaborative filtering, content-based methods, and deep learning embeddings to deliver hyper-personalized content recommendations. The system handles cold-start problems gracefully and serves 1M+ predictions daily with p99 latency under 50ms via a real-time feature store.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> Content Streaming Platform</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, TensorFlow, Redis, Feast, Kubernetes</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 30% increase in engagement, 1M+ daily predictions</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 5 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card reveal-up" data-category="platforms" data-index="10">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #14b8a6 0%, #0d9488 50%, #0f766e 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">ML Platforms</span>
+                        <h3 class="portfolio-card-title">MLOps Pipeline Framework</h3>
+                        <p class="portfolio-card-desc">Reusable ML pipeline infrastructure with automated retraining, model versioning, and canary deployments.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>MLOps Pipeline Framework</h3>
+                        <span class="lb-cat">ML Platforms & Data Products</span>
+                        <div class="lb-details">
+                            <p>Created a reusable MLOps framework that standardizes the ML lifecycle from experimentation to production. Features automated data validation, model training pipelines, experiment tracking, A/B testing infrastructure, canary deployments, and model monitoring with drift detection. Now used across 6 internal teams.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> CloudScale (Internal Platform)</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, MLflow, Kubeflow, ArgoCD, Prometheus, GCP</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 5x faster model deployment, adopted by 6 teams</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 6 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card reveal-up" data-category="platforms" data-index="11">
+                    <div class="portfolio-thumb" style="--thumb-gradient: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #7c3aed 100%)">
+                        <div class="portfolio-thumb-inner">
+                            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <button class="portfolio-view-btn" aria-label="View project details">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                                <span>View Details</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        <span class="portfolio-card-cat">ML Platforms</span>
+                        <h3 class="portfolio-card-title">Real-Time Fraud Detection</h3>
+                        <p class="portfolio-card-desc">Transaction scoring system processing 10K+ events/second with sub-100ms latency for a payments company.</p>
+                    </div>
+                    <div class="lightbox-data" hidden>
+                        <h3>Real-Time Fraud Detection</h3>
+                        <span class="lb-cat">ML Platforms & Data Products</span>
+                        <div class="lb-details">
+                            <p>Built a real-time fraud detection system that scores every transaction in under 100ms using an ensemble of gradient-boosted models and neural networks. Features include real-time feature engineering from streaming data, adaptive thresholds, and a case management UI for fraud analysts. Reduced fraud losses by 60% while maintaining a low false-positive rate.</p>
+                            <div class="lb-meta">
+                                <div class="lb-meta-item"><strong>Client:</strong> Payments Company (NDA)</div>
+                                <div class="lb-meta-item"><strong>Stack:</strong> Python, XGBoost, Kafka Streams, Flink, Cassandra, AWS</div>
+                                <div class="lb-meta-item"><strong>Impact:</strong> 60% fraud reduction, 10K+ TPS at sub-100ms latency</div>
+                                <div class="lb-meta-item"><strong>Duration:</strong> 4 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CLOSING CTA ===== -->
+    <section class="cta-section" id="cta">
+        <div class="container">
+            <div class="cta-card reveal-up">
+                <div class="cta-glow"></div>
+                <span class="section-tag">Start a Project</span>
+                <h2 class="cta-title">Have a project in mind?<br><span class="text-gradient">Let's make it happen.</span></h2>
+                <p class="cta-desc">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+                <div class="cta-actions">
+                    <a href="contact.html" class="btn btn-primary btn-lg">
+                        <span>Get In Touch</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="mailto:hello@usamagul.com" class="btn btn-outline">
+                        <span>hello@usamagul.com</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">
+                        <span class="logo-bracket">&lt;</span>
+                        <span class="logo-text">UG</span>
+                        <span class="logo-bracket">/&gt;</span>
+                    </a>
+                    <p class="footer-tagline">Building production-scale AI that actually ships.</p>
+                    <div class="footer-socials">
+                        <a href="#" class="social-link" aria-label="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                        <a href="#" class="social-link" aria-label="Twitter / X"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                        <a href="#" class="social-link" aria-label="Kaggle"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.281.18.046.149.034.238-.036.27l-6.555 6.344 6.836 8.507c.095.104.117.208.075.322z"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-links-col">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="awards.html">Awards</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h4 class="footer-heading">Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html">Machine Learning</a></li>
+                        <li><a href="services.html">Computer Vision</a></li>
+                        <li><a href="services.html">NLP & LLMs</a></li>
+                        <li><a href="services.html">MLOps</a></li>
+                        <li><a href="services.html">AI Consulting</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:rajausamagull123@gmail.com">rajausamagull123@gmail.com</a></li>
+                        <li><a href="https://wa.me/923120979064">+92 312 0979064 (WhatsApp)</a></li>
+                        <li><a href="contact.html">Send Inquiry</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Usama Gul. All rights reserved. &bull; <a href="admin/index.html" style="opacity: 0.45; color: inherit; text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.45'">Admin Portal</a></p>
+                <p class="footer-credit">Designed & Built with precision.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== LIGHTBOX MODAL ===== -->
+    <div class="lightbox-modal" id="lightboxModal" aria-hidden="true">
+        <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+        <div class="lightbox-container">
+            <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="lightbox-body">
+                <div class="lightbox-image" id="lightboxImage"></div>
+                <div class="lightbox-content" id="lightboxContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/site-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/portfolio.js"></script>
+</body>
+</html>
