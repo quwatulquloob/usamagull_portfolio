@@ -206,9 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (resetPhotoBtn) {
         resetPhotoBtn.addEventListener('click', () => {
-            currentPhotoBase64 = '../assets/profile-placeholder.svg';
+            currentPhotoBase64 = '../assets/profile.jpg';
             photoPreview.src = currentPhotoBase64;
-            showToast('Reset to placeholder headshot.');
+            showToast('Reset to default executive headshot.');
         });
     }
 

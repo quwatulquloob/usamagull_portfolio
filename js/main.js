@@ -1,8 +1,8 @@
-/* ============================================
-   USAMA GUL — PORTFOLIO JAVASCRIPT
-   Navigation, Scroll Animations, Counters,
-   Testimonials Slider, Smooth Interactions
-   ============================================ */
+/* ==========================================================================
+   USAMA GUL — PORTFOLIO JAVASCRIPT (SENIOR UI/UX & SOFTWARE ENGINEER)
+   Interactions: Spotlight tracking, Toast feedback, Counters, Slider,
+   Smooth scrolling, Navbar effects, Dynamic clipboard utilities.
+   ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
-
-        if (currentScroll > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+        if (navbar) {
+            if (currentScroll > 40) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         }
-
         lastScroll = currentScroll;
     }, { passive: true });
 
@@ -45,6 +45,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // ─── SPOTLIGHT CARD HOVER EFFECT (LINEAR / RAYCAST FEEL) ───
+    const interactiveCards = document.querySelectorAll('.spotlight-card, .stat-card, .service-card, .project-card, .service-detail-card, .award-card, .direct-contact-card');
+    
+    interactiveCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+
+
     // ─── SCROLL REVEAL ANIMATIONS ───
     const revealElements = document.querySelectorAll('.reveal-up');
 
@@ -52,21 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Don't unobserve stat cards yet — they need counter animation
                 if (!entry.target.classList.contains('stat-card')) {
                     revealObserver.unobserve(entry.target);
                 }
             }
         });
     }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
 
 
-    // ─── ANIMATED COUNTERS ───
+    // ─── TELEMETRY COUNTER ANIMATIONS ───
     const counters = document.querySelectorAll('.counter');
     let countersAnimated = false;
 
@@ -78,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 counterObserver.disconnect();
             }
         });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.25 });
 
     const statsSection = document.getElementById('stats');
     if (statsSection) {
@@ -87,9 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animateCounter(counter) {
         const target = parseFloat(counter.dataset.target);
+        if (isNaN(target)) return;
         const suffix = counter.dataset.suffix || '';
         const isDecimal = counter.dataset.decimal === 'true';
-        const duration = 2000;
+        const duration = 1800;
         const startTime = performance.now();
 
         function easeOutExpo(t) {
@@ -164,9 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Auto-play
         function startAutoPlay() {
-            autoPlayInterval = setInterval(nextSlide, 5000);
+            autoPlayInterval = setInterval(nextSlide, 6000);
         }
 
         function resetAutoPlay() {
@@ -176,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         startAutoPlay();
 
-        // Pause on hover
         track.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
         track.addEventListener('mouseleave', startAutoPlay);
 
@@ -203,10 +215,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // ─── TOAST NOTIFICATION UTILITY ───
+    let toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container';
+        document.body.appendChild(toastContainer);
+    }
+
+    window.showToast = function(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+            <svg class="toast-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>${message}</span>
+        `;
+        toastContainer.appendChild(toast);
+        
+        requestAnimationFrame(() => {
+            toast.classList.add('show');
+        });
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 350);
+        }, 3000);
+    };
+
+
+    // ─── INSTANT COPY TO CLIPBOARD HELPER ───
+    document.querySelectorAll('[data-copy]').forEach(el => {
+        el.addEventListener('click', (e) => {
+            const textToCopy = el.getAttribute('data-copy');
+            if (textToCopy) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    window.showToast(`Copied to clipboard: ${textToCopy}`);
+                }).catch(() => {
+                    window.showToast(`Selected: ${textToCopy}`);
+                });
+            }
+        });
+    });
+
+
     // ─── SMOOTH SCROLL FOR ANCHOR LINKS ───
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            const target = document.querySelector(this.getAttribute('href'));
+            const href = this.getAttribute('href');
+            if (href === '#' || href === '') return;
+            const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
                 target.scrollIntoView({
@@ -215,56 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-    });
-
-
-    // ─── STAT BAR ANIMATION ON SCROLL ───
-    const statCards = document.querySelectorAll('.stat-card');
-    const barObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                barObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.3 });
-
-    statCards.forEach(card => barObserver.observe(card));
-
-
-    // ─── ACTIVE NAV LINK HIGHLIGHT ───
-    const sections = document.querySelectorAll('section[id]');
-
-    function updateActiveNavLink() {
-        const scrollPos = window.scrollY + 200;
-
-        sections.forEach(section => {
-            const top = section.offsetTop;
-            const height = section.offsetHeight;
-            const id = section.getAttribute('id');
-
-            if (scrollPos >= top && scrollPos < top + height) {
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${id}` || 
-                        (id === 'hero' && link.getAttribute('href') === 'index.html')) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }
-
-    window.addEventListener('scroll', updateActiveNavLink, { passive: true });
-
-
-    // ─── PRELOADER / INITIAL ANIMATION SEQUENCE ───
-    // Small delay to ensure smooth initial load
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-
-    window.addEventListener('load', () => {
-        document.body.style.opacity = '1';
     });
 
 });

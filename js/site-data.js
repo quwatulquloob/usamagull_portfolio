@@ -16,7 +16,7 @@ const DEFAULT_SITE_DATA = {
         lastName: 'Gul',
         title: 'AI / ML Engineer',
         tagline: 'Building production-scale AI that actually ships.',
-        photo: 'assets/profile-placeholder.svg',
+        photo: 'assets/profile.jpg',
         yearsExp: 4,
         systemsDelivered: 15,
         happyClients: 10,
@@ -223,6 +223,9 @@ function getSiteData() {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
             const parsed = JSON.parse(stored);
+            if (parsed.profile && (parsed.profile.photo === 'assets/profile-placeholder.svg' || !parsed.profile.photo)) {
+                parsed.profile.photo = 'assets/profile.jpg';
+            }
             // Merge defaults to ensure backwards compatibility
             return Object.assign({}, DEFAULT_SITE_DATA, parsed);
         }

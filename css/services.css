@@ -1,12 +1,11 @@
-/* ============================================
-   SERVICES PAGE — Styles
-   Extends base design system (style.css)
-   ============================================ */
+/* ==========================================================================
+   SERVICES PAGE — STYLES (SENIOR UI/UX & SOFTWARE ENGINEER)
+   ========================================================================== */
 
 /* ---------- PAGE HERO ---------- */
 .page-hero {
     position: relative;
-    padding: 160px 0 60px;
+    padding: 150px 0 60px;
     text-align: center;
     z-index: var(--z-content);
 }
@@ -14,29 +13,25 @@
 .page-hero-content {
     max-width: 800px;
     margin: 0 auto;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: heroContentIn 1s var(--ease-out-expo) 0.2s forwards;
 }
 
 .page-hero-title {
-    font-size: clamp(2.4rem, 5vw, 3.4rem);
-    font-weight: 900;
-    letter-spacing: -0.03em;
+    font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
     line-height: 1.15;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
 .page-hero-subtitle {
     font-size: 1.1rem;
     color: var(--text-secondary);
     line-height: 1.7;
-    max-width: 650px;
+    max-width: 660px;
     margin: 0 auto;
 }
 
-
-/* ---------- DETAILED SERVICES SECTION ---------- */
+/* ---------- SERVICES LIST SECTION ---------- */
 .services-detail-section {
     position: relative;
     padding: 40px 0 var(--section-padding);
@@ -46,8 +41,8 @@
 .services-list {
     display: flex;
     flex-direction: column;
-    gap: 36px;
-    max-width: 1000px;
+    gap: 32px;
+    max-width: 1040px;
     margin: 0 auto;
 }
 
@@ -56,165 +51,137 @@
     position: relative;
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    border-radius: 24px;
-    padding: 40px 48px;
-    transition: transform 0.45s var(--ease-out-expo), 
-                border-color 0.4s ease, 
-                box-shadow 0.45s var(--ease-out-expo);
+    border-radius: var(--radius-xl);
+    padding: 44px 48px;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s var(--ease-out-expo);
     overflow: hidden;
 }
 
-.service-card-glow {
-    position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, var(--accent-orange-glow) 0%, transparent 70%);
-    filter: blur(50px);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-}
-
-.service-card-glow.blue-glow {
-    background: radial-gradient(circle, var(--accent-blue-glow) 0%, transparent 70%);
-}
-
 .service-detail-card:hover {
-    transform: translateY(-8px);
     border-color: var(--border-light);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45),
-                0 0 35px rgba(255, 107, 53, 0.06);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 50px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
 }
 
-.service-detail-card:hover .service-card-glow {
-    opacity: 0.6;
-}
+.service-card-glow { display: none !important; }
 
 /* Header */
 .service-card-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 24px;
     flex-wrap: wrap;
     gap: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 20px;
 }
 
 .service-header-left {
     display: flex;
     align-items: center;
-    gap: 16px;
-}
-
-.service-badge-cat {
-    display: inline-block;
-    padding: 4px 12px;
-    background: rgba(255, 107, 53, 0.1);
-    border: 1px solid rgba(255, 107, 53, 0.2);
-    border-radius: 100px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--accent-orange);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
-
-.service-badge-cat.blue-cat {
-    background: rgba(0, 180, 216, 0.1);
-    border-color: rgba(0, 180, 216, 0.2);
-    color: var(--accent-blue);
+    gap: 14px;
 }
 
 .service-icon-box {
-    width: 54px;
-    height: 54px;
-    border-radius: 14px;
-    background: rgba(255, 107, 53, 0.12);
-    color: var(--accent-orange);
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    color: var(--accent-amber);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease;
 }
 
 .service-icon-box.icon-blue {
-    background: rgba(0, 180, 216, 0.12);
-    color: var(--accent-blue);
+    background: rgba(6, 182, 212, 0.08);
+    border-color: rgba(6, 182, 212, 0.2);
+    color: var(--accent-cyan);
 }
 
-.service-detail-card:hover .service-icon-box {
-    transform: scale(1.08);
+.service-badge-cat {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent-amber);
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
 }
 
-/* Pricing Pill */
+.service-badge-cat.blue-cat {
+    color: var(--accent-cyan);
+    background: rgba(6, 182, 212, 0.08);
+    border-color: rgba(6, 182, 212, 0.2);
+}
+
 .service-pricing-pill {
     display: flex;
     align-items: baseline;
     gap: 6px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-light);
-    border-radius: 14px;
-    padding: 10px 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: 6px 16px;
 }
 
 .price-prefix {
-    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
     color: var(--text-tertiary);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-weight: 500;
 }
 
 .price-value {
-    font-size: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
     font-weight: 800;
-    font-family: var(--font-mono);
-    color: var(--accent-orange);
-    line-height: 1;
-}
-
-.service-pricing-pill.blue-pill .price-value {
-    color: var(--accent-blue);
+    color: #ffffff;
 }
 
 .price-suffix {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
 }
 
 /* Card Body */
 .service-card-title {
-    font-size: 1.6rem;
+    font-size: 1.65rem;
     font-weight: 800;
-    letter-spacing: -0.02em;
     margin-bottom: 12px;
     color: var(--text-primary);
 }
 
 .service-card-description {
-    font-size: 1.02rem;
+    font-size: 1rem;
     color: var(--text-secondary);
-    line-height: 1.75;
-    margin-bottom: 24px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 860px;
 }
 
 /* Deliverables */
 .service-deliverables {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--border-subtle);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     padding: 24px 28px;
     margin-bottom: 28px;
 }
 
 .deliverables-heading {
-    font-size: 0.85rem;
+    font-family: var(--font-display);
+    font-size: 0.88rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     color: var(--text-primary);
     margin-bottom: 16px;
 }
@@ -229,19 +196,15 @@
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     color: var(--text-secondary);
     line-height: 1.5;
 }
 
 .deliverables-list li svg {
-    color: var(--accent-orange);
+    color: var(--accent-emerald);
     flex-shrink: 0;
     margin-top: 2px;
-}
-
-.service-detail-card:nth-child(even) .deliverables-list li svg {
-    color: var(--accent-blue);
 }
 
 /* Card Footer */
@@ -251,126 +214,85 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 16px;
-    padding-top: 10px;
 }
 
 .tech-stack-mini {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    gap: 8px;
 }
 
 .tech-stack-mini .tag {
-    padding: 4px 12px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    font-size: 0.78rem;
     font-family: var(--font-mono);
+    font-size: 0.74rem;
     color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
 }
 
-
-/* ---------- PROCESS SECTION ---------- */
+/* Engagement Process Bento */
 .process-section {
     position: relative;
     padding: var(--section-padding) 0;
     z-index: var(--z-content);
+    border-top: 1px solid var(--border-subtle);
 }
 
 .process-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 20px;
+}
+
+.process-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
 }
 
 .process-step {
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 18px;
-    padding: 32px 24px;
-    position: relative;
-    transition: transform 0.4s var(--ease-out-expo), border-color 0.3s ease;
-}
-
-.process-step:hover {
-    transform: translateY(-6px);
-    border-color: var(--border-light);
-}
-
-.step-num {
-    font-size: 2.2rem;
-    font-weight: 900;
     font-family: var(--font-mono);
-    background: var(--gradient-accent);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 16px;
-    line-height: 1;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-amber);
+    margin-bottom: 12px;
 }
 
-.step-title {
+.process-title {
     font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    color: var(--text-primary);
 }
 
-.step-desc {
+.process-desc {
     font-size: 0.88rem;
     color: var(--text-secondary);
-    line-height: 1.6;
+    line-height: 1.55;
 }
 
-
-/* ---------- RESPONSIVE BREAKPOINTS ---------- */
+/* Responsive */
 @media (max-width: 1024px) {
     .service-detail-card {
-        padding: 32px 32px;
+        padding: 32px 28px;
     }
-
     .deliverables-list {
         grid-template-columns: 1fr;
     }
-
     .process-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 768px) {
-    .page-hero {
-        padding: 130px 0 40px;
-    }
-
-    .service-detail-card {
-        padding: 28px 20px;
-    }
-
     .service-card-header {
         flex-direction: column;
         align-items: flex-start;
     }
-
-    .service-card-title {
-        font-size: 1.35rem;
-    }
-
-    .service-pricing-pill {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .service-card-footer {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .service-card-footer .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
     .process-grid {
         grid-template-columns: 1fr;
     }
