@@ -1,8 +1,7 @@
-/* Contact form — validates, then posts to Formspree.
+/* Contact form — validates, then posts to local API endpoint.
    Field ids match contact.html (name, email, serviceSelect, budget, message). */
 (function () {
     'use strict';
-    var FORMSPREE_ID = 'mvkgrzvj';
 
     function init() {
         var form = document.getElementById('contactForm');
@@ -36,21 +35,27 @@
 
             var label = btn.innerHTML;
             btn.disabled = true;
-            btn.querySelector('span').textContent = 'Sending…';
+            var span = btn.querySelector('span');
+            if (span) span.textContent = 'Sending…';
 
-            fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+            var serviceText = service && service.selectedIndex >= 0 ? service.options[service.selectedIndex].text : '';
+
+            fetch('/api/contact', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     name: name, email: email, message: message,
-                    service: service.options[service.selectedIndex].text,
-                    budget: document.getElementById('budget').value
+                    service: serviceText,
+                    budget: ''
                 })
             }).then(function (r) {
-                if (!r.ok) throw new Error('bad status');
+                return r.json();
+            }).then(function (data) {
+                if (!data.ok) throw new Error(data.error || 'bad status');
                 show('Thanks, ' + name + '. Your inquiry is in and I\u2019ll reply to ' + email + ' within 24 hours.', 'success');
                 form.reset();
-            }).catch(function () {
+            }).catch(function (err) {
+                console.error('Contact form error:', err);
                 show('Your message didn\u2019t send. Check your connection and try again, or email me directly.', 'error');
             }).then(function () { btn.disabled = false; btn.innerHTML = label; });
         });

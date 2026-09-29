@@ -31,6 +31,7 @@ import {
   updateProject,
   updateService,
   type AwardInput,
+  type LogoInput,
   type ProjectInput,
   type ServiceInput,
 } from '../lib/db';

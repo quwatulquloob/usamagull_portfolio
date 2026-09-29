@@ -550,7 +550,7 @@ function slugify(text: string): string {
     .slice(0, 64) || 'item';
 }
 
-async function uniqueSlug(db: D1Database, table: 'services' | 'projects' | 'awards', base: string): Promise<string> {
+async function uniqueSlug(db: D1Database, table: 'services' | 'projects' | 'awards' | 'logos', base: string): Promise<string> {
   let candidate = base;
   let n = 1;
   for (;;) {

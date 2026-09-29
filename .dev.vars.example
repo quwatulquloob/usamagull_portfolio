@@ -6,3 +6,8 @@ ADMIN_PASSWORD_HASH=pbkdf2$100000$...$...
 # random value for production (the seed script does this automatically):
 #   node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
 SESSION_SECRET=dev-only-session-secret-replace-me
+# Resend API key for sending contact form email notifications (optional)
+# Get your API key from: https://resend.com/api-keys
+RESEND_API_KEY=re_xxxxxxxxxxxxxx
+# Email address to receive contact form notifications
+NOTIFY_EMAIL=your-email@example.com
