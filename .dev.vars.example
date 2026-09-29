@@ -1,0 +1,8 @@
+ADMIN_USERNAME=admin
+# PBKDF2-SHA256 hash of the admin password (format: pbkdf2$iter$salt$hash).
+# Generate with: npm run seed  (the plaintext is never stored anywhere)
+ADMIN_PASSWORD_HASH=pbkdf2$100000$...$...
+# HMAC-SHA256 secret used to sign admin session cookies. Generate a fresh
+# random value for production (the seed script does this automatically):
+#   node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+SESSION_SECRET=dev-only-session-secret-replace-me

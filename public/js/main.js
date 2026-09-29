@@ -46,11 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ─── SCROLL REVEAL ANIMATIONS ───
-    const revealElements = document.querySelectorAll('.reveal-up');
+    // html.js gates the hidden pre-reveal state so content is never lost
+    // when JS fails to load.
+    document.documentElement.classList.add('js');
+    const revealElements = document.querySelectorAll('.reveal-up, .reveal-right');
 
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
+            // Reveal when entering the viewport, or when the element has
+            // already been scrolled past (fast jumps land it above the fold).
+            if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
                 entry.target.classList.add('visible');
                 if (!entry.target.classList.contains('stat-card')) {
                     revealObserver.unobserve(entry.target);
@@ -63,6 +68,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
+
+    // Safety net: IntersectionObserver never fires for elements that jump from
+    // below the viewport to above it in a single scroll (anchor links, instant
+    // jumps), so reveal anything already scrolled past on every scroll frame.
+    let revealScrollScheduled = false;
+    const revealPassedElements = () => {
+        revealElements.forEach(el => {
+            if (!el.classList.contains('visible') && el.getBoundingClientRect().bottom < 0) {
+                el.classList.add('visible');
+                if (!el.classList.contains('stat-card')) {
+                    revealObserver.unobserve(el);
+                }
+            }
+        });
+    };
+    window.addEventListener('scroll', () => {
+        if (revealScrollScheduled) return;
+        revealScrollScheduled = true;
+        requestAnimationFrame(() => {
+            revealScrollScheduled = false;
+            revealPassedElements();
+        });
+    }, { passive: true });
 
 
     // ─── TELEMETRY COUNTER ANIMATIONS ───
@@ -259,5 +287,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+
+    // ─── LOGOS MARQUEE RENDERING ───
+    function renderLogosMarquee() {
+        const logosTrack = document.getElementById('logosMarqueeTrack');
+        if (!logosTrack) return;
+
+        const logos = window.__SITE_DATA__?.logos || [];
+        if (!logos.length) {
+            logosTrack.parentElement.style.display = 'none';
+            return;
+        }
+
+        // Create two sets of logos for seamless looping
+        const renderLogo = (logo) => `
+            <div class="logo-item">
+                <img src="${logo.imageUrl}" alt="${logo.name}" title="${logo.name}">
+            </div>
+        `;
+
+        const logosHTML = logos.map(renderLogo).join('');
+        logosTrack.innerHTML = `
+            <div class="marquee-content">
+                ${logosHTML}
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                ${logosHTML}
+            </div>
+        `;
+    }
+
+    // Render logos on page load
+    renderLogosMarquee();
 
 });

@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Local dev secrets (created by `npm run seed`)
+.dev.vars
+
+# Wrangler build artifacts & local state
+.wrangler/
+dist/
+
+# Logs
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+*.tsbuildinfo
+*.tgz
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+*.tmp
+.cache/

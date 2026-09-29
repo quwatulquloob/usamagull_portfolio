@@ -137,7 +137,7 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -.025em; line-height: 1.15; }
 .hero-tagline { max-width: 34rem; font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 36px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 48px; }
 .hero-tech-stack { padding-top: 24px; border-top: 1px solid var(--border-subtle); }
-.tech-label { display: block; margin-bottom: 12px; font-size: 13px; color: var(--text-tertiary); }
+.tech-label { display: block; margin-bottom: 12px; font-size: 13px; color: var(--text-tertiary); font-weight: 700; }
 .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tech-tag, .stack-chip, .tag {
     padding: 3px 10px; border-radius: 6px; background: var(--bg-sunken);
@@ -152,10 +152,13 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -.025em; line-height: 1.15; }
 .telemetry-badge { font-size: 13px; font-weight: 500; color: var(--ok); white-space: nowrap; }
 
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.hero-content-col > *, .hero-image-col { animation: rise .7s var(--ease-out-expo) both; }
+@keyframes slide-left { from { opacity: 0; transform: translateX(56px); } to { opacity: 1; transform: none; } }
+.hero-content-col > * { animation: rise .7s var(--ease-out-expo) both; }
 .hero-content-col > :nth-child(2) { animation-delay: .06s; } .hero-content-col > :nth-child(3) { animation-delay: .12s; }
 .hero-content-col > :nth-child(4) { animation-delay: .18s; } .hero-content-col > :nth-child(5) { animation-delay: .24s; }
-.hero-content-col > :nth-child(6) { animation-delay: .3s; } .hero-image-col { animation-delay: .15s; }
+.hero-content-col > :nth-child(6) { animation-delay: .3s; }
+/* Hero visual enters right-to-left (no JS dependency). */
+.hero-image-col { animation: slide-left .8s var(--ease-out-expo) .15s both; }
 
 /* ---------- Figures ---------- */
 .stats-section { border-block: 1px solid var(--border-subtle); background: var(--bg-surface); }
@@ -213,6 +216,67 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -.025em; line-height: 1.15; }
 .slider-dots .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border-light); cursor: pointer; transition: background .2s, width .2s; }
 .slider-dots .dot.active { width: 20px; border-radius: 3px; background: var(--ink); }
 .brands-section { display: none; }
+
+/* ---------- Logos Marquee ---------- */
+.logos-section {
+    padding: 80px 0;
+    background: var(--bg-secondary);
+    overflow: hidden;
+}
+
+.marquee-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.marquee-track {
+    display: flex;
+    width: 200%;
+}
+
+.marquee-content {
+    display: flex;
+    gap: 60px;
+    animation: marquee 30s linear infinite;
+    width: 50%;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.logo-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 60px;
+}
+
+.logo-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%) brightness(0.7);
+    transition: filter 0.3s ease;
+}
+
+.logo-item:hover img {
+    filter: grayscale(0%) brightness(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .marquee-content {
+        animation: none;
+    }
+}
 
 /* ---------- Closing CTA — the single dark moment ---------- */
 .cta-section { padding: var(--section-padding) 0; }
@@ -289,4 +353,36 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -.025em; line-height: 1.15; }
 }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- SCROLL REVEAL ANIMATIONS ----------
+   `.reveal-up` fades/rises, `.reveal-right` slides in from the right edge
+   (moves leftward into place). Both reveal via IntersectionObserver in
+   main.js adding `.visible`, and honor the `--delay` custom property for
+   stagger. Elements start hidden only when JS is running (html.js). */
+html.js .reveal-up,
+html.js .reveal-right {
+    opacity: 0;
+    transition:
+        opacity .7s var(--ease-out-expo) var(--delay, 0s),
+        transform .7s var(--ease-out-expo) var(--delay, 0s);
+    will-change: opacity, transform;
+}
+html.js .reveal-up { transform: translateY(24px); }
+html.js .reveal-right { transform: translateX(56px); }
+
+html.js .reveal-up.visible,
+html.js .reveal-right.visible {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.js .reveal-up,
+    html.js .reveal-right {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }

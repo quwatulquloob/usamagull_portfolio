@@ -1,0 +1,36 @@
+{
+	// Cloudflare Workers configuration — single Worker, single domain.
+	// Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "resume",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-05-03",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	// The rest of the site's CSS, JS, and images.
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+		// Route every request through the Worker first so /admin pages and
+		// /api/* can never be shadowed by a stray static file. Static assets
+		// are still served by the platform's optimized asset pipeline.
+		"run_worker_first": [
+			"/admin",
+			"/api/*",
+			"/admin/*"
+		]
+	},
+	"d1_databases": [
+		{
+			//    npx wrangler d1 create usama-portfolio-db
+			"binding": "DB",
+			"database_name": "usama-portfolio-db",
+			"database_id": "f1780746-64ef-4056-98f7-1fd5319c23cd",
+			"migrations_dir": "drizzle"
+		}
+	],
+	"observability": {
+		"enabled": true
+	}
+}
