@@ -154,12 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
         services: [],
         projects: [],
         awards: [],
+        certifications: [],
         logos: [],
+        showcaseVideos: [],
         resume: null
     };
 
     function setLoadingPanels() {
-        ['servicesAdminList', 'projectsAdminList', 'awardsAdminList', 'logosAdminList'].forEach(id => {
+        ['servicesAdminList', 'projectsAdminList', 'awardsAdminList', 'certificationsAdminList', 'logosAdminList', 'videosAdminList'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.innerHTML = '<p style="color: var(--text-tertiary); text-align: center; padding: 24px;">Loading…</p>';
         });
@@ -177,11 +179,13 @@ document.addEventListener('DOMContentLoaded', () => {
             state.services = content.services || [];
             state.projects = content.projects || [];
             state.awards = content.awards || [];
+            state.certifications = content.certifications || [];
             state.logos = content.logos || [];
+            state.showcaseVideos = content.showcaseVideos || [];
 
             document.getElementById('statServicesCount').textContent = state.services.length;
             document.getElementById('statProjectsCount').textContent = state.projects.length;
-            document.getElementById('statAwardsCount').textContent = state.awards.length;
+            document.getElementById('statAwardsCount').textContent = state.awards.length + state.certifications.length;
             const themeMap = {
                 'charcoal-orange': 'Charcoal Orange',
                 'midnight-blue': 'Midnight Blue',
@@ -196,7 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
             renderServices(state.services);
             renderProjects(state.projects);
             renderAwards(state.awards);
+            renderCertifications(state.certifications);
             renderLogos(state.logos);
+            renderVideos(state.showcaseVideos);
             renderContact(state.contact);
         } catch (err) {
             showToast(err.message, 'error');
@@ -236,6 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('profName').value = profile.name || '';
         document.getElementById('profTitle').value = profile.title || '';
         document.getElementById('profTagline').value = profile.tagline || '';
+        document.getElementById('heroVideoUrl').value = profile.heroVideoUrl || '';
         document.getElementById('profSystems').value = profile.systemsDelivered ?? 0;
         document.getElementById('profClients').value = profile.happyClients ?? 0;
         document.getElementById('profYears').value = profile.yearsExp ?? 0;
@@ -352,6 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 name: document.getElementById('profName').value.trim(),
                 title: document.getElementById('profTitle').value.trim(),
                 tagline: document.getElementById('profTagline').value.trim(),
+                heroVideoUrl: document.getElementById('heroVideoUrl').value.trim(),
                 systemsDelivered: parseInt(document.getElementById('profSystems').value, 10) || 0,
                 happyClients: parseInt(document.getElementById('profClients').value, 10) || 0,
                 yearsExp: parseInt(document.getElementById('profYears').value, 10) || 0,
@@ -366,7 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const res = await api('/api/admin/settings', { method: 'PUT', body: { profile } });
                 state.profile = res.settings.profile;
-                showToast('Profile & headshot saved — live site updated!');
+                showToast('Profile, headshot & hero video saved — live site updated!');
             } catch (err) {
                 showToast(err.message, 'error');
             }
@@ -461,6 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="admin-item-meta">
                         <h4>${escapeHtml(service.title)}</h4>
                         <p>${escapeHtml(service.description)}</p>
+                        <span style="font-size: 0.75rem; color: var(--text-tertiary);">${escapeHtml(service.category)} | ${service.price > 0 ? `$${Number(service.price).toLocaleString('en-US')}${service.priceSuffix ? ` ${escapeHtml(service.priceSuffix)}` : ''}` : 'Custom quote'}</span>
                     </div>
                 </div>
                 <div class="admin-item-actions">
@@ -518,8 +527,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     <input type="text" id="svcCat" class="form-input" value="${escapeHtml(item ? item.category : 'Engineering')}" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Short Description</label>
+                    <label class="form-label">Service Description</label>
                     <textarea id="svcDesc" class="form-input" rows="3" required>${escapeHtml(item ? item.description : '')}</textarea>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="svcPrice">Starting price (USD)</label>
+                        <input type="number" id="svcPrice" class="form-input" min="0" step="1" value="${escapeHtml(item ? item.price : 0)}">
+                        <small>Set to 0 to display “Custom quote”.</small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="svcPriceSuffix">Price unit</label>
+                        <input type="text" id="svcPriceSuffix" class="form-input" value="${escapeHtml(item ? item.priceSuffix : '/ project')}" placeholder="/ project">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Deliverables (one per line)</label>
@@ -530,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <input type="text" id="svcTags" class="form-input" value="${escapeHtml((item && item.tags || []).join(', '))}" placeholder="Python, AI, FastAPI">
                 </div>
                 <div class="form-actions-bar">
-                    <button type="submit" class="btn btn-primary">${isEdit ? 'Save Changes' : 'Create Service'}</button>
+                    <button type="submit" class="btn btn-primary">${isEdit ? 'Save Changes' : 'Add to Service Catalog'}</button>
                 </div>
             </form>
         `;
@@ -542,8 +562,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const body = {
                 title: document.getElementById('svcTitle').value.trim(),
                 category: document.getElementById('svcCat').value.trim(),
-                price: 0,
-                priceSuffix: '',
+                price: Math.max(0, parseInt(document.getElementById('svcPrice').value, 10) || 0),
+                priceSuffix: document.getElementById('svcPriceSuffix').value.trim(),
                 description: document.getElementById('svcDesc').value.trim(),
                 deliverables: document.getElementById('svcDeliverables').value.split('\n').map(s => s.trim()).filter(Boolean),
                 tags: document.getElementById('svcTags').value.split(',').map(s => s.trim()).filter(Boolean),
@@ -822,7 +842,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     await api(`/api/admin/awards/${encodeURIComponent(btn.dataset.id)}`, { method: 'DELETE' });
                     state.awards = state.awards.filter(a => a.id !== btn.dataset.id);
                     renderAwards(state.awards);
-                    document.getElementById('statAwardsCount').textContent = state.awards.length;
+                    document.getElementById('statAwardsCount').textContent = state.awards.length + state.certifications.length;
                     showToast('Award removed.');
                 } catch (err) {
                     showToast(err.message, 'error');
@@ -903,7 +923,167 @@ document.addEventListener('DOMContentLoaded', () => {
                     showToast('New achievement added!');
                 }
                 renderAwards(state.awards);
-                document.getElementById('statAwardsCount').textContent = state.awards.length;
+                document.getElementById('statAwardsCount').textContent = state.awards.length + state.certifications.length;
+                closeModal();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        };
+    }
+
+    // ─── CERTIFICATIONS MANAGER ───
+    const certificationsListContainer = document.getElementById('certificationsAdminList');
+    const addNewCertificationBtn = document.getElementById('addNewCertificationBtn');
+
+    function renderCertifications(certifications) {
+        if (!certificationsListContainer) return;
+        certificationsListContainer.innerHTML = '';
+
+        if (!certifications.length) {
+            certificationsListContainer.innerHTML = '<p style="color: var(--text-tertiary); text-align: center; padding: 20px;">No certificates added yet.</p>';
+            return;
+        }
+
+        certifications.forEach(certification => {
+            const card = document.createElement('div');
+            card.className = 'admin-item-card';
+            card.innerHTML = `
+                <div class="admin-item-left">
+                    <div class="admin-item-thumb" style="color: var(--accent);">
+                        ${certification.imageUrl
+                            ? `<img src="${escapeHtml(certification.imageUrl)}" alt="" style="width:100%;height:100%;object-fit:cover;">`
+                            : '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>'}
+                    </div>
+                    <div class="admin-item-meta">
+                        <h4>${escapeHtml(certification.title)}${certification.issueDate ? ` (${escapeHtml(certification.issueDate)})` : ''}</h4>
+                        <p>${escapeHtml(certification.issuer || 'Issuing organization not specified')}</p>
+                    </div>
+                </div>
+                <div class="admin-item-actions">
+                    <button class="btn-icon btn-edit-certification" data-id="${escapeHtml(certification.id)}" title="Edit certificate">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn-icon btn-icon-del btn-del-certification" data-id="${escapeHtml(certification.id)}" title="Delete certificate">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                </div>
+            `;
+            certificationsListContainer.appendChild(card);
+        });
+
+        certificationsListContainer.querySelectorAll('.btn-edit-certification').forEach(btn => {
+            btn.onclick = () => openCertificationModal(btn.dataset.id);
+        });
+        certificationsListContainer.querySelectorAll('.btn-del-certification').forEach(btn => {
+            btn.onclick = async () => {
+                const certification = state.certifications.find(item => item.id === btn.dataset.id);
+                if (!confirm(`Are you sure you want to remove "${certification ? certification.title : 'this certificate'}"? This permanently deletes it from the database.`)) return;
+                btn.disabled = true;
+                try {
+                    await api(`/api/admin/certifications/${encodeURIComponent(btn.dataset.id)}`, { method: 'DELETE' });
+                    state.certifications = state.certifications.filter(item => item.id !== btn.dataset.id);
+                    renderCertifications(state.certifications);
+                    document.getElementById('statAwardsCount').textContent = state.awards.length + state.certifications.length;
+                    showToast('Certificate removed.');
+                } catch (err) {
+                    showToast(err.message, 'error');
+                    btn.disabled = false;
+                }
+            };
+        });
+    }
+
+    if (addNewCertificationBtn) {
+        addNewCertificationBtn.onclick = () => openCertificationModal(null);
+    }
+
+    function openCertificationModal(id) {
+        const isEdit = id !== null;
+        const item = isEdit ? state.certifications.find(certification => certification.id === id) : null;
+        if (isEdit && !item) { showToast('Certificate not found.', 'error'); return; }
+
+        const modalBody = `
+            <form id="certificationModalForm" class="admin-form" style="background: transparent; border: none; padding: 0;">
+                <div class="form-group">
+                    <label class="form-label" for="certTitle">Certificate title</label>
+                    <input type="text" id="certTitle" class="form-input" value="${escapeHtml(item ? item.title : '')}" required maxlength="160">
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="certIssuer">Issuing organization</label>
+                        <input type="text" id="certIssuer" class="form-input" value="${escapeHtml(item ? item.issuer : '')}" maxlength="160">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="certIssueDate">Issue date</label>
+                        <input type="text" id="certIssueDate" class="form-input" value="${escapeHtml(item ? item.issueDate : '')}" placeholder="e.g. October 2026">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="certCredentialUrl">Credential verification URL</label>
+                    <input type="url" id="certCredentialUrl" class="form-input" value="${escapeHtml(item ? item.credentialUrl : '')}" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="certImageUrl">Certificate image URL (optional)</label>
+                    <input type="text" id="certImageUrl" class="form-input" value="${escapeHtml(item && !item.imageUrl.startsWith('data:image/') ? item.imageUrl : '')}" placeholder="/assets/certificate.png or https://...">
+                    <input type="file" id="certImageFile" class="form-input" accept="image/*" style="margin-top: 8px;">
+                    ${item && item.imageUrl.startsWith('data:image/') ? '<small>Certificate image is uploaded. Choose a new file to replace it.</small>' : ''}
+                </div>
+                <div class="form-actions-bar">
+                    <button type="submit" class="btn btn-primary">${isEdit ? 'Save Changes' : 'Add Certificate'}</button>
+                </div>
+            </form>
+        `;
+
+        openModal(isEdit ? 'Edit Certificate' : 'Add Certificate', modalBody);
+        const imageFileInput = document.getElementById('certImageFile');
+        imageFileInput.addEventListener('change', async () => {
+            const file = imageFileInput.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                showToast('Please choose an image file.', 'error');
+                imageFileInput.value = '';
+                return;
+            }
+            if (file.size > 200 * 1024) {
+                showToast('Certificate image is too large — please use an image under 200KB.', 'error');
+                imageFileInput.value = '';
+                return;
+            }
+            try {
+                const dataUri = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = event => resolve(event.target.result);
+                    reader.onerror = () => reject(new Error('Could not read the selected certificate image.'));
+                    reader.readAsDataURL(file);
+                });
+                document.getElementById('certImageUrl').value = dataUri;
+            } catch (err) {
+                showToast(err.message, 'error');
+                imageFileInput.value = '';
+            }
+        });
+        document.getElementById('certificationModalForm').onsubmit = async event => {
+            event.preventDefault();
+            const body = {
+                title: document.getElementById('certTitle').value.trim(),
+                issuer: document.getElementById('certIssuer').value.trim(),
+                issueDate: document.getElementById('certIssueDate').value.trim(),
+                credentialUrl: document.getElementById('certCredentialUrl').value.trim(),
+                imageUrl: document.getElementById('certImageUrl').value.trim()
+                    || (isEdit ? item.imageUrl : '')
+            };
+            try {
+                if (isEdit) {
+                    const res = await api(`/api/admin/certifications/${encodeURIComponent(id)}`, { method: 'PUT', body });
+                    state.certifications = state.certifications.map(certification => certification.id === id ? res.certification : certification);
+                    showToast('Certificate updated!');
+                } else {
+                    const res = await api('/api/admin/certifications', { method: 'POST', body });
+                    state.certifications.push(res.certification);
+                    showToast('Certificate added!');
+                }
+                renderCertifications(state.certifications);
+                document.getElementById('statAwardsCount').textContent = state.awards.length + state.certifications.length;
                 closeModal();
             } catch (err) {
                 showToast(err.message, 'error');
@@ -1046,6 +1226,145 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    // ─── VIDEO SHOWCASE MANAGER ───
+    const videosListContainer = document.getElementById('videosAdminList');
+    const addNewVideoBtn = document.getElementById('addNewVideoBtn');
+
+    function renderVideos(videos) {
+        if (!videosListContainer) return;
+        videosListContainer.innerHTML = '';
+
+        if (!videos || !videos.length) {
+            videosListContainer.innerHTML = '<p style="color: var(--text-tertiary); text-align: center; padding: 20px;">No videos added yet. Click "Add New Video" to get started.</p>';
+            return;
+        }
+
+        videos.forEach((vid) => {
+            const vidId = extractYouTubeId(vid.youtube_url);
+            const thumb = vidId ? `https://img.youtube.com/vi/${vidId}/mqdefault.jpg` : '';
+
+            const item = document.createElement('div');
+            item.className = 'admin-video-item';
+            item.innerHTML = `
+                ${thumb ? `<div class="admin-video-thumb"><img src="${escapeHtml(thumb)}" alt="${escapeHtml(vid.title)}"></div>` : ''}
+                <div class="admin-video-info">
+                    <p class="admin-video-title">${escapeHtml(vid.title)}</p>
+                    <p class="admin-video-meta">${vid.category ? escapeHtml(vid.category) + ' · ' : ''}${escapeHtml(vid.youtube_url)}</p>
+                </div>
+                <div class="admin-video-actions">
+                    <button class="btn-icon btn-edit-video" data-id="${escapeHtml(String(vid.id))}" title="Edit video">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="btn-icon btn-icon-del btn-del-video" data-id="${escapeHtml(String(vid.id))}" title="Delete video">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                </div>
+            `;
+            videosListContainer.appendChild(item);
+        });
+
+        document.querySelectorAll('.btn-edit-video').forEach(btn => {
+            btn.onclick = () => openVideoModal(btn.dataset.id);
+        });
+
+        document.querySelectorAll('.btn-del-video').forEach(btn => {
+            btn.onclick = async () => {
+                const vid = state.showcaseVideos.find(v => String(v.id) === btn.dataset.id);
+                if (!confirm(`Delete "${vid ? vid.title : 'this video'}"? This is permanent.`)) return;
+                btn.disabled = true;
+                try {
+                    await api(`/api/admin/videos/${encodeURIComponent(btn.dataset.id)}`, { method: 'DELETE' });
+                    state.showcaseVideos = state.showcaseVideos.filter(v => String(v.id) !== btn.dataset.id);
+                    renderVideos(state.showcaseVideos);
+                    showToast('Video removed.');
+                } catch (err) {
+                    showToast(err.message, 'error');
+                    btn.disabled = false;
+                }
+            };
+        });
+    }
+
+    if (addNewVideoBtn) {
+        addNewVideoBtn.onclick = () => openVideoModal(null);
+    }
+
+    /** Extract an 11-char YouTube video ID from a URL or raw ID string. */
+    function extractYouTubeId(raw) {
+        if (!raw) return null;
+        const short = raw.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+        if (short) return short[1];
+        const shorts = raw.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+        if (shorts) return shorts[1];
+        const watch = raw.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+        if (watch) return watch[1];
+        if (/^[a-zA-Z0-9_-]{11}$/.test(raw.trim())) return raw.trim();
+        return null;
+    }
+
+    function openVideoModal(id) {
+        const isEdit = id !== null;
+        const item = isEdit ? state.showcaseVideos.find(v => String(v.id) === id) : null;
+        if (isEdit && !item) { showToast('Video not found.', 'error'); return; }
+
+        const modalBody = `
+            <form id="videoModalForm" class="admin-form" style="background: transparent; border: none; padding: 0;">
+                <div class="form-group">
+                    <label class="form-label">Video Title</label>
+                    <input type="text" id="videoTitle" class="form-input" value="${escapeHtml(item ? item.title : '')}" placeholder="Enterprise RAG Pipeline Demo" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">YouTube URL or Video ID</label>
+                    <input type="text" id="videoYoutubeUrl" class="form-input" value="${escapeHtml(item ? item.youtube_url : '')}" placeholder="https://youtu.be/dQw4w9WgXcQ or dQw4w9WgXcQ" required>
+                    <span style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;display:block;">Paste any YouTube link — full URL, youtu.be short link, or just the video ID.</span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category <span style="opacity:.6">(optional)</span></label>
+                    <input type="text" id="videoCategory" class="form-input" value="${escapeHtml(item ? (item.category || '') : '')}" placeholder="e.g. Agentic AI, Computer Vision">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Short Description <span style="opacity:.6">(optional)</span></label>
+                    <textarea id="videoDescription" class="form-input form-textarea" rows="3" placeholder="Brief context about what this demo shows…">${escapeHtml(item ? (item.description || '') : '')}</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sort Order <span style="opacity:.6">(lower = first)</span></label>
+                    <input type="number" id="videoSortOrder" class="form-input" value="${item ? (item.sort_order ?? 0) : 0}" min="0" step="1">
+                </div>
+                <div class="form-actions-bar">
+                    <button type="submit" class="btn btn-primary">${isEdit ? 'Save Changes' : 'Add Video'}</button>
+                </div>
+            </form>
+        `;
+
+        openModal(isEdit ? 'Edit Video' : 'Add New Video', modalBody);
+
+        document.getElementById('videoModalForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const body = {
+                title: document.getElementById('videoTitle').value.trim(),
+                youtube_url: document.getElementById('videoYoutubeUrl').value.trim(),
+                category: document.getElementById('videoCategory').value.trim(),
+                description: document.getElementById('videoDescription').value.trim(),
+                sort_order: parseInt(document.getElementById('videoSortOrder').value, 10) || 0,
+            };
+            try {
+                if (isEdit) {
+                    const res = await api(`/api/admin/videos/${encodeURIComponent(id)}`, { method: 'PUT', body });
+                    state.showcaseVideos = state.showcaseVideos.map(v => (String(v.id) === id ? res.video : v));
+                    showToast('Video updated!');
+                } else {
+                    const res = await api('/api/admin/videos', { method: 'POST', body });
+                    state.showcaseVideos.push(res.video);
+                    showToast('Video added!');
+                }
+                renderVideos(state.showcaseVideos);
+                closeModal();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        };
+    }
+
     // ─── CONTACT & SOCIALS MANAGER ───
     function renderContact(contact) {
         if (!contact) return;
@@ -1053,7 +1372,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('contactWhatsapp').value = contact.whatsapp || '';
         document.getElementById('contactLinkedin').value = contact.linkedin || '';
         document.getElementById('contactGithub').value = contact.github || '';
-        document.getElementById('contactTwitter').value = contact.twitter || '';
+        const upworkInput = document.getElementById('contactUpwork') || document.getElementById('contactTwitter');
+        if (upworkInput) upworkInput.value = contact.upwork || contact.twitter || '';
         document.getElementById('contactKaggle').value = contact.kaggle || '';
     }
 
@@ -1061,12 +1381,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactDetailsForm) {
         contactDetailsForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            const upworkVal = ((document.getElementById('contactUpwork') || document.getElementById('contactTwitter'))?.value || '').trim();
             const contact = {
                 email: document.getElementById('contactEmail').value.trim(),
                 whatsapp: document.getElementById('contactWhatsapp').value.trim(),
                 linkedin: document.getElementById('contactLinkedin').value.trim(),
                 github: document.getElementById('contactGithub').value.trim(),
-                twitter: document.getElementById('contactTwitter').value.trim(),
+                upwork: upworkVal,
+                twitter: upworkVal,
                 kaggle: document.getElementById('contactKaggle').value.trim()
             };
             try {

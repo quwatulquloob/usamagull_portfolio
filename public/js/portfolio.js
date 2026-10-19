@@ -2,6 +2,7 @@
    PORTFOLIO INTERACTION SCRIPT
    - Category Filter Tabs with smooth transitions
    - Project Details Lightbox Modal
+   - Full-screen Image Zoom Viewer
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -53,19 +54,80 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxContent = document.getElementById('lightboxContent');
 
+    // ─── FULL-SCREEN IMAGE ZOOM VIEWER ───
+    function createZoomViewer() {
+        if (document.getElementById('imgZoomViewer')) return;
+        const viewer = document.createElement('div');
+        viewer.id = 'imgZoomViewer';
+        viewer.setAttribute('aria-hidden', 'true');
+        viewer.innerHTML = `
+            <div class="zoom-backdrop"></div>
+            <div class="zoom-content">
+                <button class="zoom-close" aria-label="Close image viewer">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+                <img class="zoom-img" src="" alt="">
+                <div class="zoom-caption"></div>
+            </div>`;
+        document.body.appendChild(viewer);
+
+        const closeZoom = () => {
+            viewer.classList.remove('open');
+            viewer.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        };
+        viewer.querySelector('.zoom-backdrop').addEventListener('click', closeZoom);
+        viewer.querySelector('.zoom-close').addEventListener('click', (e) => { e.stopPropagation(); closeZoom(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && viewer.classList.contains('open')) closeZoom(); });
+    }
+
+    function openZoom(src, alt) {
+        if (!src) return;
+        createZoomViewer();
+        const viewer = document.getElementById('imgZoomViewer');
+        const img = viewer.querySelector('.zoom-img');
+        const caption = viewer.querySelector('.zoom-caption');
+        img.src = src;
+        img.alt = alt || '';
+        if (caption) caption.textContent = alt || '';
+        viewer.classList.add('open');
+        viewer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
     function openLightbox(card) {
         const thumb = card.querySelector('.portfolio-thumb');
         const data = card.querySelector('.lightbox-data');
 
         if (!data || !lightboxModal) return;
 
-        // Clone visual background gradient and icon from thumbnail
-        const innerIcon = thumb.querySelector('.portfolio-thumb-inner') ? thumb.querySelector('.portfolio-thumb-inner').innerHTML : '';
-
-                lightboxImage.style.display = 'flex';
-        lightboxImage.style.alignItems = 'center';
-        lightboxImage.style.justifyContent = 'center';
-        lightboxImage.innerHTML = `<div style="transform: scale(1.6); opacity: 0.85;">${innerIcon}</div>`;
+        // If the card has a real image, show it as a proper cover in the lightbox header.
+        // Otherwise fall back to the scaled SVG placeholder icon.
+        const realImg = thumb.querySelector('.portfolio-thumb-inner img');
+        if (realImg) {
+            lightboxImage.style.display = '';
+            lightboxImage.style.alignItems = '';
+            lightboxImage.style.justifyContent = '';
+            lightboxImage.style.cursor = 'zoom-in';
+            lightboxImage.innerHTML = `
+                <img src="${realImg.src}" alt="${realImg.alt}" class="lb-zoomable" title="Click to view full size">
+                <div class="lb-zoom-badge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                    <span>Click image to enlarge</span>
+                </div>`;
+            lightboxImage.onclick = (e) => {
+                e.stopPropagation();
+                openZoom(realImg.src, realImg.alt);
+            };
+        } else {
+            lightboxImage.onclick = null;
+            lightboxImage.style.cursor = 'default';
+            const innerIcon = thumb.querySelector('.portfolio-thumb-inner') ? thumb.querySelector('.portfolio-thumb-inner').innerHTML : '';
+            lightboxImage.style.display = 'flex';
+            lightboxImage.style.alignItems = 'center';
+            lightboxImage.style.justifyContent = 'center';
+            lightboxImage.innerHTML = `<div style="transform: scale(1.6); opacity: 0.85;">${innerIcon}</div>`;
+        }
 
         // Inject content
         lightboxContent.innerHTML = data.innerHTML;
@@ -85,9 +147,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Attach click listeners to cards
     window.initPortfolioListeners = function() {
+        createZoomViewer();
         const cards = document.querySelectorAll('.portfolio-card');
         cards.forEach(card => {
+            // Whole card click opens lightbox
             card.onclick = () => openLightbox(card);
+
+            // Direct click on the image thumbnail opens full-screen zoom view directly
+            const thumbImg = card.querySelector('.portfolio-thumb-inner img');
+            if (thumbImg) {
+                thumbImg.onclick = (e) => {
+                    e.stopPropagation();
+                    openZoom(thumbImg.src, thumbImg.alt);
+                };
+            }
         });
     };
 

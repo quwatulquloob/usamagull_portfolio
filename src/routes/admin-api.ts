@@ -13,27 +13,37 @@
 import { asNumber, asString, asStringArray, json, readJsonBody } from '../lib/http';
 import {
   createAward,
+  createCertification,
   createLogo,
   createProject,
   createService,
+  createShowcaseVideo,
   deleteAward,
+  deleteCertification,
   deleteLogo,
   deleteProject,
   deleteService,
+  deleteShowcaseVideo,
   getSettings,
   listAwards,
+  listCertifications,
   listLogos,
   listProjects,
   listServices,
+  listShowcaseVideos,
   saveSettings,
   updateAward,
+  updateCertification,
   updateLogo,
   updateProject,
   updateService,
+  updateShowcaseVideo,
   type AwardInput,
+  type CertificationInput,
   type LogoInput,
   type ProjectInput,
   type ServiceInput,
+  type ShowcaseVideoInput,
 } from '../lib/db';
 import { MIN_PASSWORD_LENGTH, VALID_THEMES } from '../lib/constants';
 import { hashPassword, verifyPassword } from '../lib/auth';
@@ -78,14 +88,16 @@ function parseLogoInput(value: unknown): { logo: string | null } | string {
 
 /** GET /api/admin/content */
 export async function handleGetContent(env: Env): Promise<Response> {
-  const [settings, services, projects, awards, logos] = await Promise.all([
+  const [settings, services, projects, awards, logos, showcaseVideos, certifications] = await Promise.all([
     getSettings(env.DB),
     listServices(env.DB),
     listProjects(env.DB),
     listAwards(env.DB),
     listLogos(env.DB),
+    listShowcaseVideos(env.DB),
+    listCertifications(env.DB),
   ]);
-  return json({ ok: true, settings, services, projects, awards, logos });
+  return json({ ok: true, settings, services, projects, awards, logos, showcaseVideos, certifications });
 }
 
 /** PUT /api/admin/settings */
@@ -105,6 +117,10 @@ export async function handleUpdateSettings(request: Request, env: Env): Promise<
     const p = body.profile as Record<string, unknown>;
     const name = asString(p.name);
     if (!name) return invalid('Profile name is required.');
+    const heroVideoUrl = asString(p.heroVideoUrl).trim();
+    if (heroVideoUrl.length > 500 || (heroVideoUrl && !isValidYouTubeVideoUrl(heroVideoUrl))) {
+      return invalid('Enter a valid YouTube video URL or 11-character video ID for the hero video.');
+    }
     const parts = name.split(/\s+/);
     const parsedLogo = parseLogoInput(p.logo);
     if (typeof parsedLogo === 'string') return invalid(parsedLogo);
@@ -115,6 +131,7 @@ export async function handleUpdateSettings(request: Request, env: Env): Promise<
       title: asString(p.title),
       tagline: asString(p.tagline),
       photo: asString(p.photo, '/assets/profile.png') || '/assets/profile.png',
+      heroVideoUrl,
       logo: parsedLogo.logo,
       yearsExp: Math.max(0, Math.round(asNumber(p.yearsExp, 0))),
       systemsDelivered: Math.max(0, Math.round(asNumber(p.systemsDelivered, 0))),
@@ -129,13 +146,15 @@ export async function handleUpdateSettings(request: Request, env: Env): Promise<
     const email = asString(c.email);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return invalid('A valid email is required.');
     const whatsapp = asString(c.whatsapp);
+    const upwork = asString(c.upwork || c.twitter);
     patch.contact = {
       email,
       whatsapp,
       whatsappRaw: whatsapp.replace(/[^0-9]/g, ''),
       linkedin: asString(c.linkedin),
       github: asString(c.github),
-      twitter: asString(c.twitter),
+      upwork,
+      twitter: upwork,
       kaggle: asString(c.kaggle),
     };
   }
@@ -169,6 +188,30 @@ export async function handleUpdateSettings(request: Request, env: Env): Promise<
 
   const settings = await saveSettings(env.DB, patch);
   return json({ ok: true, settings });
+}
+
+function isValidYouTubeVideoUrl(value: string): boolean {
+  if (/^[A-Za-z0-9_-]{11}$/.test(value)) return true;
+
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    try {
+      url = new URL(`https://${value}`);
+    } catch {
+      return false;
+    }
+  }
+
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') return false;
+  const host = url.hostname.toLowerCase().replace(/^www\./, '');
+  if (host === 'youtu.be') {
+    return /^\/[A-Za-z0-9_-]{11}\/?$/.test(url.pathname);
+  }
+  if (!['youtube.com', 'm.youtube.com', 'music.youtube.com'].includes(host)) return false;
+  return /^\/(?:watch|embed\/[A-Za-z0-9_-]{11}|shorts\/[A-Za-z0-9_-]{11}|live\/[A-Za-z0-9_-]{11})$/.test(url.pathname) &&
+    (url.pathname !== '/watch' || /^[A-Za-z0-9_-]{11}$/.test(url.searchParams.get('v') ?? ''));
 }
 
 // ---------------------------------------------------------------------------
@@ -338,6 +381,76 @@ export async function handleDeleteAward(env: Env, id: string): Promise<Response>
 }
 
 // ---------------------------------------------------------------------------
+// Certifications
+// ---------------------------------------------------------------------------
+
+function parseCertificationInput(body: Record<string, unknown>): CertificationInput | string {
+  const title = asString(body.title).trim();
+  if (!title) return 'Certification title is required.';
+
+  const credentialUrl = asString(body.credentialUrl).trim();
+  if (credentialUrl && !isHttpUrl(credentialUrl)) return 'Enter a valid HTTP or HTTPS credential URL.';
+
+  const imageUrl = asString(body.imageUrl).trim();
+  if (imageUrl && !/^(data:image\/|https?:\/\/|\/)/.test(imageUrl)) {
+    return 'Certificate image must be an image data URI, an absolute path, or an HTTP(S) URL.';
+  }
+  if (imageUrl.startsWith('data:image/') && imageUrl.length > 300_000) {
+    return 'Certificate image is too large. Please use an image under ~200KB or a URL instead.';
+  }
+
+  return {
+    title,
+    issuer: asString(body.issuer).trim(),
+    issueDate: asString(body.issueDate).trim(),
+    credentialUrl,
+    imageUrl,
+  };
+}
+
+function isHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' || url.protocol === 'http:';
+  } catch {
+    return false;
+  }
+}
+
+/** GET /api/admin/certifications */
+export async function handleListCertifications(env: Env): Promise<Response> {
+  return json({ ok: true, certifications: await listCertifications(env.DB) });
+}
+
+/** POST /api/admin/certifications */
+export async function handleCreateCertification(request: Request, env: Env): Promise<Response> {
+  const body = await readJsonBody(request);
+  if (!body) return invalid('Invalid request body.');
+  const input = parseCertificationInput(body);
+  if (typeof input === 'string') return invalid(input);
+  const certification = await createCertification(env.DB, input);
+  return json({ ok: true, certification }, 201);
+}
+
+/** PUT /api/admin/certifications/:id */
+export async function handleUpdateCertification(request: Request, env: Env, id: string): Promise<Response> {
+  const body = await readJsonBody(request);
+  if (!body) return invalid('Invalid request body.');
+  const input = parseCertificationInput(body);
+  if (typeof input === 'string') return invalid(input);
+  const certification = await updateCertification(env.DB, id, input);
+  if (!certification) return notFound();
+  return json({ ok: true, certification });
+}
+
+/** DELETE /api/admin/certifications/:id */
+export async function handleDeleteCertification(env: Env, id: string): Promise<Response> {
+  const deleted = await deleteCertification(env.DB, id);
+  if (!deleted) return notFound();
+  return json({ ok: true });
+}
+
+// ---------------------------------------------------------------------------
 // Logos
 // ---------------------------------------------------------------------------
 
@@ -430,4 +543,59 @@ export async function handleUpdateCredentials(request: Request, env: Env): Promi
     note: 'Admin credentials are stored as encrypted Worker secrets. Run these commands to apply the change:',
     commands,
   });
+}
+
+// ---------------------------------------------------------------------------
+// Showcase Videos
+// ---------------------------------------------------------------------------
+
+function parseShowcaseVideoInput(body: Record<string, unknown>): ShowcaseVideoInput | string {
+  const title = asString(body.title);
+  if (!title) return 'Video title is required.';
+  const youtubeUrl = asString(body.youtube_url);
+  if (!youtubeUrl) return 'YouTube URL is required.';
+  // Validate it looks like a YouTube URL or video ID
+  if (!/^(https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+|[a-zA-Z0-9_-]{11})$/.test(youtubeUrl)) {
+    return 'Please enter a valid YouTube URL or video ID.';
+  }
+  return {
+    title,
+    youtubeUrl,
+    description: asString(body.description),
+    category: asString(body.category),
+    sortOrder: typeof body.sort_order === 'number' ? body.sort_order : 0,
+  };
+}
+
+/** GET /api/admin/videos */
+export async function handleListShowcaseVideos(env: Env): Promise<Response> {
+  return json({ ok: true, showcaseVideos: await listShowcaseVideos(env.DB) });
+}
+
+/** POST /api/admin/videos */
+export async function handleCreateShowcaseVideo(request: Request, env: Env): Promise<Response> {
+  const body = await readJsonBody(request);
+  if (!body) return invalid('Invalid request body.');
+  const input = parseShowcaseVideoInput(body);
+  if (typeof input === 'string') return invalid(input);
+  const video = await createShowcaseVideo(env.DB, input);
+  return json({ ok: true, video }, 201);
+}
+
+/** PUT /api/admin/videos/:id */
+export async function handleUpdateShowcaseVideo(request: Request, env: Env, id: string): Promise<Response> {
+  const body = await readJsonBody(request);
+  if (!body) return invalid('Invalid request body.');
+  const input = parseShowcaseVideoInput(body);
+  if (typeof input === 'string') return invalid(input);
+  const video = await updateShowcaseVideo(env.DB, id, input);
+  if (!video) return notFound();
+  return json({ ok: true, video });
+}
+
+/** DELETE /api/admin/videos/:id */
+export async function handleDeleteShowcaseVideo(env: Env, id: string): Promise<Response> {
+  const deleted = await deleteShowcaseVideo(env.DB, id);
+  if (!deleted) return notFound();
+  return json({ ok: true });
 }

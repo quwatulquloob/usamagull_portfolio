@@ -15,6 +15,8 @@ export interface Env {
   SESSION_SECRET: string;
   /** Resend API key for sending email notifications (optional). */
   RESEND_API_KEY?: string;
+  /** Verified sender address for contact form emails (optional). */
+  CONTACT_FROM_EMAIL?: string;
   /** Email address to receive contact form notifications (optional). */
   NOTIFY_EMAIL?: string;
 }
@@ -85,11 +87,36 @@ export interface AwardRow {
   updated_at: string;
 }
 
+/** Shape of rows in the certifications table. */
+export interface CertificationRow {
+  id: string;
+  title: string;
+  issuer: string;
+  issue_date: string;
+  credential_url: string;
+  image_url: string;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
 /** Shape of rows in the logos table. */
 export interface LogoRow {
   id: string;
   name: string;
   image_url: string;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+/** Shape of rows in the showcase_videos table. */
+export interface ShowcaseVideoRow {
+  id: string;
+  title: string;
+  youtube_url: string;
+  description: string;
+  category: string;
   sort_order: number;
   created_at: string;
   updated_at: string;
@@ -123,6 +150,7 @@ export interface SiteProfile {
   title: string;
   tagline: string;
   photo: string;
+  heroVideoUrl: string;
   /** Brand logo (data URI). Null/absent -> the default "UG" monogram shows. */
   logo?: string | null;
   yearsExp: number;
@@ -138,7 +166,8 @@ export interface SiteContact {
   whatsappRaw: string;
   linkedin: string;
   github: string;
-  twitter: string;
+  upwork: string;
+  twitter?: string;
   kaggle: string;
 }
 
@@ -180,10 +209,28 @@ export interface Award {
   tags: string[];
 }
 
+export interface Certification {
+  id: string;
+  title: string;
+  issuer: string;
+  issueDate: string;
+  credentialUrl: string;
+  imageUrl: string;
+}
+
 export interface Logo {
   id: string;
   name: string;
   imageUrl: string;
+}
+
+export interface ShowcaseVideo {
+  id: string;
+  title: string;
+  youtube_url: string;
+  description: string;
+  category: string;
+  sort_order: number;
 }
 
 /** Aggregate payload injected into every page and served at /api/site-data. */
@@ -194,7 +241,9 @@ export interface SiteData {
   services: Service[];
   projects: Project[];
   awards: Award[];
+  certifications: Certification[];
   logos: Logo[];
+  showcaseVideos: ShowcaseVideo[];
   /** Resume availability + original filename (never the PDF payload). */
   resume: { filename: string; updatedAt?: string } | null;
 }

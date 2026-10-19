@@ -197,6 +197,7 @@
     text-align: left;
     transition: all 0.25s ease;
     width: 100%;
+    text-decoration: none;
 }
 
 .nav-item:hover {
@@ -211,6 +212,27 @@
 
 .nav-item svg {
     flex-shrink: 0;
+}
+
+.analytics-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    position: relative;
+}
+
+.analytics-link:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.analytics-link .external-icon {
+    margin-left: auto;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.analytics-link:hover .external-icon {
+    opacity: 1;
 }
 
 .sidebar-footer {
@@ -545,6 +567,14 @@
     border: 1px solid var(--border-subtle);
     border-radius: 20px;
     padding: 32px;
+}
+
+.hero-video-help {
+    display: block;
+    margin-top: 6px;
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    line-height: 1.5;
 }
 
 .profile-upload-section {

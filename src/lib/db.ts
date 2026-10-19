@@ -6,6 +6,8 @@ import type {
   AdminUserRow,
   Award,
   AwardRow,
+  Certification,
+  CertificationRow,
   Env,
   Logo,
   LogoRow,
@@ -15,6 +17,8 @@ import type {
   Service,
   ServiceRow,
   SettingRow,
+  ShowcaseVideo,
+  ShowcaseVideoRow,
   SiteContact,
   SiteProfile,
   SiteSettings,
@@ -38,9 +42,10 @@ export const DEFAULT_PROFILE: SiteProfile = {
   name: 'Usama Gul',
   firstName: 'Usama',
   lastName: 'Gul',
-  title: 'AI / ML Systems Architect & Research Engineer',
-  tagline: 'Building production-scale AI that actually ships.',
+  title: 'AI / ML Engineer',
+  tagline: 'Building scalable AI systems that actually ship.',
   photo: '/assets/profile.png',
+  heroVideoUrl: '',
   yearsExp: 4,
   systemsDelivered: 15,
   happyClients: 10,
@@ -54,7 +59,8 @@ export const DEFAULT_CONTACT: SiteContact = {
   whatsappRaw: '923120979064',
   linkedin: 'https://linkedin.com',
   github: 'https://github.com',
-  twitter: 'https://twitter.com',
+  upwork: 'https://www.upwork.com/freelancers/~01440869ef56e8e97a',
+  twitter: 'https://www.upwork.com/freelancers/~01440869ef56e8e97a',
   kaggle: 'https://kaggle.com',
 };
 
@@ -465,6 +471,67 @@ export async function deleteAward(db: D1Database, id: string): Promise<boolean> 
 }
 
 // ---------------------------------------------------------------------------
+// Certifications
+// ---------------------------------------------------------------------------
+
+export function mapCertification(row: CertificationRow): Certification {
+  return {
+    id: row.id,
+    title: row.title,
+    issuer: row.issuer,
+    issueDate: row.issue_date,
+    credentialUrl: row.credential_url,
+    imageUrl: row.image_url,
+  };
+}
+
+export async function listCertifications(db: D1Database): Promise<Certification[]> {
+  const { results } = await db
+    .prepare('SELECT * FROM certifications ORDER BY sort_order ASC, created_at ASC')
+    .all<CertificationRow>();
+  return (results ?? []).map(mapCertification);
+}
+
+export interface CertificationInput {
+  title: string;
+  issuer: string;
+  issueDate: string;
+  credentialUrl: string;
+  imageUrl: string;
+}
+
+export async function createCertification(db: D1Database, input: CertificationInput): Promise<Certification> {
+  const id = await uniqueSlug(db, 'certifications', slugify(input.title));
+  await db
+    .prepare(
+      'INSERT INTO certifications (id, title, issuer, issue_date, credential_url, image_url, sort_order) ' +
+      'VALUES (?, ?, ?, ?, ?, ?, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM certifications))',
+    )
+    .bind(id, input.title, input.issuer, input.issueDate, input.credentialUrl, input.imageUrl)
+    .run();
+  const row = await db.prepare('SELECT * FROM certifications WHERE id = ?').bind(id).first<CertificationRow>();
+  if (!row) throw new Error('insert_failed');
+  return mapCertification(row);
+}
+
+export async function updateCertification(db: D1Database, id: string, input: CertificationInput): Promise<Certification | null> {
+  const res = await db
+    .prepare(
+      'UPDATE certifications SET title = ?, issuer = ?, issue_date = ?, credential_url = ?, image_url = ?, updated_at = datetime(?) WHERE id = ?',
+    )
+    .bind(input.title, input.issuer, input.issueDate, input.credentialUrl, input.imageUrl, new Date().toISOString(), id)
+    .run();
+  if (!res.meta.changes) return null;
+  const row = await db.prepare('SELECT * FROM certifications WHERE id = ?').bind(id).first<CertificationRow>();
+  return row ? mapCertification(row) : null;
+}
+
+export async function deleteCertification(db: D1Database, id: string): Promise<boolean> {
+  const res = await db.prepare('DELETE FROM certifications WHERE id = ?').bind(id).run();
+  return (res.meta.changes ?? 0) > 0;
+}
+
+// ---------------------------------------------------------------------------
 // Logos
 // ---------------------------------------------------------------------------
 
@@ -529,7 +596,73 @@ export async function deleteLogo(db: D1Database, id: string): Promise<boolean> {
 }
 
 // ---------------------------------------------------------------------------
-// Shared helpers
+// Showcase Videos
+// ---------------------------------------------------------------------------
+
+export function mapShowcaseVideo(row: ShowcaseVideoRow): ShowcaseVideo {
+  return {
+    id: row.id,
+    title: row.title,
+    youtube_url: row.youtube_url,
+    description: row.description,
+    category: row.category,
+    sort_order: row.sort_order,
+  };
+}
+
+export async function listShowcaseVideos(db: D1Database): Promise<ShowcaseVideo[]> {
+  const { results } = await db
+    .prepare('SELECT * FROM showcase_videos ORDER BY sort_order ASC, created_at ASC')
+    .all<ShowcaseVideoRow>();
+  return (results ?? []).map(mapShowcaseVideo);
+}
+
+export interface ShowcaseVideoInput {
+  title: string;
+  youtubeUrl: string;   // internal camelCase — maps to youtube_url column
+  description: string;
+  category: string;
+  sortOrder?: number;
+}
+
+export async function createShowcaseVideo(db: D1Database, input: ShowcaseVideoInput): Promise<ShowcaseVideo> {
+  const id = await uniqueSlug(db, 'showcase_videos', slugify(input.title));
+  const sortOrder = typeof input.sortOrder === 'number' ? input.sortOrder
+    : (await db.prepare('SELECT COALESCE(MAX(sort_order), 0) + 1 AS next FROM showcase_videos').first<{ next: number }>())?.next ?? 1;
+  await db
+    .prepare(
+      'INSERT INTO showcase_videos (id, title, youtube_url, description, category, sort_order) VALUES (?, ?, ?, ?, ?, ?)',
+    )
+    .bind(id, input.title, input.youtubeUrl, input.description ?? '', input.category ?? '', sortOrder)
+    .run();
+  const row = await db.prepare('SELECT * FROM showcase_videos WHERE id = ?').bind(id).first<ShowcaseVideoRow>();
+  if (!row) throw new Error('insert_failed');
+  return mapShowcaseVideo(row);
+}
+
+export async function updateShowcaseVideo(db: D1Database, id: string, input: ShowcaseVideoInput): Promise<ShowcaseVideo | null> {
+  const res = await db
+    .prepare(
+      'UPDATE showcase_videos SET title = ?, youtube_url = ?, description = ?, category = ?, updated_at = datetime(?) WHERE id = ?',
+    )
+    .bind(
+      input.title,
+      input.youtubeUrl,
+      input.description ?? '',
+      input.category ?? '',
+      new Date().toISOString(),
+      id,
+    )
+    .run();
+  if (!res.meta.changes) return null;
+  const row = await db.prepare('SELECT * FROM showcase_videos WHERE id = ?').bind(id).first<ShowcaseVideoRow>();
+  return row ? mapShowcaseVideo(row) : null;
+}
+
+export async function deleteShowcaseVideo(db: D1Database, id: string): Promise<boolean> {
+  const res = await db.prepare('DELETE FROM showcase_videos WHERE id = ?').bind(id).run();
+  return (res.meta.changes ?? 0) > 0;
+}
 // ---------------------------------------------------------------------------
 
 function safeParseArray(raw: string): string[] {
@@ -550,7 +683,7 @@ function slugify(text: string): string {
     .slice(0, 64) || 'item';
 }
 
-async function uniqueSlug(db: D1Database, table: 'services' | 'projects' | 'awards' | 'logos', base: string): Promise<string> {
+async function uniqueSlug(db: D1Database, table: 'services' | 'projects' | 'awards' | 'certifications' | 'logos' | 'showcase_videos', base: string): Promise<string> {
   let candidate = base;
   let n = 1;
   for (;;) {

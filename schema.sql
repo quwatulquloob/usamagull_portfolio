@@ -76,6 +76,21 @@ CREATE TABLE IF NOT EXISTS awards (
     updated_at       TEXT    NOT NULL DEFAULT (datetime('now'))
 );
 
+-- ------------------------------------------------------------
+-- Certifications (admin CRUD -> /awards)
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS certifications (
+    id               TEXT    PRIMARY KEY,
+    title            TEXT    NOT NULL,
+    issuer           TEXT    NOT NULL DEFAULT '',
+    issue_date       TEXT    NOT NULL DEFAULT '',
+    credential_url   TEXT    NOT NULL DEFAULT '',
+    image_url        TEXT    NOT NULL DEFAULT '',
+    sort_order       INTEGER NOT NULL DEFAULT 0,
+    created_at       TEXT    NOT NULL DEFAULT (datetime('now')),
+    updated_at       TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+
 CREATE TABLE IF NOT EXISTS contact_messages (
     id               INTEGER PRIMARY KEY AUTOINCREMENT,
     name             TEXT    NOT NULL,
@@ -102,4 +117,21 @@ CREATE INDEX IF NOT EXISTS idx_services_sort  ON services (sort_order);
 CREATE INDEX IF NOT EXISTS idx_projects_sort  ON projects (sort_order);
 CREATE INDEX IF NOT EXISTS idx_projects_cat   ON projects (category);
 CREATE INDEX IF NOT EXISTS idx_awards_sort    ON awards (sort_order);
+CREATE INDEX IF NOT EXISTS idx_certifications_sort ON certifications (sort_order);
 CREATE INDEX IF NOT EXISTS idx_logos_sort     ON logos (sort_order);
+
+-- ------------------------------------------------------------
+-- Showcase videos for homepage video reel (admin CRUD)
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS showcase_videos (
+    id               TEXT    PRIMARY KEY,        -- slug, e.g. 'rag-pipeline-demo'
+    title            TEXT    NOT NULL,
+    youtube_url      TEXT    NOT NULL,           -- full YouTube URL or video ID
+    description      TEXT    NOT NULL DEFAULT '',
+    category         TEXT    NOT NULL DEFAULT '',
+    sort_order       INTEGER NOT NULL DEFAULT 0,
+    created_at       TEXT    NOT NULL DEFAULT (datetime('now')),
+    updated_at       TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_showcase_videos_sort ON showcase_videos (sort_order);

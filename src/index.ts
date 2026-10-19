@@ -14,7 +14,7 @@
 import { errorPage, html, json } from './lib/http';
 import { notFoundPage, renderTemplate } from './lib/templates';
 import { buildSiteData } from './lib/templates';
-import { getSettings, listAwards, listLogos, listProjects, listServices, seedSettings } from './lib/db';
+import { getSettings, listAwards, listCertifications, listLogos, listProjects, listServices, listShowcaseVideos, seedSettings } from './lib/db';
 import { getSessionToken, verifySessionToken } from './lib/auth';
 import type { Env, SiteData } from './lib/types';
 import { PUBLIC_ROUTES } from './lib/constants';
@@ -25,38 +25,48 @@ import {
 } from './routes/admin-auth';
 import {
   handleCreateAward,
+  handleCreateCertification,
   handleCreateLogo,
   handleCreateProject,
   handleCreateService,
+  handleCreateShowcaseVideo,
   handleDeleteAward,
+  handleDeleteCertification,
   handleDeleteLogo,
   handleDeleteProject,
   handleDeleteService,
+  handleDeleteShowcaseVideo,
   handleGetContent,
   handleListAwards,
+  handleListCertifications,
   handleListLogos,
   handleListProjects,
   handleListServices,
+  handleListShowcaseVideos,
   handleUpdateAward,
+  handleUpdateCertification,
   handleUpdateCredentials,
   handleUpdateLogo,
   handleUpdateProject,
   handleUpdateService,
   handleUpdateSettings,
+  handleUpdateShowcaseVideo,
 } from './routes/admin-api';
 import { handleContactSubmit, handleResumeDownload, handleSiteData } from './routes/public-api';
 
 /** Load the full site bundle from D1, tolerating a missing/failed database. */
 async function loadSiteData(env: Env): Promise<SiteData | null> {
   try {
-    const [settings, services, projects, awards, logos] = await Promise.all([
+    const [settings, services, projects, awards, logos, showcaseVideos, certifications] = await Promise.all([
       getSettings(env.DB),
       listServices(env.DB),
       listProjects(env.DB),
       listAwards(env.DB),
       listLogos(env.DB),
+      listShowcaseVideos(env.DB),
+      listCertifications(env.DB),
     ]);
-    return buildSiteData(settings, services, projects, awards, logos);
+    return buildSiteData(settings, services, projects, awards, logos, showcaseVideos, certifications);
   } catch (err) {
     console.error('D1 loadSiteData failed:', err);
     return null;
@@ -133,8 +143,8 @@ export default {
           return await handleUpdateCredentials(request, env);
         }
 
-        // /api/admin/{services|projects|awards|logos}[/:id]
-        const m = path.match(/^\/api\/admin\/(services|projects|awards|logos)(?:\/([^/]+))?$/);
+        // /api/admin/{services|projects|awards|certifications|logos|videos}[/:id]
+        const m = path.match(/^\/api\/admin\/(services|projects|awards|certifications|logos|videos)(?:\/([^/]+))?$/);
         if (m) {
           const [, resource, id] = m;
           const handlers = {
@@ -156,11 +166,23 @@ export default {
               update: handleUpdateAward,
               remove: handleDeleteAward,
             },
+            certifications: {
+              list: handleListCertifications,
+              create: handleCreateCertification,
+              update: handleUpdateCertification,
+              remove: handleDeleteCertification,
+            },
             logos: {
               list: handleListLogos,
               create: handleCreateLogo,
               update: handleUpdateLogo,
               remove: handleDeleteLogo,
+            },
+            videos: {
+              list: handleListShowcaseVideos,
+              create: handleCreateShowcaseVideo,
+              update: handleUpdateShowcaseVideo,
+              remove: handleDeleteShowcaseVideo,
             },
           } as const;
           const h = handlers[resource as keyof typeof handlers];
@@ -208,3 +230,4 @@ export default {
     }
   },
 } satisfies ExportedHandler<Env>;
+// Force rebuild

@@ -8,7 +8,7 @@
  */
 import { html } from './http';
 import { SITE_NAME, THEME_LABELS } from './constants';
-import type { Award, Logo, Project, ResumeInfo, Service, SiteData, SiteSettings } from './types';
+import type { Award, Certification, Logo, Project, ResumeInfo, Service, ShowcaseVideo, SiteData, SiteSettings } from './types';
 
 // Bundled at build time by Wrangler's ESBuild.
 import indexTpl from '../../templates/index.html';
@@ -38,6 +38,50 @@ function escapeHtml(s: string): string {
     .replace(/'/g, '&#039;');
 }
 
+function getHeroYouTubeVideoId(rawUrl: string): string | null {
+  const value = rawUrl.trim();
+  if (/^[A-Za-z0-9_-]{11}$/.test(value)) return value;
+
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    try {
+      url = new URL(`https://${value}`);
+    } catch {
+      return null;
+    }
+  }
+
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
+  const host = url.hostname.toLowerCase().replace(/^www\./, '');
+  let id: string | null = null;
+  if (host === 'youtu.be') {
+    id = url.pathname.replace(/^\/|\/$/g, '');
+  } else if (['youtube.com', 'm.youtube.com', 'music.youtube.com'].includes(host)) {
+    if (url.pathname === '/watch') {
+      id = url.searchParams.get('v');
+    } else {
+      const match = url.pathname.match(/^\/(?:embed|shorts|live)\/([A-Za-z0-9_-]{11})\/?$/);
+      id = match ? match[1] : null;
+    }
+  }
+  return id && /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
+}
+
+function renderHeroVideoPreview(data: SiteData): string {
+  const videoId = getHeroYouTubeVideoId(data.profile.heroVideoUrl);
+  if (!videoId) {
+    return `<img src="${escapeHtml(data.profile.photo)}" alt="Usama Gul — AI/ML Engineer" class="hero-photo" id="heroVideoPlaceholder">`;
+  }
+
+  return `<button class="hero-video-preview" type="button" aria-label="Play introduction video" data-video-id="${videoId}">
+    <img class="hero-video-thumbnail" src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="" loading="eager">
+    <span class="hero-video-preview-play" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 12 7-12 7z"></path></svg></span>
+    <span class="hero-video-preview-label">Watch introduction</span>
+  </button>`;
+}
+
 /**
  * Assemble the bootstrap JSON blob. Kept in one place so the public site,
  * the admin panel, and the seed data all speak the same shape.
@@ -48,6 +92,8 @@ export function buildSiteData(
   projects: Project[],
   awards: Award[],
   logos: Logo[],
+  showcaseVideos: ShowcaseVideo[] = [],
+  certifications: Certification[] = [],
 ): SiteData {
   // Bootstrap carries only resume availability + filename (never the PDF
   // payload) so the homepage button can hide when no resume is uploaded.
@@ -61,7 +107,9 @@ export function buildSiteData(
     services,
     projects,
     awards,
+    certifications,
     logos,
+    showcaseVideos,
     resume: resumeMeta,
   };
 }
@@ -85,6 +133,9 @@ export function renderTemplate(route: string, data: SiteData): Response | null {
   let out = tpl
     .replace('__SITE_DATA_PLACEHOLDER__', () => bootstrap)
     .replace('__THEME_ATTR__', () => escapeHtml(theme));
+  if (route === '/') {
+    out = out.replace('__HERO_VIDEO_PREVIEW__', () => renderHeroVideoPreview(data));
+  }
 
   return html(out, 200, { 'Cache-Control': 'no-store' });
 }
@@ -123,3 +174,6 @@ export function notFoundPage(): Response {
 </body>
 </html>`, 404, { 'Cache-Control': 'no-store' });
 }
+//
+
+// Updated

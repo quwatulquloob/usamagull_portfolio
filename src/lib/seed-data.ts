@@ -29,7 +29,7 @@ export const SEED_SERVICES: SeedService[] = [
       'Custom AI chatbots and multi-agent workflows engineered with LangGraph, advanced RAG architectures, and custom tool calling for real business workflows.',
     deliverables: [
       'Multi-agent orchestration with LangGraph & CrewAI',
-      'Production RAG pipelines with vector databases',
+      'Enterprise RAG pipelines with vector databases',
       'Autonomous tool calling & API integrations',
       'Custom prompt engineering & guardrails',
     ],
@@ -79,7 +79,7 @@ export const SEED_SERVICES: SeedService[] = [
       'Custom ML model development and training',
       'Data preprocessing and feature engineering',
       'Model evaluation and performance optimization',
-      'Production deployment and monitoring systems',
+      'Automated deployment and monitoring systems',
     ],
     tags: ['Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'MLflow'],
     price: 0,
@@ -108,7 +108,7 @@ export const SEED_PROJECTS: SeedProject[] = [
     description:
       'Built a retrieval-augmented generation system for internal knowledge management, reducing search time by 60%.',
     full_details:
-      "Designed and deployed a production RAG pipeline integrating vector databases, semantic search, and GPT-4 for a Fortune 500 company's internal knowledge base. The system indexes over 200K documents and serves contextual answers with source citations in under 2 seconds.",
+      "Designed and deployed an enterprise RAG pipeline integrating vector databases, semantic search, and GPT-4 for a Fortune 500 company's internal knowledge base. The system indexes over 200K documents and serves contextual answers with source citations in under 2 seconds.",
     client: 'Fortune 500 Enterprise',
     stack: 'Python, LangChain, Pinecone, FastAPI, AWS',
     impact: '60% reduction in search time, 4x faster onboarding',
@@ -142,20 +142,6 @@ export const SEED_PROJECTS: SeedProject[] = [
     impact: '98.5% accuracy, 70% fewer defects reaching customers',
     duration: '4 months',
     gradient: 'linear-gradient(135deg, #00b4d8 0%, #0077b6 50%, #023e8a 100%)',
-  },
-  {
-    id: 'proj-4',
-    title: 'Medical Image Analysis Platform',
-    category: 'vision',
-    description:
-      'Built a diagnostic imaging AI for radiology achieving 96% accuracy in detecting anomalies across chest X-rays.',
-    full_details:
-      'Developed a deep learning platform for automated radiology analysis, capable of detecting pneumonia, nodules, and other anomalies in chest X-rays with heatmap visualizations for explainability.',
-    client: 'HealthAI Diagnostics',
-    stack: 'Python, PyTorch, ResNet, Grad-CAM, DICOM, Flask',
-    impact: '96% accuracy, 3x faster preliminary reads',
-    duration: '5 months',
-    gradient: 'linear-gradient(135deg, #0ea5e9 0%, #2563eb 50%, #4f46e5 100%)',
   },
   {
     id: 'proj-5',
@@ -206,10 +192,10 @@ export const SEED_AWARDS: SeedAward[] = [
     issuer: 'California Government Public-Sector Initiative',
     status_pill: 'Public Sector Impact',
     description:
-      'California government-funded agentic AI system for school incident reporting, threat mitigation, and automated triage. Recognized for delivering a production-grade LLM solution for public-sector use.',
+      'California government-funded agentic AI system for school incident reporting, threat mitigation, and automated triage. Recognized for delivering an enterprise-grade LLM solution for public-sector use.',
     why_it_matters:
-      'Demonstrates the rare capability to deliver compliant, high-stakes, production-grade LLM architectures trusted by public institutions.',
-    tags: ['Agentic AI', 'Government Funded', 'Public Safety', 'Production LLMs'],
+      'Demonstrates the rare capability to deliver compliant, high-stakes, enterprise-grade LLM architectures trusted by public institutions.',
+    tags: ['Agentic AI', 'Government Funded', 'Public Safety', 'Enterprise LLMs'],
   },
   {
     id: 'certifications-ai',
@@ -233,7 +219,7 @@ export const SEED_AWARDS: SeedAward[] = [
       'Invited as an industry guest speaker to lead a university technical seminar for undergraduate engineering students, helping students understand real-world ML and LLM work versus academic research.',
     why_it_matters:
       'Highlights industry credibility, recognized thought leadership, and strong communication skills.',
-    tags: ['Guest Speaker', 'Mentorship', 'Production AI Talk', 'Knowledge Sharing'],
+    tags: ['Guest Speaker', 'Mentorship', 'AI Engineering Talk', 'Knowledge Sharing'],
   },
 ];
 

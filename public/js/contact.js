@@ -52,7 +52,11 @@
                 return r.json();
             }).then(function (data) {
                 if (!data.ok) throw new Error(data.error || 'bad status');
-                show('Thanks, ' + name + '. Your inquiry is in and I\u2019ll reply to ' + email + ' within 24 hours.', 'success');
+                if (data.acknowledgmentSent) {
+                    show('Thanks, ' + name + '. Your inquiry has been submitted. A confirmation email was sent to ' + email + '.', 'success');
+                } else {
+                    show('Thanks, ' + name + '. Your inquiry has been submitted, but we couldn\u2019t send a confirmation email right now.', 'success');
+                }
                 form.reset();
             }).catch(function (err) {
                 console.error('Contact form error:', err);

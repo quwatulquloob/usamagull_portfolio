@@ -50,6 +50,12 @@ npm run dev               # → http://localhost:8787
 npm run deploy
 ```
 
+Contact form email requires `RESEND_API_KEY` and `CONTACT_FROM_EMAIL`, which must
+use a domain verified with Resend. Automatic acknowledgments are sent to the
+email address entered by the visitor. `NOTIFY_EMAIL` receives a separate
+inquiry notification only; it is not the acknowledgment recipient. Configure
+these values in the local `.dev.vars` file and the deployed Worker environment.
+
 ## Day-to-day
 
 | Task | Command |
