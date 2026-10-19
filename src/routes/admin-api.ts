@@ -282,6 +282,17 @@ function parseProjectInput(body: Record<string, unknown>): ProjectInput | string
     // Guard against unbounded inline images (D1 row limit is ~1MB per statement).
     if (image.length > 700_000) return 'Image is too large. Use an image under ~500KB or a URL instead.';
   }
+  const projectUrl = asString(body.projectUrl).trim();
+  if (projectUrl) {
+    try {
+      const url = new URL(projectUrl);
+      if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+        return 'Project link must use an http or https URL.';
+      }
+    } catch {
+      return 'Enter a valid project URL.';
+    }
+  }
   return {
     title,
     category: asString(body.category, 'agentic'),
@@ -291,6 +302,7 @@ function parseProjectInput(body: Record<string, unknown>): ProjectInput | string
     stack: asString(body.stack),
     impact: asString(body.impact),
     duration: asString(body.duration, ''),
+    projectUrl,
     image,
     gradient: asString(body.gradient, 'linear-gradient(135deg, #ff6b35 0%, #00b4d8 100%)'),
   };

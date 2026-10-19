@@ -704,6 +704,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <label class="form-label">Duration</label>
                     <input type="text" id="projDuration" class="form-input" value="${escapeHtml(item ? item.duration : '3 months')}" placeholder="e.g. 3 months">
                 </div>
+                <div class="form-group">
+                    <label for="projUrl" class="form-label">Live Project / GitHub URL (optional)</label>
+                    <input type="url" id="projUrl" class="form-input" value="${escapeHtml(item ? (item.projectUrl || '') : '')}" placeholder="https://github.com/username/project" aria-describedby="projUrlHelp">
+                    <p id="projUrlHelp" class="form-hint">Add the full https:// link to your live project or GitHub repository.</p>
+                </div>
 
                 <div class="form-group">
                     <label class="form-label">Project Thumbnail Image (under 450KB)</label>
@@ -769,6 +774,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 stack: document.getElementById('projStack').value.trim(),
                 impact: document.getElementById('projImpact').value.trim(),
                 duration: document.getElementById('projDuration').value.trim(),
+                projectUrl: document.getElementById('projUrl').value.trim(),
                 image: tempImage,
                 gradient: item ? item.gradient : 'linear-gradient(135deg, #ff6b35 0%, #00b4d8 100%)'
             };

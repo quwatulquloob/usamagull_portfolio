@@ -299,6 +299,7 @@ export function mapProject(row: ProjectRow): Project {
     stack: row.stack,
     impact: row.impact,
     duration: row.duration,
+    projectUrl: row.project_url,
     image: row.image,
     gradient: row.gradient,
   };
@@ -320,6 +321,7 @@ export interface ProjectInput {
   stack: string;
   impact: string;
   duration: string;
+  projectUrl: string;
   image: string | null;
   gradient: string;
 }
@@ -329,8 +331,8 @@ export async function createProject(db: D1Database, input: ProjectInput): Promis
   const id = await uniqueSlug(db, 'projects', slugify(input.title));
   await db
     .prepare(
-      'INSERT INTO projects (id, title, category, category_label, description, full_details, client, stack, impact, duration, image, gradient, sort_order) ' +
-      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM projects))',
+      'INSERT INTO projects (id, title, category, category_label, description, full_details, client, stack, impact, duration, project_url, image, gradient, sort_order) ' +
+      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM projects))',
     )
     .bind(
       id,
@@ -343,6 +345,7 @@ export async function createProject(db: D1Database, input: ProjectInput): Promis
       input.stack,
       input.impact,
       input.duration,
+      input.projectUrl,
       input.image,
       input.gradient,
     )
@@ -357,7 +360,7 @@ export async function updateProject(db: D1Database, id: string, input: ProjectIn
   const res = await db
     .prepare(
       'UPDATE projects SET title = ?, category = ?, category_label = ?, description = ?, full_details = ?, ' +
-      'client = ?, stack = ?, impact = ?, duration = ?, image = ?, gradient = ?, updated_at = datetime(?) WHERE id = ?',
+      'client = ?, stack = ?, impact = ?, duration = ?, project_url = ?, image = ?, gradient = ?, updated_at = datetime(?) WHERE id = ?',
     )
     .bind(
       input.title,
@@ -369,6 +372,7 @@ export async function updateProject(db: D1Database, id: string, input: ProjectIn
       input.stack,
       input.impact,
       input.duration,
+      input.projectUrl,
       input.image,
       input.gradient,
       new Date().toISOString(),

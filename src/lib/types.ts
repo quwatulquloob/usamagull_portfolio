@@ -65,6 +65,7 @@ export interface ProjectRow {
   stack: string;
   impact: string;
   duration: string;
+  project_url: string;
   image: string | null;
   gradient: string;
   sort_order: number;
@@ -194,6 +195,7 @@ export interface Project {
   stack: string;
   impact: string;
   duration: string;
+  projectUrl: string;
   image: string | null;
   gradient: string;
 }

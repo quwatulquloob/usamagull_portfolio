@@ -43,6 +43,10 @@ npm run seed
 npm run db:init:local     # local dev database
 npm run db:init:remote    # production database
 
+# For an existing database created before the project-link field:
+npx wrangler d1 execute usama-portfolio-db --local --file=./scripts/add-project-url.sql
+npx wrangler d1 execute usama-portfolio-db --remote --file=./scripts/add-project-url.sql
+
 # 6. Test locally (D1 is emulated locally; no internet needed)
 npm run dev               # → http://localhost:8787
 

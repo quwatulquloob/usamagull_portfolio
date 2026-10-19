@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS projects (
     stack            TEXT    NOT NULL DEFAULT '',
     impact           TEXT    NOT NULL DEFAULT '',
     duration         TEXT    NOT NULL DEFAULT '',
+    project_url      TEXT    NOT NULL DEFAULT '',
     image            TEXT,                        -- absolute path (/assets/...) or data: URI; NULL = gradient
     gradient         TEXT    NOT NULL DEFAULT 'linear-gradient(135deg, #ff6b35 0%, #00b4d8 100%)',
     sort_order       INTEGER NOT NULL DEFAULT 0,

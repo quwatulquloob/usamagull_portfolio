@@ -39,6 +39,8 @@
 .lightbox-body h3 { font-size: 1.7rem; letter-spacing: -.03em; margin-bottom: 6px; }
 .lightbox-body .lb-cat { display: block; margin-bottom: 20px; font-size: 14px; color: var(--accent); }
 .lightbox-body p { margin-bottom: 28px; color: var(--text-secondary); }
+.lb-project-link { display: inline-flex; margin-bottom: 24px; color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.lb-project-link:hover { color: var(--ink); }
 .lb-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; padding-top: 24px; border-top: 1px solid var(--border-subtle); }
 .lb-meta-item { font-size: 15px; }
 .lb-meta-item strong { display: block; margin-bottom: 2px; font-size: 13px; font-weight: 400; color: var(--text-tertiary); }
@@ -83,4 +85,3 @@
 #imgZoomViewer .zoom-caption { margin-top: 14px; text-align: center; color: rgba(255, 255, 255, 0.85); font-size: 14px; font-weight: 500; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
 #imgZoomViewer .zoom-close { position: absolute; top: -14px; right: -14px; z-index: 2; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--bg-surface, #1a1b22); border: 1px solid rgba(255,255,255,.15); color: #fff; cursor: pointer; transition: background .15s, border-color .15s; }
 #imgZoomViewer .zoom-close:hover { background: var(--accent, #ff6b35); border-color: transparent; }
-

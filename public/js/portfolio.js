@@ -8,7 +8,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ─── FILTER TABS LOGIC ───
     const filterTabs = document.querySelectorAll('.filter-tab');
-    const projectCards = document.querySelectorAll('.portfolio-card');
 
     filterTabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -20,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Filter cards with staggered transition
             let visibleCount = 0;
-            projectCards.forEach(card => {
+            document.querySelectorAll('.portfolio-card').forEach(card => {
                 const category = card.getAttribute('data-category');
                 const matches = filterValue === 'all' || category === filterValue;
 
@@ -151,7 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const cards = document.querySelectorAll('.portfolio-card');
         cards.forEach(card => {
             // Whole card click opens lightbox
-            card.onclick = () => openLightbox(card);
+            card.onclick = (e) => {
+                if (e.target.closest('a')) return;
+                openLightbox(card);
+            };
 
             // Direct click on the image thumbnail opens full-screen zoom view directly
             const thumbImg = card.querySelector('.portfolio-thumb-inner img');

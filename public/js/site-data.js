@@ -209,12 +209,14 @@ function hydratePage() {
                     <span class="portfolio-card-cat">${escapeHtml(proj.categoryLabel || proj.category)}</span>
                     <h3 class="portfolio-card-title">${escapeHtml(proj.title)}</h3>
                     <p class="portfolio-card-desc">${escapeHtml(proj.description)}</p>
+                    ${/^https?:\/\//i.test(proj.projectUrl || '') ? `<a class="lb-project-link" href="${escapeHtml(proj.projectUrl)}" target="_blank" rel="noopener noreferrer">Open project ↗</a>` : ''}
                 </div>
                 <div class="lightbox-data" hidden>
                     <h3>${escapeHtml(proj.title)}</h3>
                     <span class="lb-cat">${escapeHtml(proj.categoryLabel || proj.category)}</span>
                     <div class="lb-details">
                         <p>${escapeHtml(proj.fullDetails || proj.description)}</p>
+                        ${/^https?:\/\//i.test(proj.projectUrl || '') ? `<a class="lb-project-link" href="${escapeHtml(proj.projectUrl)}" target="_blank" rel="noopener noreferrer">View live project / GitHub</a>` : ''}
                         <div class="lb-meta">
                             <div class="lb-meta-item"><strong>Client:</strong> ${escapeHtml(proj.client || 'Enterprise')}</div>
                             <div class="lb-meta-item"><strong>Stack:</strong> ${escapeHtml(proj.stack || 'Python, AI')}</div>
