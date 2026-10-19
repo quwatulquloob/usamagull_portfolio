@@ -1008,3 +1008,10 @@
         justify-content: flex-end;
     }
 }
+
+/* Project ordering */
+.project-drag-handle { cursor: grab; flex-shrink: 0; font-size: 22px; user-select: none; }
+.project-drag-handle:active { cursor: grabbing; }
+#projectsAdminList .project-dragging { opacity: 0.45; border-color: var(--accent-blue); }
+#projectsAdminList[aria-busy="true"] { opacity: 0.65; }
+#projectsAdminList .btn-icon:disabled { opacity: 0.3; cursor: default; }

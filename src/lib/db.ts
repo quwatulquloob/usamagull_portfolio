@@ -46,7 +46,7 @@ export const DEFAULT_PROFILE: SiteProfile = {
   tagline: 'Building scalable AI systems that actually ship.',
   photo: '/assets/profile.png',
   heroVideoUrl: '',
-  yearsExp: 4,
+  yearsExp: 3,
   systemsDelivered: 15,
   happyClients: 10,
   avgRating: 4.9,

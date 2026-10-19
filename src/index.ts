@@ -48,6 +48,7 @@ import {
   handleUpdateCredentials,
   handleUpdateLogo,
   handleUpdateProject,
+  handleReorderProjects,
   handleUpdateService,
   handleUpdateSettings,
   handleUpdateShowcaseVideo,
@@ -141,6 +142,10 @@ export default {
         }
         if (path === '/api/admin/credentials' && method === 'PUT') {
           return await handleUpdateCredentials(request, env);
+        }
+
+        if (path === '/api/admin/projects/reorder' && method === 'PUT') {
+          return await handleReorderProjects(request, env);
         }
 
         // /api/admin/{services|projects|awards|certifications|logos|videos}[/:id]

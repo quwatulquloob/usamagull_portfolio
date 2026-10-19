@@ -308,6 +308,24 @@ function parseProjectInput(body: Record<string, unknown>): ProjectInput | string
   };
 }
 
+/** Persist the complete project order atomically. */
+export async function handleReorderProjects(request: Request, env: Env): Promise<Response> {
+  const body = await readJsonBody(request);
+  if (!body || !Array.isArray(body.ids) || !body.ids.every(id => typeof id === 'string')) {
+    return invalid('Provide an ordered list of project IDs.');
+  }
+  const ids = body.ids as string[];
+  const projects = await listProjects(env.DB);
+  const existing = new Set(projects.map(project => project.id));
+  if (ids.length !== existing.size || new Set(ids).size !== ids.length || ids.some(id => !existing.has(id))) {
+    return json({ ok: false, error: 'The project list changed. Refresh the admin page and try again.' }, 409);
+  }
+  if (ids.length) await env.DB.batch(ids.map((id, index) =>
+    env.DB.prepare("UPDATE projects SET sort_order = ?, updated_at = datetime('now') WHERE id = ?").bind(index, id),
+  ));
+  return json({ ok: true });
+}
+
 /** GET /api/admin/projects */
 export async function handleListProjects(env: Env): Promise<Response> {
   return json({ ok: true, projects: await listProjects(env.DB) });

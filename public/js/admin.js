@@ -592,6 +592,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectsListContainer = document.getElementById('projectsAdminList');
     const addNewProjectBtn = document.getElementById('addNewProjectBtn');
 
+    let projectOrderSaving = false;
+    let draggedProject = null;
+
+    async function saveProjectOrder(ids) {
+        if (projectOrderSaving || ids.every((id, index) => state.projects[index].id === id)) return;
+        projectOrderSaving = true;
+        projectsListContainer.inert = true;
+        projectsListContainer.setAttribute('aria-busy', 'true');
+        if (addNewProjectBtn) addNewProjectBtn.disabled = true;
+        try {
+            await api('/api/admin/projects/reorder', { method: 'PUT', body: { ids } });
+            const byId = new Map(state.projects.map(project => [project.id, project]));
+            state.projects = ids.map(id => byId.get(id));
+            showToast('Project order saved. The website now uses this order.');
+        } catch (err) {
+            showToast(err.message, 'error');
+        } finally {
+            projectOrderSaving = false;
+            projectsListContainer.inert = false;
+            projectsListContainer.removeAttribute('aria-busy');
+            if (addNewProjectBtn) addNewProjectBtn.disabled = false;
+            renderProjects(state.projects);
+        }
+    }
+
+    if (projectsListContainer) {
+        projectsListContainer.addEventListener('dragover', event => {
+            if (!draggedProject || projectOrderSaving) return;
+            event.preventDefault();
+            event.dataTransfer.dropEffect = 'move';
+            const target = event.target.closest('.admin-item-card');
+            if (!target || target === draggedProject) return;
+            const rect = target.getBoundingClientRect();
+            projectsListContainer.insertBefore(draggedProject, event.clientY < rect.top + rect.height / 2 ? target : target.nextSibling);
+        });
+        projectsListContainer.addEventListener('drop', event => {
+            if (!draggedProject || projectOrderSaving) return;
+            event.preventDefault();
+            draggedProject.classList.remove('project-dragging');
+            draggedProject = null;
+            saveProjectOrder(Array.from(projectsListContainer.children, card => card.dataset.projectId));
+        });
+    }
+
     function renderProjects(projects) {
         if (!projectsListContainer) return;
         projectsListContainer.innerHTML = '';
@@ -601,14 +645,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        projects.forEach((proj) => {
+        projects.forEach((proj, index) => {
             const card = document.createElement('div');
             card.className = 'admin-item-card';
+            card.dataset.projectId = proj.id;
             const thumbDisplay = proj.image
                 ? `<img src="${escapeHtml(proj.image)}" alt="${escapeHtml(proj.title)}">`
                 : `<div style="width: 100%; height: 100%; background: ${proj.gradient || 'var(--gradient-accent)'};"></div>`;
             card.innerHTML = `
                 <div class="admin-item-left">
+                    <button type="button" class="btn-icon project-drag-handle" draggable="true" aria-label="Drag to reorder ${escapeHtml(proj.title)}" title="Drag up or down to reorder">&#8942;&#8942;</button>
                     <div class="admin-item-thumb">${thumbDisplay}</div>
                     <div class="admin-item-meta">
                         <h4>${escapeHtml(proj.title)}</h4>
@@ -617,6 +663,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
                 <div class="admin-item-actions">
+                    <button type="button" class="btn-icon project-move-up" aria-label="Move ${escapeHtml(proj.title)} up" title="Move up" ${index === 0 ? 'disabled' : ''}>&uarr;</button>
+                    <button type="button" class="btn-icon project-move-down" aria-label="Move ${escapeHtml(proj.title)} down" title="Move down" ${index === projects.length - 1 ? 'disabled' : ''}>&darr;</button>
                     <button class="btn-icon btn-edit-project" data-id="${escapeHtml(proj.id)}" title="Edit project & thumbnail">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                     </button>
@@ -625,6 +673,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     </button>
                 </div>
             `;
+            const handle = card.querySelector('.project-drag-handle');
+            handle.addEventListener('dragstart', event => {
+                if (projectOrderSaving) { event.preventDefault(); return; }
+                draggedProject = card;
+                event.dataTransfer.effectAllowed = 'move';
+                event.dataTransfer.setData('text/plain', proj.id);
+                event.dataTransfer.setDragImage(card, 30, 20);
+                card.classList.add('project-dragging');
+            });
+            handle.addEventListener('dragend', () => {
+                card.classList.remove('project-dragging');
+                if (draggedProject) {
+                    draggedProject = null;
+                    renderProjects(state.projects);
+                }
+            });
+            [-1, 1].forEach(direction => {
+                card.querySelector(direction < 0 ? '.project-move-up' : '.project-move-down').onclick = () => {
+                    const ids = state.projects.map(project => project.id);
+                    const destination = index + direction;
+                    if (destination < 0 || destination >= ids.length) return;
+                    [ids[index], ids[destination]] = [ids[destination], ids[index]];
+                    saveProjectOrder(ids);
+                };
+            });
             projectsListContainer.appendChild(card);
         });
 
