@@ -10,8 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/services.css">
+    <link rel="stylesheet" href="/css/refresh.css">
+    <link rel="icon" href="/favicon.ico?v=ug1" sizes="32x32">
+    <link rel="icon" href="/favicon.svg?v=ug1" type="image/svg+xml" sizes="any">
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
     <!-- ===== ARCHITECTURAL BACKGROUND ===== -->
 
@@ -28,8 +32,11 @@
                 <li><a href="/services" class="nav-link active">Services</a></li>
                 <li><a href="/portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="/awards" class="nav-link">Achievements</a></li>
+                <li class="nav-mobile-action"><a class="nav-link" href="/contact">Contact</a></li>
+
             </ul>
             <div class="nav-actions">
+
                 <a href="/contact" class="nav-cta-btn">
                     <span>Get in touch</span>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -38,11 +45,12 @@
                     </svg>
                 </a>
             </div>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </nav>
     </header>
+    <main id="main-content" tabindex="-1">
 
     <!-- ===== PAGE HERO ===== -->
     <section class="page-hero">
@@ -74,12 +82,10 @@
 
                     <div class="service-card-body">
                         <h2 class="service-card-title">Agentic AI & Multi-Agent LLM Systems</h2>
-                        <p class="service-card-description">
-                            Custom multi-agent workflows engineered with LangGraph, AutoGen, and CrewAI. Enterprise RAG architectures with vector embeddings, semantic re-ranking, and structured tool calling designed to automate complex, multi-step business procedures with strict guardrails and zero hallucinations.
-                        </p>
+                        <p class="service-card-description">Build AI chatbots and LangGraph workflows with document retrieval, tool calling, speech input, and structured report generation.</p>
 
                         <div class="service-deliverables">
-                            <h4 class="deliverables-heading">Core Capabilities & Architectural Deliverables:</h4>
+                            <h3 class="deliverables-heading">Core Capabilities & Architectural Deliverables:</h3>
                             <ul class="deliverables-list">
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -87,7 +93,7 @@
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Enterprise RAG pipelines with Pinecone, Qdrant, or Chroma and hybrid semantic search
+                                    Enterprise RAG pipelines with Pinecone, Weaviate and hybrid semantic search
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -95,7 +101,7 @@
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Rigorous automated eval suites (Ragas, TruLens) preventing regression and drift
+                                    LLM evaluation, prompt refinement, and workflow validation
                                 </li>
                             </ul>
                         </div>
@@ -105,7 +111,7 @@
                                 <span class="tag">LangGraph</span>
                                 <span class="tag">Python</span>
                                 <span class="tag">OpenAI / Claude</span>
-                                <span class="tag">Pinecone / Qdrant</span>
+                                <span class="tag">Pinecone / Weaviate</span>
                                 <span class="tag">FastAPI</span>
                             </div>
                             <a href="/contact?service=agentic-ai" class="btn btn-primary">
@@ -129,12 +135,10 @@
 
                     <div class="service-card-body">
                         <h2 class="service-card-title">Computer Vision & Edge Stream Analytics</h2>
-                        <p class="service-card-description">
-                            High-speed object detection, instance segmentation, tracking, and video stream analytics powered by modern YOLO architectures (YOLOv8 / YOLOv11) and OpenCV. Custom-trained on domain datasets and optimized for edge devices (NVIDIA Jetson, TensorRT) at 60 FPS.
-                        </p>
+                        <p class="service-card-description">Develop detection, segmentation, and image analysis models, and integrate inference into web, mobile, and mixed reality applications.</p>
 
                         <div class="service-deliverables">
-                            <h4 class="deliverables-heading">Core Capabilities & Architectural Deliverables:</h4>
+                            <h3 class="deliverables-heading">Core Capabilities & Architectural Deliverables:</h3>
                             <ul class="deliverables-list">
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -142,15 +146,15 @@
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Sub-16ms video frame processing via RTSP, WebRTC, and DeepStream pipelines
+                                    Image and video analysis with YOLO, OpenCV, and model evaluation
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Edge compilation with TensorRT and ONNX runtime for minimal wattage consumption
+                                    Model optimization and deployment in application workflows
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Automated anomaly detection, zone intrusion alerting, and MQTT telemetry
+                                    Detection, segmentation, and reporting integrations
                                 </li>
                             </ul>
                         </div>
@@ -159,8 +163,8 @@
                             <div class="tech-stack-mini">
                                 <span class="tag">YOLOv8/11</span>
                                 <span class="tag">OpenCV</span>
-                                <span class="tag">TensorRT</span>
-                                <span class="tag">NVIDIA Jetson</span>
+                                <span class="tag">TensorFlow</span>
+                                <span class="tag">Model Deployment</span>
                                 <span class="tag">PyTorch</span>
                             </div>
                             <a href="/contact?service=computer-vision" class="btn btn-outline">
@@ -183,17 +187,15 @@
                     </div>
 
                     <div class="service-card-body">
-                        <h2 class="service-card-title">Sub-800ms Voice AI Assistants</h2>
-                        <p class="service-card-description">
-                            End-to-end conversational voice agents featuring lightning-fast speech-to-text, context-aware LLM reasoning, neural streaming text-to-speech, and full telephony integration (Twilio SIP). Engineered for natural conversational turn-taking with automated interruption handling.
-                        </p>
+                        <h2 class="service-card-title">Voice AI Assistants</h2>
+                        <p class="service-card-description">Build knowledge-grounded voice assistants with Vapi, LLMs, Whisper, ElevenLabs, and Twilio, supported by Python backends.</p>
 
                         <div class="service-deliverables">
-                            <h4 class="deliverables-heading">Core Capabilities & Architectural Deliverables:</h4>
+                            <h3 class="deliverables-heading">Core Capabilities & Architectural Deliverables:</h3>
                             <ul class="deliverables-list">
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Sub-800ms end-to-end voice latency via streaming WebSockets architecture
+                                    Voice assistant orchestration with Vapi and Python backends
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -201,11 +203,11 @@
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Voice cloning and neural TTS streaming using ElevenLabs and Cartesia
+                                    Speech synthesis and voice cloning with ElevenLabs
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Automated call transcripts, sentiment analysis, and CRM record synchronizing
+                                    Document retrieval and backend integration for voice assistants
                                 </li>
                             </ul>
                         </div>
@@ -239,12 +241,10 @@
 
                     <div class="service-card-body">
                         <h2 class="service-card-title">Machine Learning and AI Systems Development</h2>
-                        <p class="service-card-description">
-                            End-to-end machine learning and AI systems development, from data preprocessing and model training to deployment and monitoring. Specializing in custom ML solutions tailored to your specific business needs using modern frameworks and best practices.
-                        </p>
+                        <p class="service-card-description">Develop machine learning solutions from data preparation and model training to evaluation, API integration, and production deployment.</p>
 
                         <div class="service-deliverables">
-                            <h4 class="deliverables-heading">Core Capabilities & Architectural Deliverables:</h4>
+                            <h3 class="deliverables-heading">Core Capabilities & Architectural Deliverables:</h3>
                             <ul class="deliverables-list">
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -260,7 +260,7 @@
                                 </li>
                                 <li>
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Automated deployment pipelines and continuous monitoring with MLflow
+                                    Model deployment and CI/CD workflows with Docker and GitHub Actions
                                 </li>
                             </ul>
                         </div>
@@ -271,7 +271,7 @@
                                 <span class="tag">TensorFlow</span>
                                 <span class="tag">PyTorch</span>
                                 <span class="tag">Scikit-learn</span>
-                                <span class="tag">MLflow</span>
+                                <span class="tag">GitHub Actions</span>
                             </div>
                             <a href="/contact?service=ml-ai-systems" class="btn btn-outline">
                                 <span>Inquire About ML Systems</span>
@@ -341,6 +341,7 @@
     </section>
 
     <!-- ===== FOOTER ===== -->
+    </main>
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
@@ -349,37 +350,37 @@
                         <span class="logo-mark">UG</span>
                         <span class="logo-text">Usama Gul</span>
                     </a>
-                    <p class="footer-tagline">Architecting enterprise-grade AI systems that scale reliably in mission-critical operations.</p>
+                    <p class="footer-tagline">Building practical AI products, from computer vision and chatbots to Python backends.</p>
                     <div class="footer-socials">
-                        <a href="https://github.com" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-                        <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                        __GITHUB_LINK__
+                        <a href="https://www.linkedin.com/in/usama-gul-3a0188250/" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
                         <a href="https://www.upwork.com/freelancers/~01440869ef56e8e97a" class="social-link" aria-label="Upwork" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-3.057 0-4.945 2.016-5.59 4.103-1.467-2.127-2.583-4.708-3.095-7.121h-3.07v8.94c0 1.94-1.579 3.518-3.518 3.518s-3.518-1.579-3.518-3.518v-8.94h-3.07v8.94c0 3.633 2.956 6.589 6.588 6.589 3.633 0 6.589-2.956 6.589-6.589v-1.28c.552 1.632 1.458 3.404 2.71 4.793l-2.088 9.948h3.125l1.503-7.156c1.071.741 2.378 1.189 3.826 1.189 3.185 0 5.777-2.592 5.777-5.777.001-3.185-2.591-5.777-5.775-5.777z"/></svg></a>
                     </div>
                 </div>
                 <div class="footer-links-col">
-                    <h4 class="footer-heading">Usefull links</h4>
+                    <h2 class="footer-heading">Useful links</h2>
                     <ul class="footer-links">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/about">About & Story</a></li>
-                        <li><a href="/services">Engineering Services</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/services">Services</a></li>
                         <li><a href="/portfolio">Case Studies</a></li>
-                        <li><a href="/awards">Credentials & Achievements</a></li>
-                        <li><a href="/contact">Technical Contact</a></li>
+                        <li><a href="/awards">Achievements</a></li>
+                        <li><a href="/contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-col">
-                    <h4 class="footer-heading">Services</h4>
+                    <h2 class="footer-heading">Services</h2>
                     <ul class="footer-links">
                         <li><a href="/services">Agentic AI & Multi-Agent LLMs</a></li>
-                        <li><a href="/services">Computer Vision & Edge 60 FPS</a></li>
-                        <li><a href="/services">Sub-800ms Voice Assistants</a></li>
+                        <li><a href="/services">Computer Vision & Model Deployment</a></li>
+                        <li><a href="/services">Voice AI Assistants</a></li>
                         <li><a href="/services">Machine Learning & AI Systems</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-col">
-                    <h4 class="footer-heading">Direct Contact</h4>
+                    <h2 class="footer-heading">Direct Contact</h2>
                     <ul class="footer-links">
-                        <li><a href="/contact">Start an Engagement</a></li>
+                        <li><a href="/contact">Contact me</a></li>
                     </ul>
                 </div>
             </div>

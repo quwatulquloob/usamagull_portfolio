@@ -22,69 +22,107 @@ export interface SeedLogo {
 
 export const SEED_SERVICES: SeedService[] = [
   {
-    id: 'agentic-ai',
-    title: 'Agentic AI & LLM Systems',
-    category: 'Autonomous Intelligence',
-    description:
-      'Custom AI chatbots and multi-agent workflows engineered with LangGraph, advanced RAG architectures, and custom tool calling for real business workflows.',
-    deliverables: [
-      'Multi-agent orchestration with LangGraph & CrewAI',
-      'Enterprise RAG pipelines with vector databases',
-      'Autonomous tool calling & API integrations',
-      'Custom prompt engineering & guardrails',
+    "id": "agentic-ai",
+    "title": "Agentic AI & LLM Systems",
+    "category": "Conversational AI",
+    "description": "Build AI chatbots and LangGraph workflows with document retrieval, tool calling, speech input, and structured report generation.",
+    "deliverables": [
+      "LangGraph chatbot and agent workflows",
+      "RAG from internal documents and websites",
+      "Tool calling and API integration",
+      "Prompt development and LLM evaluation"
     ],
-    tags: ['LangGraph', 'Python', 'OpenAI / Claude', 'Vector DBs'],
-    price: 0,
-    price_suffix: '',
+    "tags": [
+      "Python",
+      "LangGraph",
+      "LangChain",
+      "RAG"
+    ],
+    "price": 0,
+    "price_suffix": ""
   },
   {
-    id: 'computer-vision',
-    title: 'Computer Vision & Real-Time AI',
-    category: 'Visual Perception',
-    description:
-      'Object detection, instance segmentation, and video analytics pipelines using YOLOv8/YOLOv11 and OpenCV, optimized for edge devices and cloud streams.',
-    deliverables: [
-      'Custom object detection trained on domain datasets',
-      'Low-latency video streaming pipelines (RTSP, WebRTC)',
-      'Edge optimization for NVIDIA Jetson & TensorRT',
-      'Automated QA inspection & anomaly detection',
+    "id": "computer-vision",
+    "title": "Computer Vision & Model Deployment",
+    "category": "Computer Vision",
+    "description": "Develop detection, segmentation, and image analysis models, and integrate inference into web, mobile, and mixed reality applications.",
+    "deliverables": [
+      "Custom detection and segmentation models",
+      "Dataset preparation and model evaluation",
+      "Image and video analysis pipelines",
+      "Model deployment and application integration"
     ],
-    tags: ['YOLOv8/11', 'OpenCV', 'TensorRT', 'PyTorch'],
-    price: 0,
-    price_suffix: '',
+    "tags": [
+      "YOLOv8/11",
+      "OpenCV",
+      "PyTorch",
+      "TensorFlow"
+    ],
+    "price": 0,
+    "price_suffix": ""
   },
   {
-    id: 'voice-ai',
-    title: 'Voice AI Assistants',
-    category: 'Conversational Audio',
-    description:
-      'End-to-end conversational voice agents featuring ultra-fast Speech-to-Text (STT), context-aware LLM reasoning, natural Text-to-Speech (TTS), and full telephony integration.',
-    deliverables: [
-      'Sub-800ms end-to-end voice latency for natural dialogue',
-      'Telephony routing & setup (Twilio, SIP trunking)',
-      'Neural TTS & voice cloning (ElevenLabs, Cartesia)',
-      'Automated call transcripts & CRM synchronization',
+    "id": "voice-ai",
+    "title": "Voice AI Assistants",
+    "category": "Voice AI",
+    "description": "Build knowledge-grounded voice assistants with Vapi, LLMs, Whisper, ElevenLabs, and Twilio, supported by Python backends.",
+    "deliverables": [
+      "Knowledge retrieval from documents and websites",
+      "Speech-to-text and text-to-speech integration",
+      "Inbound and outbound Twilio calling",
+      "Django backend orchestration"
     ],
-    tags: ['Twilio / SIP', 'Whisper STT', 'ElevenLabs', 'WebSockets'],
-    price: 0,
-    price_suffix: '',
+    "tags": [
+      "Vapi",
+      "Whisper",
+      "ElevenLabs",
+      "Twilio",
+      "Django"
+    ],
+    "price": 0,
+    "price_suffix": ""
   },
   {
-    id: 'ml-ai-systems',
-    title: 'Machine Learning and AI Systems Development',
-    category: 'Core AI Development',
-    description:
-      'End-to-end machine learning and AI systems development, from data preprocessing and model training to deployment and monitoring. Specializing in custom ML solutions tailored to your specific business needs.',
-    deliverables: [
-      'Custom ML model development and training',
-      'Data preprocessing and feature engineering',
-      'Model evaluation and performance optimization',
-      'Automated deployment and monitoring systems',
+    "id": "ml-ai-systems",
+    "title": "Machine Learning & Analytics",
+    "category": "Machine Learning",
+    "description": "Build predictive models and analytics applications for forecasting, customer segmentation, and business decision-making.",
+    "deliverables": [
+      "Data preparation and feature engineering",
+      "Model training, tuning, and evaluation",
+      "Forecasting and customer segmentation",
+      "Backend integration and analytics dashboards"
     ],
-    tags: ['Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'MLflow'],
-    price: 0,
-    price_suffix: '',
+    "tags": [
+      "Python",
+      "Scikit-Learn",
+      "TensorFlow",
+      "Flask"
+    ],
+    "price": 0,
+    "price_suffix": ""
   },
+  {
+    "id": "mlops-deployment",
+    "title": "AI Backends & Production Deployment",
+    "category": "Python Engineering",
+    "description": "Develop Django, Flask, and FastAPI backends, integrate external APIs and billing, and deploy AI applications with cloud infrastructure.",
+    "deliverables": [
+      "Python REST APIs and application backends",
+      "Authentication and role-based access",
+      "Third-party API and subscription integration",
+      "Containerization, deployment, and issue resolution"
+    ],
+    "tags": [
+      "Django",
+      "Flask",
+      "FastAPI",
+      "Docker",
+      "AWS"
+    ],
+    "price": 0,
+    "price_suffix": ""
+  }
 ];
 
 export interface SeedProject {
@@ -102,75 +140,89 @@ export interface SeedProject {
 
 export const SEED_PROJECTS: SeedProject[] = [
   {
-    id: 'proj-1',
-    title: 'Enterprise RAG Pipeline',
-    category: 'agentic',
-    description:
-      'Built a retrieval-augmented generation system for internal knowledge management, reducing search time by 60%.',
-    full_details:
-      "Designed and deployed an enterprise RAG pipeline integrating vector databases, semantic search, and GPT-4 for a Fortune 500 company's internal knowledge base. The system indexes over 200K documents and serves contextual answers with source citations in under 2 seconds.",
-    client: 'Fortune 500 Enterprise',
-    stack: 'Python, LangChain, Pinecone, FastAPI, AWS',
-    impact: '60% reduction in search time, 4x faster onboarding',
-    duration: '3 months',
-    gradient: 'linear-gradient(135deg, #ff6b35 0%, #f7931e 40%, #ffad33 100%)',
+    "id": "proj-1",
+    "title": "Automated Roof Measurement System",
+    "category": "vision",
+    "description": "YOLOv8 roof segmentation and polygonization with a FastAPI backend and Google Maps API integration.",
+    "full_details": "Built a computer vision system for roof segmentation and polygonization using 3.5k satellite images. Integrated a FastAPI backend with the Google Maps API. Reduced report generation time from 2-3 days to under 30 seconds and data acquisition costs by 90%.",
+    "client": "Project at Cplusoft",
+    "stack": "Python, YOLOv8, FastAPI, Google Maps API",
+    "impact": "Reports in under 30 seconds; 90% lower data acquisition costs",
+    "duration": "",
+    "gradient": "linear-gradient(135deg, #2b4bff, #101c35)"
   },
   {
-    id: 'proj-2',
-    title: 'Multi-Agent Orchestration Framework',
-    category: 'agentic',
-    description:
-      'Designed an autonomous multi-agent system that orchestrates complex business workflows with zero human intervention.',
-    full_details:
-      'Architected a multi-agent orchestration framework where specialized AI agents collaborate to handle end-to-end business processes — from data extraction and validation to report generation and stakeholder notification.',
-    client: 'FinTech Startup',
-    stack: 'Python, AutoGen, CrewAI, Redis, Docker',
-    impact: '90% automation of manual review workflows',
-    duration: '4 months',
-    gradient: 'linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%)',
+    "id": "proj-2",
+    "title": "CYBHI - AI Chatbot Orchestration",
+    "category": "agentic",
+    "description": "LangGraph chatbot workflows for school incident reporting and student support on a California government-funded platform.",
+    "full_details": "Lead a team of AI developers as Senior AI Engineer on CYBHI at Cplusoft. Developed LangGraph chatbot orchestration with speech-to-text input, scenario analysis, multi-perspective validation, and automated reports. Built guided report creation and report-linked billing, and managed production deployment, optimization, and issue resolution.",
+    "client": "Project at Cplusoft",
+    "stack": "Python, LangGraph, LLMs, Speech-to-Text, API Integration",
+    "impact": "Guided incident reporting, student support, and automated report generation",
+    "duration": "",
+    "gradient": "linear-gradient(135deg, #2b4bff, #101c35)"
   },
   {
-    id: 'proj-3',
-    title: 'Real-Time Object Detection System',
-    category: 'vision',
-    description:
-      'Deployed a 60fps edge-optimized detection system for manufacturing quality assurance on embedded hardware.',
-    full_details:
-      'Engineered a real-time object detection pipeline running at 60fps on NVIDIA Jetson edge devices for a manufacturing plant. Identifies defects on assembly lines with 98.5% accuracy, triggering automated rejection and alerting.',
-    client: 'VisionTech Manufacturing',
-    stack: 'Python, YOLOv8, TensorRT, NVIDIA Jetson, MQTT',
-    impact: '98.5% accuracy, 70% fewer defects reaching customers',
-    duration: '4 months',
-    gradient: 'linear-gradient(135deg, #00b4d8 0%, #0077b6 50%, #023e8a 100%)',
+    "id": "proj-3",
+    "title": "Prism - Retail Intelligence Platform",
+    "category": "platforms",
+    "description": "Machine learning for pharmacy sales forecasting, customer segmentation, and inventory management, with a Flask analytics dashboard.",
+    "full_details": "Architected a retail intelligence platform for pharmacies. Trained models for customer segmentation, sales prediction, and demand forecasting on real-time retail data. Built a Flask backend with authentication, role-based access control, and a dynamic analytics dashboard.",
+    "client": "Project at Cplusoft",
+    "stack": "Python, Machine Learning, Flask, REST APIs, Analytics",
+    "impact": "Sales forecasting, customer segmentation, and inventory insights",
+    "duration": "",
+    "gradient": "linear-gradient(135deg, #2b4bff, #101c35)"
   },
   {
-    id: 'proj-5',
-    title: 'Predictive Analytics Engine',
-    category: 'platforms',
-    description:
-      'End-to-end ML platform for demand forecasting, reducing inventory costs by 25% for an e-commerce client.',
-    full_details:
-      'Built a comprehensive demand forecasting platform that ingests sales data, market signals, and seasonal patterns to predict product demand 90 days ahead with automated retraining and A/B evaluation.',
-    client: 'E-commerce Platform',
-    stack: 'Python, XGBoost, Prophet, Airflow, Snowflake, Streamlit',
-    impact: '25% inventory cost reduction, 92% forecast accuracy',
-    duration: '4 months',
-    gradient: 'linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%)',
+    "id": "proj-4",
+    "title": "Bone Metastasis Detection",
+    "category": "vision",
+    "description": "Computer vision models for detecting bone metastasis in X-ray images using the BS80k dataset.",
+    "full_details": "Developed a computer vision system at Highfive Electronics for bone metastasis detection from X-ray images. Trained and evaluated multiple detection models on the BS80k dataset to support diagnostic analysis and clinical decision-making.",
+    "client": "Project at Highfive Electronics",
+    "stack": "Python, Computer Vision, Deep Learning, BS80k",
+    "impact": "Detection model training and evaluation for medical image analysis",
+    "duration": "",
+    "gradient": "linear-gradient(135deg, #2b4bff, #101c35)"
   },
   {
-    id: 'proj-6',
-    title: 'Real-Time Fraud Detection',
-    category: 'platforms',
-    description:
-      'Transaction scoring system processing 10K+ events/second with sub-100ms latency for a payments company.',
-    full_details:
-      'Built a real-time fraud detection system that scores every transaction in under 100ms using an ensemble of gradient-boosted models and neural networks. Reduced fraud losses by 60% while maintaining low false positives.',
-    client: 'Payments Company (NDA)',
-    stack: 'Python, XGBoost, Kafka Streams, Flink, Cassandra, AWS',
-    impact: '60% fraud reduction, 10K+ TPS at sub-100ms latency',
-    duration: '4 months',
-    gradient: 'linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #7c3aed 100%)',
+    "id": "proj-5",
+    "title": "Brainiatic - AI Voice Assistant Platform",
+    "category": "agentic",
+    "description": "Agentic voice assistants grounded in website and document content, with Vapi, Whisper, ElevenLabs, Twilio, and a Django backend.",
+    "full_details": "Built an agentic AI voice assistant platform using Vapi and LLMs. Developed retrieval pipelines from scraped websites and ingested documents, with Whisper speech-to-text, ElevenLabs text-to-speech and voice cloning, and Twilio inbound and outbound calls. Built a Django backend to orchestrate data processing and real-time voice responses.",
+    "client": "Project at Cplusoft",
+    "stack": "Python, Django, Vapi, RAG, Whisper, ElevenLabs, Twilio",
+    "impact": "Knowledge-grounded voice assistants with inbound and outbound calling",
+    "duration": "",
+    "gradient": "linear-gradient(135deg, #2b4bff, #101c35)"
   },
+  {
+    "id": "proj-6",
+    "title": "AI Model Deployment - Flutter & HoloLens 2",
+    "category": "vision",
+    "description": "Deployed AI models in Flutter applications and YOLOv8 on Microsoft HoloLens 2 for real-time mixed reality inference.",
+    "full_details": "At Highfive Electronics, deployed facial expression recognition, acne detection, and stroke detection models within a Flutter application. Also deployed a YOLOv8 model on Microsoft HoloLens 2 for real-time mixed reality inference.",
+    "client": "Project at Highfive Electronics",
+    "stack": "Python, YOLOv8, Flutter, Microsoft HoloLens 2",
+    "impact": "AI inference integrated into mobile and mixed reality applications",
+    "duration": "",
+    "gradient": "linear-gradient(135deg, #2b4bff, #101c35)"
+  },
+  {
+    "id": "acne-detection-and-recognition-system",
+    "title": "Acne Detection & Recognition",
+    "category": "vision",
+    "description": "An acne detection model integrated into a Flutter mobile application.",
+    "full_details": "Developed and deployed an acne detection model within a Flutter application as part of the AI model deployment work at Highfive Electronics.",
+    "client": "Project at Highfive Electronics",
+    "stack": "Python, Computer Vision, Flutter",
+    "impact": "Acne detection integrated into a mobile application",
+    "duration": "",
+    "gradient": "linear-gradient(135deg, #2b4bff, #101c35)"
+  }
 ];
 
 export interface SeedAward {
@@ -186,41 +238,35 @@ export interface SeedAward {
 
 export const SEED_AWARDS: SeedAward[] = [
   {
-    id: 'cybhi-2025',
-    title: 'Led CYBHIAI Platform 2025',
-    year: '2025',
-    issuer: 'California Government Public-Sector Initiative',
-    status_pill: 'Public Sector Impact',
-    description:
-      'California government-funded agentic AI system for school incident reporting, threat mitigation, and automated triage. Recognized for delivering an enterprise-grade LLM solution for public-sector use.',
-    why_it_matters:
-      'Demonstrates the rare capability to deliver compliant, high-stakes, enterprise-grade LLM architectures trusted by public institutions.',
-    tags: ['Agentic AI', 'Government Funded', 'Public Safety', 'Enterprise LLMs'],
+    "id": "cybhi-2025",
+    "title": "AI Team Leadership on CYBHI",
+    "year": "Current role",
+    "issuer": "Cplusoft - CYBHI",
+    "status_pill": "Professional Contribution",
+    "description": "Lead a team of AI developers as Senior AI Engineer on CYBHI, a California government-funded platform for school incident reporting and student support. Build LangGraph workflows, speech-to-text input, validation, report generation, and report-linked billing.",
+    "why_it_matters": "Combines AI team leadership, chatbot orchestration, backend integration, and production delivery in a public-sector project.",
+    "tags": [
+      "LangGraph",
+      "Team Leadership",
+      "School Incident Reporting",
+      "Production AI"
+    ]
   },
   {
-    id: 'certifications-ai',
-    title: 'Certifications in Applied AI & Modern Frameworks',
-    year: '2023 – Present',
-    issuer: 'DeepLearning.AI & Industry Academies',
-    status_pill: 'Continuous Upskilling',
-    description:
-      'Completed rigorous specialized certifications from DeepLearning.AI and leading engineering curriculums covering PyTorch deep learning, advanced RAG architectures, LangChain / LangGraph development, and Agent & MCP development.',
-    why_it_matters:
-      'Reflects continuous upskilling in modern AI, ensuring every solution built leverages cutting-edge paradigms.',
-    tags: ['DeepLearning.AI', 'PyTorch', 'LangChain & RAG', 'Agent & MCP'],
-  },
-  {
-    id: 'guest-speaker',
-    title: 'Guest Speaker: AI Engineering as a Career',
-    year: '2024 – 2025',
-    issuer: 'University Engineering Department',
-    status_pill: 'Community Leadership',
-    description:
-      'Invited as an industry guest speaker to lead a university technical seminar for undergraduate engineering students, helping students understand real-world ML and LLM work versus academic research.',
-    why_it_matters:
-      'Highlights industry credibility, recognized thought leadership, and strong communication skills.',
-    tags: ['Guest Speaker', 'Mentorship', 'AI Engineering Talk', 'Knowledge Sharing'],
-  },
+    "id": "certifications-ai",
+    "title": "Applied AI Courses & Certifications",
+    "year": "Professional learning",
+    "issuer": "DeepLearning.AI & Udemy",
+    "status_pill": "Continued Learning",
+    "description": "Completed PyTorch for Deep Learning, RAG in Action, and LangChain for LLM Application from DeepLearning.AI, and The Complete Agent & MCP Course from Udemy.",
+    "why_it_matters": "Continued learning in deep learning, retrieval-augmented generation, LLM applications, and agent development.",
+    "tags": [
+      "PyTorch",
+      "RAG",
+      "LangChain",
+      "Agents & MCP"
+    ]
+  }
 ];
 
 export const SEED_LOGOS: SeedLogo[] = [

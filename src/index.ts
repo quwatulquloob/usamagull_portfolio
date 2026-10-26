@@ -3,7 +3,6 @@
  *
  * Routing map:
  *   /api/site-data          GET   public JSON bundle (D1)
- *   /resume                 GET   admin-uploaded resume PDF (download)
  *   /api/contact            POST  contact form intake
  *   /api/admin/auth/*       POST  login / logout, GET session
  *   /api/admin/*            *     session-guarded CRUD (D1)
@@ -53,7 +52,7 @@ import {
   handleUpdateSettings,
   handleUpdateShowcaseVideo,
 } from './routes/admin-api';
-import { handleContactSubmit, handleResumeDownload, handleSiteData } from './routes/public-api';
+import { handleContactSubmit, handleSiteData } from './routes/public-api';
 
 /** Load the full site bundle from D1, tolerating a missing/failed database. */
 async function loadSiteData(env: Env): Promise<SiteData | null> {
@@ -106,9 +105,6 @@ export default {
       // ---------------------------------------------------------------------
       if (path === '/api/site-data' && method === 'GET') {
         return await handleSiteData(env);
-      }
-      if (path === '/resume' && method === 'GET') {
-        return await handleResumeDownload(env);
       }
       if (path === '/api/contact' && method === 'POST') {
         return await handleContactSubmit(request, env);

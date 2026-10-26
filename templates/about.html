@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About & Engineering Story — Usama Gul | AI/ML Engineer</title>
     <meta name="description"
-        content="Learn about Usama Gul's background in Electrical Engineering, transition into applied machine learning, and 3+ years architecting scalable enterprise AI systems.">
+        content="Meet Usama Gul, an AI Engineer with 4+ years of experience in machine learning, computer vision, agentic AI, and Python backends at Highfive Electronics and Cplusoft.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -14,9 +14,13 @@
         rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/about.css">
+    <link rel="stylesheet" href="/css/refresh.css">
+    <link rel="icon" href="/favicon.ico?v=ug1" sizes="32x32">
+    <link rel="icon" href="/favicon.svg?v=ug1" type="image/svg+xml" sizes="any">
 </head>
 
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
     <!-- ===== ARCHITECTURAL BACKGROUND ===== -->
 
@@ -33,8 +37,11 @@
                 <li><a href="/services" class="nav-link">Services</a></li>
                 <li><a href="/portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="/awards" class="nav-link">Achievements</a></li>
+                <li class="nav-mobile-action"><a class="nav-link" href="/contact">Contact</a></li>
+
             </ul>
             <div class="nav-actions">
+
                 <a href="/contact" class="nav-cta-btn">
                     <span>Get in touch</span>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -43,22 +50,21 @@
                     </svg>
                 </a>
             </div>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </nav>
     </header>
+    <main id="main-content" tabindex="-1">
 
     <!-- ===== PAGE HERO ===== -->
-    <section class="page-hero">
+    <section class="page-hero about-hero">
         <div class="container">
             <div class="page-hero-content reveal-up">
                 <h1 class="page-hero-title">
                     Designing AI for Practical, Real-World Use
                 </h1>
-                <p class="page-hero-subtitle">From low-latency computer vision pipelines to distributed multi-agent LLM
-                    systems,
-                    I focus on building AI that performs reliably in real-world environments.</p>
+                <p class="page-hero-subtitle">I turn complex AI ideas into practical tools people can use. With 4+ years of experience in computer vision, machine learning, and AI agents, I work across the full development process, from understanding the problem and preparing data to building, integrating, and deploying the solution. My focus is on AI that fits the way people work, solves a clear problem, and stays reliable beyond the demo.</p>
             </div>
         </div>
     </section>
@@ -70,7 +76,7 @@
                 <div class="story-image-column reveal-up">
                     <div class="story-card-wrapper">
                         <div class="story-image-frame spotlight-card">
-                            <img src="/assets/profile.png" alt="Usama Gul — AI/ML Engineer" class="story-photo">
+                            <img src="/assets/profile.png" alt="Usama Gul — AI/ML Engineer" class="story-photo" width="768" height="883" loading="lazy" decoding="async">
                         </div>
                         <div class="story-badge-highlight">
                             <div class="badge-icon">
@@ -81,7 +87,7 @@
                                 </svg>
                             </div>
                             <div class="badge-text">
-                                <span class="badge-title">3+ Years</span>
+                                <span class="badge-title">4+ Years</span>
                                 <span class="badge-sub">AI Engineering Mastery</span>
                             </div>
                         </div>
@@ -90,23 +96,13 @@
 
                 <div class="story-content-column reveal-up" style="--delay: 0.1s">
                     <h2 class="story-heading">
-                        Solving the Engineering Challenge of AI Reliability
+                        From Models to Working AI Products
                     </h2>
                     
-                    <p class="story-paragraph">
-                        I’m an AI Engineer with 3+ years of experience building scalable computer vision and
-                        agentic AI systems. I build computer vision pipelines for detection, segmentation,
-                        and video analytics using YOLO, PyTorch, and OpenCV. I also build agentic systems
-                        with LangGraph, RAG, tool calling, and deterministic guardrails. My focus is turning
-                        prototypes into reliable products through strong data pipelines, model evaluation,
-                        backend orchestration, and dependable deployment. I thrive on translating complex
-                        requirements into AI systems that work consistently outside the notebook.
-                    </p>
+                    <p class="story-paragraph">I'm an AI Engineer based in Islamabad with 4+ years of experience delivering machine learning, computer vision, and AI products. At Highfive Electronics, I worked on accident detection, medical imaging, RAG chatbots, and model deployment in Flutter and Microsoft HoloLens 2. I now work as a Python AI Engineer at Cplusoft, building agentic chatbots, voice assistants, computer vision tools, and analytics platforms.</p>
 
                     <div class="story-quote-card">
-                        <p class="quote-text">"The real value in AI engineering isn't in training models that look good
-                            in a benchmark chart; it is in building hardened software architectures that operate
-                            reliably in mission-critical environments 24 hours a day."</p>
+                        <p class="quote-text">&quot;For me, AI engineering means connecting the model, the data, and the application so the whole product works for the people using it.&quot;</p>
                     </div>
 
                     <div class="mission-box">
@@ -119,9 +115,8 @@
                             </svg>
                         </div>
                         <div class="mission-content">
-                            <h4 class="mission-title">Core Engineering Principle</h4>
-                            <p class="mission-desc">Deliver predictable, low-latency, and architecturally transparent AI
-                                systems that give enterprise leaders complete confidence in live deployments.</p>
+                            <h3 class="mission-title">How I Work</h3>
+                            <p class="mission-desc">Turn business requirements into useful AI products through careful model development, clear backend integration, and dependable production delivery.</p>
                         </div>
                     </div>
                 </div>
@@ -134,112 +129,26 @@
         <div class="container">
             <div class="section-header reveal-up">
                 <h2 class="section-title">Milestones & Experience</h2>
-                <p class="section-subtitle">Key architectural inflection points that shaped my engineering philosophy.
+                <p class="section-subtitle">The roles, teams, and AI products that shaped my work.
                 </p>
             </div>
 
             <div class="timeline-wrapper">
-                <div class="timeline-spine"></div>
-
-                <!-- Milestone 1 -->
-                <div class="timeline-item reveal-up">
-                    <div class="timeline-node">
-                        <span class="node-dot"></span>
-                    </div>
-                    <div class="timeline-card spotlight-card">
-                        <div class="timeline-meta">
-                            <span class="timeline-year">2021 – 2022</span>
-                            <span class="timeline-tag">Foundations</span>
-                        </div>
-                        <h3 class="timeline-title">Hardware & Applied ML Exploration</h3>
-                        <p class="timeline-desc">Studied Electrical and Electronics Engineering, developing mathematical
-                            foundations in linear algebra, DSP, and statistical learning. Programmed microcontrollers,
-                            embedded sensors, and early neural networks.</p>
-                    </div>
-                </div>
-
-                <!-- Milestone 2 -->
-                <div class="timeline-item reveal-up" style="--delay: 0.08s">
-                    <div class="timeline-node">
-                        <span class="node-dot"></span>
-                    </div>
-                    <div class="timeline-card spotlight-card">
-                        <div class="timeline-meta">
-                            <span class="timeline-year">2022</span>
-                            <span class="timeline-tag">Industry Role</span>
-                        </div>
-                        <h3 class="timeline-title">Machine Learning Engineer at Highfive Electronics</h3>
-                        <p class="timeline-desc">The deployment of Acne detection, recognition and recommendation system
-                            on Flutter mobile app.</p>
-                    </div>
-                </div>
-
-                <!-- Milestone 3 -->
-                <div class="timeline-item reveal-up" style="--delay: 0.16s">
-                    <div class="timeline-node">
-                        <span class="node-dot"></span>
-                    </div>
-                    <div class="timeline-card spotlight-card">
-                        <div class="timeline-meta">
-                            <span class="timeline-year">2023</span>
-                            <span class="timeline-tag">Edge Deployment</span>
-                        </div>
-                        <h3 class="timeline-title">YOLOv8 Deployment on Microsoft HoloLens 2</h3>
-                        <p class="timeline-desc">Deployed a YOLOv8 model on Microsoft HoloLens 2 for real-time mixed
-                            reality inference, enabling on-device object detection within an AR headset.</p>
-                    </div>
-                </div>
-
-                <!-- Milestone 4 -->
-                <div class="timeline-item reveal-up" style="--delay: 0.24s">
-                    <div class="timeline-node">
-                        <span class="node-dot"></span>
-                    </div>
-                    <div class="timeline-card spotlight-card">
-                        <div class="timeline-meta">
-                            <span class="timeline-year">2023 – 2024</span>
-                            <span class="timeline-tag">Backend Infrastructure</span>
-                        </div>
-                        <h3 class="timeline-title">Python AI Engineer at Cplusoft</h3>
-                        <p class="timeline-desc">Architected microservice backends with FastAPI and Docker. Deployed
-                            low-latency inference endpoints, integrated Redis vector caching, and automated CI/CD model
-                            retraining pipelines.</p>
-                    </div>
-                </div>
-
-                <!-- Milestone 5 -->
-                <div class="timeline-item reveal-up" style="--delay: 0.32s">
-                    <div class="timeline-node">
-                        <span class="node-dot"></span>
-                    </div>
-                    <div class="timeline-card spotlight-card">
-                        <div class="timeline-meta">
-                            <span class="timeline-year">2024 – 2025</span>
-                            <span class="timeline-tag">Public Sector AI</span>
-                        </div>
-                        <h3 class="timeline-title">Technical Lead: CYBHIAI California Public-Sector Platform</h3>
-                        <p class="timeline-desc">Led the architecture of a California government-funded agentic AI
-                            system for K-12 threat triage and incident reporting. Delivered multi-agent orchestration,
-                            strict compliance guardrails, and automated emergency routing.</p>
-                    </div>
-                </div>
-
-                <!-- Milestone 6 -->
-                <div class="timeline-item reveal-up" style="--delay: 0.4s">
-                    <div class="timeline-node">
-                        <span class="node-dot"></span>
-                    </div>
-                    <div class="timeline-card spotlight-card">
-                        <div class="timeline-meta">
-                            <span class="timeline-year">Present</span>
-                            <span class="timeline-tag highlight">Scale & Advisory</span>
-                        </div>
-                        <h3 class="timeline-title">15+ Shipped AI Systems & Consulting Practice</h3>
-                        <p class="timeline-desc">Maintaining a 4.9/5 client satisfaction rating across international
-                            clients. Consulting and building custom AI architectures for forward-thinking technology
-                            companies.</p>
-                    </div>
-                </div>
+                <article class="timeline-item reveal-up" style="--delay: 0.00s"><div class="timeline-card spotlight-card">
+                    <div class="timeline-meta"><span class="timeline-year">2021 - 2022</span><span class="timeline-tag">Startup Experience</span></div>
+                    <h3 class="timeline-title">IoT Developer - Business Incubation Center</h3>
+                    <p class="timeline-desc">Worked with multiple startups as an IoT Developer, contributing to IoT applications and collaborating with startup teams to turn ideas into practical solutions.</p>
+                </div></article>
+                <article class="timeline-item reveal-up" style="--delay: 0.08s"><div class="timeline-card spotlight-card">
+                    <div class="timeline-meta"><span class="timeline-year">Mar 2022 - Nov 2024</span><span class="timeline-tag">Machine Learning - Islamabad</span></div>
+                    <h3 class="timeline-title">Machine Learning Engineer - Highfive Electronics</h3>
+                    <p class="timeline-desc">Built computer vision and machine learning applications for accident detection, medical image analysis, and conversational AI.</p><p class="timeline-desc">Developed a DenseNet-based accident detection system for CCTV footage, with alerts to hospitals and police stations that reduced emergency response time by 30%. Trained and evaluated bone metastasis detection models on the BS80k X-ray dataset.</p><p class="timeline-desc">Built a LangGraph RAG chatbot for solar-domain queries, combining internal documents, Tavily search, and voice interaction. Deployed facial expression recognition, acne detection, and stroke detection models in Flutter, and a YOLOv8 model on Microsoft HoloLens 2 for real-time mixed reality inference.</p>
+                </div></article>
+                <article class="timeline-item reveal-up" style="--delay: 0.16s"><div class="timeline-card spotlight-card">
+                    <div class="timeline-meta"><span class="timeline-year">Dec 2024 - Present</span><span class="timeline-tag">Python AI Engineering - Islamabad</span></div>
+                    <h3 class="timeline-title">Python AI Engineer - Cplusoft</h3>
+                    <p class="timeline-desc">Develop AI products and Python backends across agentic chatbots, voice assistants, computer vision, and retail analytics. Manage production deployment, performance optimization, and issue resolution.</p><p class="timeline-desc">CYBHI: Lead a team of AI developers as Senior AI Engineer on a California government-funded platform for school incident reporting and student support. Build LangGraph chatbot orchestration, speech-to-text input, scenario analysis, multi-perspective validation, guided report creation, and report-linked billing.</p><p class="timeline-desc">Brainiatic: Built an agentic voice assistant platform with Vapi, LLMs, retrieval from scraped websites and documents, Whisper, ElevenLabs, and Twilio. Developed a Django backend to orchestrate data processing and voice responses.</p><p class="timeline-desc">Automated Roof Measurement: Built YOLOv8 roof segmentation and polygonization using 3.5k satellite images, with a FastAPI backend and Google Maps API integration. Reduced report generation from 2-3 days to under 30 seconds and data acquisition costs by 90%.</p><p class="timeline-desc">Prism and content generation: Built retail forecasting, customer segmentation, and inventory analytics with a Flask backend, authentication, role-based access, and dashboards. Developed a Django platform for AI-generated emails and social content with REST APIs and PayPal subscriptions.</p>
+                </div></article>
             </div>
         </div>
     </section>
@@ -248,9 +157,8 @@
     <section class="skills-section" id="skills">
         <div class="container">
             <div class="section-header reveal-up">
-                <h2 class="section-title">Architectural Specializations</h2>
-                <p class="section-subtitle">Deep domain competencies battle-tested in live enterprise
-                    environments.</p>
+                <h2 class="section-title">Technical Expertise</h2>
+                <p class="section-subtitle">Tools and approaches used across my machine learning, computer vision, and AI product work.</p>
             </div>
 
             <div class="skills-grid">
@@ -267,16 +175,8 @@
                         </div>
                         <h3 class="competency-name">Agentic AI & Orchestration</h3>
                     </div>
-                    <p class="competency-desc">Autonomous multi-agent architectures using LangGraph and CrewAI.
-                        Designing custom state graphs, structured tool calling, deterministic guardrails, and memory
-                        management.</p>
-                    <div class="competency-chips">
-                        <span class="competency-chip">LangGraph</span>
-                        <span class="competency-chip">CrewAI</span>
-                        <span class="competency-chip">MCP Tools</span>
-                        <span class="competency-chip">State Graphs</span>
-                        <span class="competency-chip">Guardrails</span>
-                    </div>
+                    <p class="competency-desc">LangGraph chatbot orchestration, scenario analysis, multi-perspective validation, tool calling, and guided report generation, including team leadership on CYBHI.</p>
+                    <div class="competency-chips"><span class="competency-chip">LangGraph</span><span class="competency-chip">CrewAI</span><span class="competency-chip">MCP</span><span class="competency-chip">Tool Calling</span><span class="competency-chip">LLM Evaluation</span></div>
                 </div>
 
                 <!-- Competency 2 -->
@@ -289,17 +189,10 @@
                                 <circle cx="12" cy="12" r="3" />
                             </svg>
                         </div>
-                        <h3 class="competency-name">Computer Vision & Edge AI</h3>
+                        <h3 class="competency-name">Computer Vision & Model Deployment</h3>
                     </div>
-                    <p class="competency-desc">High-throughput object detection and segmentation running at 60 FPS on
-                        edge hardware. Model quantization, TensorRT compilation, and RTSP video analytics pipelines.</p>
-                    <div class="competency-chips">
-                        <span class="competency-chip">YOLOv8/11</span>
-                        <span class="competency-chip">TensorRT</span>
-                        <span class="competency-chip">OpenCV</span>
-                        <span class="competency-chip">NVIDIA Jetson</span>
-                        <span class="competency-chip">RTSP / WebRTC</span>
-                    </div>
+                    <p class="competency-desc">Object detection, segmentation, medical image analysis, and video analytics with YOLO, PyTorch, TensorFlow, and OpenCV. Model deployment in Flutter and Microsoft HoloLens 2.</p>
+                    <div class="competency-chips"><span class="competency-chip">YOLOv8/11</span><span class="competency-chip">OpenCV</span><span class="competency-chip">PyTorch</span><span class="competency-chip">Flutter</span><span class="competency-chip">HoloLens 2</span></div>
                 </div>
 
                 <!-- Competency 3 -->
@@ -312,18 +205,10 @@
                                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
                             </svg>
                         </div>
-                        <h3 class="competency-name">Enterprise RAG Pipelines</h3>
+                        <h3 class="competency-name">RAG & Knowledge Retrieval</h3>
                     </div>
-                    <p class="competency-desc">Vector indexing systems across 200K+ enterprise documents. Hybrid
-                        BM25/Dense semantic search, re-ranking, source citation verification, and sub-2s response
-                        latency.</p>
-                    <div class="competency-chips">
-                        <span class="competency-chip">Pinecone</span>
-                        <span class="competency-chip">Qdrant</span>
-                        <span class="competency-chip">ChromaDB</span>
-                        <span class="competency-chip">Hybrid Search</span>
-                        <span class="competency-chip">Re-Ranking</span>
-                    </div>
+                    <p class="competency-desc">Chatbots grounded in internal documents, scraped websites, and domain knowledge. Retrieval pipelines, vector databases, and Tavily search for context-aware answers.</p>
+                    <div class="competency-chips"><span class="competency-chip">LangChain</span><span class="competency-chip">LlamaIndex</span><span class="competency-chip">Pinecone</span><span class="competency-chip">Weaviate</span><span class="competency-chip">Tavily</span></div>
                 </div>
 
                 <!-- Competency 4 -->
@@ -336,17 +221,10 @@
                                     d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
                             </svg>
                         </div>
-                        <h3 class="competency-name">MLOps & Cloud Infrastructure</h3>
+                        <h3 class="competency-name">Deployment & Cloud Infrastructure</h3>
                     </div>
-                    <p class="competency-desc">Packaging models into Dockerized auto-scaling containers, managing model
-                        registries with MLflow, deploying on AWS/GCP, and configuring real-time telemetry alerts.</p>
-                    <div class="competency-chips">
-                        <span class="competency-chip">Docker</span>
-                        <span class="competency-chip">Kubernetes</span>
-                        <span class="competency-chip">FastAPI</span>
-                        <span class="competency-chip">MLflow</span>
-                        <span class="competency-chip">AWS / GCP</span>
-                    </div>
+                    <p class="competency-desc">Model deployment, containerization, CI/CD, and data pipelines using Docker, Kubernetes, GitHub Actions, AWS, and Azure.</p>
+                    <div class="competency-chips"><span class="competency-chip">Docker</span><span class="competency-chip">Kubernetes</span><span class="competency-chip">GitHub Actions</span><span class="competency-chip">AWS</span><span class="competency-chip">Azure</span></div>
                 </div>
 
                 <!-- Competency 5 -->
@@ -361,17 +239,10 @@
                                 <line x1="8" y1="23" x2="16" y2="23" />
                             </svg>
                         </div>
-                        <h3 class="competency-name">Voice AI & Conversational Audio</h3>
+                        <h3 class="competency-name">Voice AI & Conversational Systems</h3>
                     </div>
-                    <p class="competency-desc">Sub-800ms natural voice dialogue systems connecting Whisper STT, LLM
-                        reasoning, and neural streaming TTS with Twilio SIP trunking and WebSockets.</p>
-                    <div class="competency-chips">
-                        <span class="competency-chip">ElevenLabs</span>
-                        <span class="competency-chip">Whisper STT</span>
-                        <span class="competency-chip">Twilio SIP</span>
-                        <span class="competency-chip">WebSockets</span>
-                        <span class="competency-chip">Cartesia</span>
-                    </div>
+                    <p class="competency-desc">Voice assistants using Vapi and LLMs, Whisper speech-to-text, ElevenLabs text-to-speech and voice cloning, and Twilio inbound and outbound calling.</p>
+                    <div class="competency-chips"><span class="competency-chip">Vapi</span><span class="competency-chip">Whisper</span><span class="competency-chip">ElevenLabs</span><span class="competency-chip">Twilio</span><span class="competency-chip">Django</span></div>
                 </div>
 
                 <!-- Competency 6 -->
@@ -384,17 +255,10 @@
                                 <polyline points="8 6 2 12 8 18" />
                             </svg>
                         </div>
-                        <h3 class="competency-name">High-Throughput Backends</h3>
+                        <h3 class="competency-name">Python Backends & Analytics</h3>
                     </div>
-                    <p class="competency-desc">Asynchronous microservices designed in Python with FastAPI, Redis message
-                        queues, PostgreSQL, and Kafka stream processing capable of 10K+ events per second.</p>
-                    <div class="competency-chips">
-                        <span class="competency-chip">FastAPI</span>
-                        <span class="competency-chip">Redis</span>
-                        <span class="competency-chip">PostgreSQL</span>
-                        <span class="competency-chip">Kafka</span>
-                        <span class="competency-chip">AsyncIO</span>
-                    </div>
+                    <p class="competency-desc">Django, Flask, and FastAPI backends for AI applications, including role-based access, dashboards, REST APIs, billing integrations, and retail forecasting.</p>
+                    <div class="competency-chips"><span class="competency-chip">Django</span><span class="competency-chip">Flask</span><span class="competency-chip">FastAPI</span><span class="competency-chip">PostgreSQL</span><span class="competency-chip">MongoDB</span></div>
                 </div>
             </div>
         </div>
@@ -405,7 +269,7 @@
         <div class="container">
             <div class="cta-card spotlight-card reveal-up">
                 <h2 class="cta-title">Need an engineer who builds AI that ships?<br>Let's discuss your roadmap.</h2>
-                <p class="cta-desc">Whether you need an agentic LLM architecture, an edge vision pipeline, or a
+                <p class="cta-desc">Whether you need an AI chatbot, a computer vision application, or a
                     full-scale AI platform, I'm ready to build.</p>
                 <div class="cta-actions">
                     <a href="/contact" class="btn btn-primary btn-lg">
@@ -424,6 +288,7 @@
     </section>
 
     <!-- ===== FOOTER ===== -->
+    </main>
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
@@ -432,15 +297,10 @@
                         <span class="logo-mark">UG</span>
                         <span class="logo-text">Usama Gul</span>
                     </a>
-                    <p class="footer-tagline">Architecting enterprise-grade AI systems that scale reliably in
-                        mission-critical operations.</p>
+                    <p class="footer-tagline">Building practical AI products, from computer vision and chatbots to Python backends.</p>
                     <div class="footer-socials">
-                        <a href="https://github.com" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg width="18" height="18"
-                                viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                            </svg></a>
-                        <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg width="18"
+                        __GITHUB_LINK__
+                        <a href="https://www.linkedin.com/in/usama-gul-3a0188250/" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg width="18"
                                 height="18" viewBox="0 0 24 24" fill="currentColor">
                                 <path
                                     d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -453,29 +313,29 @@
                     </div>
                 </div>
                 <div class="footer-links-col">
-                    <h4 class="footer-heading">Usefull links</h4>
+                    <h2 class="footer-heading">Useful links</h2>
                     <ul class="footer-links">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/about">About & Story</a></li>
-                        <li><a href="/services">Engineering Services</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/services">Services</a></li>
                         <li><a href="/portfolio">Case Studies</a></li>
-                        <li><a href="/awards">Credentials & Awards</a></li>
-                        <li><a href="/contact">Technical Contact</a></li>
+                        <li><a href="/awards">Achievements</a></li>
+                        <li><a href="/contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-col">
-                    <h4 class="footer-heading">Specializations</h4>
+                    <h2 class="footer-heading">Specializations</h2>
                     <ul class="footer-links">
                         <li><a href="/services">Multi-Agent LangGraph</a></li>
                         <li><a href="/services">Edge Computer Vision</a></li>
-                        <li><a href="/services">Sub-800ms Voice Systems</a></li>
+                        <li><a href="/services">Voice AI Systems</a></li>
                         <li><a href="/services">Enterprise RAG Retrieval</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-col">
-                    <h4 class="footer-heading">Direct Channels</h4>
+                    <h2 class="footer-heading">Contact</h2>
                     <ul class="footer-links">
-                        <li><a href="/contact">Start an Engagement</a></li>
+                        <li><a href="/contact">Contact me</a></li>
                     </ul>
                 </div>
             </div>

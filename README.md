@@ -91,3 +91,9 @@ these values in the local `.dev.vars` file and the deployed Worker environment.
 - Login attempts are rate-limited (10 failures / 10 min / IP).
 - All D1 access uses parameterized queries; all user content is HTML-escaped
   both server-side and client-side.
+
+## Essential frontend checks
+
+See [ESSENTIALS.md](ESSENTIALS.md) for the file-by-file changelog, verified-data sources, remaining TODOs, WebP optimization workflow, and local browser checks.
+
+Run `npm run typecheck`, `npm run build`, `npm run check:essentials`, and `npm run check:layout` with the local preview running. The build is a production dry run and does not deploy.

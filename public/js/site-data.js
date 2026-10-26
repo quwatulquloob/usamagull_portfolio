@@ -11,11 +11,11 @@ const FALLBACK_DATA = {
         name: 'Usama Gul',
         firstName: 'Usama',
         lastName: 'Gul',
-        title: 'AI / ML Engineer',
+        title: 'AI Engineer',
         tagline: 'Building scalable AI systems that actually ship.',
-        photo: '/assets/profile.png',
-        heroVideoUrl: '',
-        yearsExp: 3,
+        photo: "/assets/optimized/03d4ba25424cc736a922.webp",
+        heroVideoUrl: 'https://www.youtube.com/watch?v=UBaeXPFcrYw',
+        yearsExp: 4,
         systemsDelivered: 15,
         happyClients: 10,
         avgRating: 4.9,
@@ -25,11 +25,11 @@ const FALLBACK_DATA = {
         email: 'rajausamagull123@gmail.com',
         whatsapp: '+92 312 0979064',
         whatsappRaw: '923120979064',
-        linkedin: 'https://linkedin.com',
-        github: 'https://github.com',
+        linkedin: 'https://www.linkedin.com/in/usama-gul-3a0188250/',
+        github: '',
         upwork: 'https://www.upwork.com/freelancers/~01440869ef56e8e97a',
         twitter: 'https://www.upwork.com/freelancers/~01440869ef56e8e97a',
-        kaggle: 'https://kaggle.com'
+        kaggle: ''
     },
     services: [],
     projects: [],
@@ -94,9 +94,17 @@ function hydratePage() {
     const statCards = document.querySelectorAll('.stat-card .counter');
     if (statCards.length >= 4) {
         if (data.profile.systemsDelivered) statCards[0].dataset.target = data.profile.systemsDelivered;
+        if (data.profile.happyClients) statCards[1].dataset.target = data.profile.happyClients;
         if (data.profile.yearsExp) statCards[2].dataset.target = data.profile.yearsExp;
         if (data.profile.avgRating) statCards[3].dataset.target = data.profile.avgRating;
     }
+
+    document.querySelectorAll('.counter').forEach(counter => {
+        if (counter.dataset.animated !== 'true') {
+            const value = Number(counter.dataset.target);
+            counter.textContent = (counter.dataset.decimal === 'true' ? value.toFixed(1) : String(value)) + (counter.dataset.suffix || '');
+        }
+    });
 
     // Profile photo
     if (data.profile.photo) {
@@ -111,7 +119,7 @@ function hydratePage() {
         document.querySelectorAll('.logo-mark').forEach(el => {
             if (!el.querySelector('img')) {
                 el.classList.add('has-logo');
-                el.innerHTML = `<img src="${escapeHtml(data.profile.logo)}" alt="${escapeHtml(data.profile.name || 'Logo')} logo">`;
+                el.innerHTML = `<img src="${escapeHtml(data.profile.logo)}" alt="${escapeHtml(data.profile.name || 'Logo')} logo" width="30" height="30">`;
             }
         });
     }
@@ -139,7 +147,7 @@ function hydratePage() {
     if (data.contact.linkedin) {
         document.querySelectorAll('a[aria-label="LinkedIn"], a[aria-label="LinkedIn Profile"]').forEach(a => a.href = data.contact.linkedin);
     }
-    if (data.contact.github) {
+    if (data.contact.github && /^https?:\/\/[^/]+\/.+/.test(data.contact.github)) {
         document.querySelectorAll('a[aria-label="GitHub"], a[aria-label="GitHub Profile"]').forEach(a => a.href = data.contact.github);
     }
 
@@ -150,7 +158,7 @@ function hydratePage() {
             servicesGrid.innerHTML = '<p class="services-empty">New service packages are coming soon. Please get in touch to discuss your project.</p>';
         } else {
             servicesGrid.innerHTML = data.services.map((svc, i) => `
-                <div class="service-detail-card reveal-up visible" style="--delay: ${i * 0.1}s">
+                <div class="service-detail-card reveal-up visible" id="service-${escapeHtml(svc.id)}" style="--delay: ${i * 0.1}s">
                     <div class="service-card-header">
                         <span class="service-badge-cat ${i % 2 === 1 ? 'blue-cat' : ''}">${escapeHtml(svc.category)}</span>
                         <div class="service-package-price">
@@ -164,7 +172,7 @@ function hydratePage() {
                         <p class="service-card-description">${escapeHtml(svc.description)}</p>
                         ${(svc.deliverables || []).length ? `
                         <div class="service-deliverables">
-                            <h4 class="deliverables-heading">What’s included</h4>
+                            <h3 class="deliverables-heading">What’s included</h3>
                             <ul class="deliverables-list">
                                 ${(svc.deliverables || []).map(d => `
                                     <li>
@@ -191,15 +199,15 @@ function hydratePage() {
 
     // ── Dynamic Portfolio Rendering (portfolio page) ──
     const portfolioGrid = document.getElementById('portfolioGrid');
-    if (portfolioGrid && data.projects && data.projects.length) {
+    if (portfolioGrid && !portfolioGrid.querySelector('.portfolio-card') && data.projects && data.projects.length) {
         portfolioGrid.innerHTML = data.projects.map((proj, i) => `
-            <div class="portfolio-card reveal-up visible card-visible" data-category="${escapeHtml(proj.category)}" data-index="${i}">
+            <div class="portfolio-card reveal-up visible card-visible" id="project-${escapeHtml(proj.id)}" data-category="${escapeHtml(proj.category)}" data-index="${i}">
                 <div class="portfolio-thumb" style="--thumb-gradient: ${proj.gradient || 'linear-gradient(135deg, #ff6b35 0%, #00b4d8 100%)'}">
                     <div class="portfolio-thumb-inner">
-                        ${proj.image ? `<img src="${escapeHtml(proj.image)}" alt="${escapeHtml(proj.title)}">` : `<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`}
+                        ${proj.image ? `<img src="${escapeHtml(proj.image)}" alt="${escapeHtml(proj.title)} project preview" width="${proj.imageWidth || 800}" height="${proj.imageHeight || 450}" loading="lazy" decoding="async">` : `<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`}
                     </div>
                     <div class="portfolio-card-overlay">
-                        <button class="portfolio-view-btn" aria-label="View project details">
+                        <button class="portfolio-view-btn" aria-label="Details about ${escapeHtml(proj.title)}">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
                             <span>View Details</span>
                         </button>
@@ -208,7 +216,7 @@ function hydratePage() {
                 <div class="portfolio-card-body">
                     <span class="portfolio-card-cat">${escapeHtml(proj.categoryLabel || proj.category)}</span>
                     <h3 class="portfolio-card-title">${escapeHtml(proj.title)}</h3>
-                    <p class="portfolio-card-desc">${escapeHtml(proj.description)}</p>
+                    ${projectFactsMarkup(proj)}
                     ${/^https?:\/\//i.test(proj.projectUrl || '') ? `<a class="lb-project-link" href="${escapeHtml(proj.projectUrl)}" target="_blank" rel="noopener noreferrer">Open project ↗</a>` : ''}
                 </div>
                 <div class="lightbox-data" hidden>
@@ -218,10 +226,10 @@ function hydratePage() {
                         <p>${escapeHtml(proj.fullDetails || proj.description)}</p>
                         ${/^https?:\/\//i.test(proj.projectUrl || '') ? `<a class="lb-project-link" href="${escapeHtml(proj.projectUrl)}" target="_blank" rel="noopener noreferrer">View live project / GitHub</a>` : ''}
                         <div class="lb-meta">
-                            <div class="lb-meta-item"><strong>Client:</strong> ${escapeHtml(proj.client || 'Enterprise')}</div>
-                            <div class="lb-meta-item"><strong>Stack:</strong> ${escapeHtml(proj.stack || 'Python, AI')}</div>
-                            <div class="lb-meta-item"><strong>Impact:</strong> ${escapeHtml(proj.impact || 'Live Deployment')}</div>
-                            <div class="lb-meta-item"><strong>Duration:</strong> ${escapeHtml(proj.duration || '3 months')}</div>
+                            <div class="lb-meta-item"><strong>Client:</strong> ${escapeHtml(proj.client || '[TODO: add project client or organization]')}</div>
+                            <div class="lb-meta-item"><strong>Stack:</strong> ${escapeHtml(proj.stack || '[TODO: add project tech stack]')}</div>
+                            <div class="lb-meta-item"><strong>Impact:</strong> ${escapeHtml(proj.impact || '[TODO: add project result]')}</div>
+                            <div class="lb-meta-item"><strong>Duration:</strong> ${escapeHtml(proj.duration || '[TODO: add project duration]')}</div>
                         </div>
                     </div>
                 </div>
@@ -280,7 +288,7 @@ function hydratePage() {
             return `
                 <article class="certification-card">
                     ${imageUrl
-                        ? `<button class="certification-image-button" type="button" aria-label="View ${escapeHtml(certification.title)} certificate"><img class="certification-image" src="${escapeHtml(imageUrl)}" alt="${escapeHtml(certification.title)} certificate" loading="lazy"></button>`
+                        ? `<button class="certification-image-button" type="button" aria-label="View ${escapeHtml(certification.title)} certificate"><img class="certification-image" src="${escapeHtml(imageUrl)}" alt="${escapeHtml(certification.title)} certificate" width="800" height="566" loading="lazy" decoding="async"></button>`
                         : '<div class="certification-image-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>'}
                     <div class="certification-card-body">
                         ${certification.issuer ? `<p class="certification-issuer">${escapeHtml(certification.issuer)}</p>` : ''}
@@ -298,6 +306,15 @@ function hydratePage() {
 
     // ── Dynamic Video Showcase Rendering (home page) ──
     renderVideoShowcase(data);
+}
+
+function projectFactsMarkup(project) {
+    const facts = project.caseStudy || {
+        problem: `[TODO: add problem for ${project.title}]`, solution: project.description,
+        result: /acne/i.test(project.title) ? '[TODO: add measurable Acne Detection outcome]' : project.impact || `[TODO: add result for ${project.title}]`
+    };
+    const tags = (project.stack || '').split(/[,;|]/).map(tag => tag.trim()).filter(Boolean);
+    return `<dl class="project-facts">${Object.entries(facts).map(([key, value]) => `<div><dt>${escapeHtml(key[0].toUpperCase() + key.slice(1))}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl><ul class="project-tech-tags" aria-label="Technology stack">${tags.map(tag => `<li class="stack-chip">${escapeHtml(tag)}</li>`).join('')}</ul>`;
 }
 
 function safeCertificationImageUrl(value) {
@@ -363,7 +380,7 @@ function renderHeroVideo(rawUrl) {
         }
         const thumbnail = existingPreview.querySelector('.hero-video-thumbnail');
         thumbnail?.addEventListener('error', () => {
-            thumbnail.src = '/assets/profile.png';
+            thumbnail.src = getSiteData().profile.photo;
         }, { once: true });
         return;
     }
@@ -378,9 +395,10 @@ function renderHeroVideo(rawUrl) {
     thumbnail.className = 'hero-video-thumbnail';
     thumbnail.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
     thumbnail.alt = '';
+    thumbnail.width = 480; thumbnail.height = 360;
     thumbnail.loading = 'eager';
     thumbnail.addEventListener('error', () => {
-        thumbnail.src = '/assets/profile.png';
+        thumbnail.src = getSiteData().profile.photo;
     }, { once: true });
 
     const playIcon = document.createElement('span');
@@ -594,7 +612,7 @@ function renderVideoShowcase(data) {
                 if (!isExpanded) {
                     const sec = document.getElementById('video-showcase');
                     if (sec) {
-                        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        sec.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
                     }
                 }
             };

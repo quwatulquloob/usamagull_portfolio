@@ -30,14 +30,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navToggle && navLinks) {
         navToggle.addEventListener('click', () => {
             navToggle.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', String(navToggle.classList.contains('active')));
             navLinks.classList.toggle('mobile-open');
             document.body.style.overflow = navLinks.classList.contains('mobile-open') ? 'hidden' : '';
         });
 
+        navToggle.addEventListener('keydown', event => {
+            if (!navLinks.classList.contains('mobile-open')) return;
+            if (event.key === 'Escape') { navToggle.click(); return; }
+            if (event.key === 'Tab') {
+                event.preventDefault();
+                const links = [...navLinks.querySelectorAll('a[href]')];
+                (event.shiftKey ? links.at(-1) : links[0])?.focus();
+            }
+        });
+        navLinks.addEventListener('keydown', event => {
+            const links = [...navLinks.querySelectorAll('a[href]')];
+            if (event.key === 'Escape') { navToggle.click(); navToggle.focus(); }
+            if (event.key === 'Tab' && event.shiftKey && document.activeElement === links[0]) { event.preventDefault(); navToggle.focus(); }
+            if (event.key === 'Tab' && !event.shiftKey && document.activeElement === links.at(-1)) { event.preventDefault(); navToggle.focus(); }
+        });
         // Close menu on link click
         navLinks.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 navToggle.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
                 navLinks.classList.remove('mobile-open');
                 document.body.style.overflow = '';
             });
@@ -51,23 +68,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.classList.add('js');
     const revealElements = document.querySelectorAll('.reveal-up, .reveal-right');
 
-    const revealObserver = new IntersectionObserver((entries) => {
+    const revealObserver = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             // Reveal when entering the viewport, or when the element has
             // already been scrolled past (fast jumps land it above the fold).
             if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
                 entry.target.classList.add('visible');
                 if (!entry.target.classList.contains('stat-card')) {
-                    revealObserver.unobserve(entry.target);
+                    revealObserver?.unobserve(entry.target);
                 }
             }
         });
     }, {
         threshold: 0.12,
         rootMargin: '0px 0px -40px 0px'
-    });
+    }) : null;
 
-    revealElements.forEach(el => revealObserver.observe(el));
+    revealElements.forEach(el => revealObserver ? revealObserver.observe(el) : el.classList.add('visible'));
 
     // Safety net: IntersectionObserver never fires for elements that jump from
     // below the viewport to above it in a single scroll (anchor links, instant
@@ -78,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!el.classList.contains('visible') && el.getBoundingClientRect().bottom < 0) {
                 el.classList.add('visible');
                 if (!el.classList.contains('stat-card')) {
-                    revealObserver.unobserve(el);
+                    revealObserver?.unobserve(el);
                 }
             }
         });
@@ -95,57 +112,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ─── TELEMETRY COUNTER ANIMATIONS ───
     const counters = document.querySelectorAll('.counter');
-    let countersAnimated = false;
-
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !countersAnimated) {
-                countersAnimated = true;
-                counters.forEach(counter => animateCounter(counter));
-                counterObserver.disconnect();
-            }
-        });
-    }, { threshold: 0.25 });
-
-    const statsSection = document.getElementById('stats');
-    if (statsSection) {
-        counterObserver.observe(statsSection);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function finishCounter(counter) {
+        const value = Number(counter.dataset.target);
+        if (!Number.isFinite(value)) return;
+        counter.textContent = (counter.dataset.decimal === 'true' ? value.toFixed(1) : String(value)) + (counter.dataset.suffix || '');
     }
-
     function animateCounter(counter) {
-        const target = parseFloat(counter.dataset.target);
-        if (isNaN(target)) return;
-        const suffix = counter.dataset.suffix || '';
-        const isDecimal = counter.dataset.decimal === 'true';
-        const duration = 1800;
-        const startTime = performance.now();
-
-        function easeOutExpo(t) {
-            return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-        }
-
-        function update(currentTime) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easedProgress = easeOutExpo(progress);
-            const currentValue = easedProgress * target;
-
-            if (isDecimal) {
-                counter.textContent = currentValue.toFixed(1) + suffix;
-            } else {
-                counter.textContent = Math.floor(currentValue) + suffix;
-            }
-
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            }
-        }
-
+        if (counter.dataset.animated === 'true') return;
+        counter.dataset.animated = 'true';
+        if (reducedMotion.matches) { finishCounter(counter); return; }
+        const target = Number(counter.dataset.target);
+        if (!Number.isFinite(target)) return;
+        const start = performance.now();
+        const update = now => {
+            if (reducedMotion.matches) { finishCounter(counter); return; }
+            const progress = Math.min((now - start) / 1100, 1);
+            const value = target * (1 - Math.pow(1 - progress, 3));
+            counter.textContent = (counter.dataset.decimal === 'true' ? value.toFixed(1) : String(Math.floor(value))) + (counter.dataset.suffix || '');
+            if (progress < 1) requestAnimationFrame(update); else finishCounter(counter);
+        };
         requestAnimationFrame(update);
     }
+    const statsSection = document.getElementById('stats');
+    if (statsSection && !reducedMotion.matches && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+            if (!entries.some(entry => entry.isIntersecting)) return;
+            counters.forEach(animateCounter);
+            observer.disconnect();
+        }, { threshold: 0.2 });
+        observer.observe(statsSection);
+    } else counters.forEach(finishCounter);
 
-
-    // ─── TESTIMONIALS SLIDER ───
+    // Testimonials: preserve quotes; keep inactive slides out of keyboard navigation.
     const track = document.getElementById('testimonialsTrack');
     const prevBtn = document.getElementById('sliderPrev');
     const nextBtn = document.getElementById('sliderNext');
@@ -161,9 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
         function goToSlide(index) {
             currentSlide = ((index % totalSlides) + totalSlides) % totalSlides;
             track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            cards.forEach((card, i) => { card.inert = i !== currentSlide; card.setAttribute('aria-hidden', String(i !== currentSlide)); });
 
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentSlide);
+                dot.setAttribute('aria-pressed', String(i === currentSlide));
             });
         }
 
@@ -193,7 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         function startAutoPlay() {
-            autoPlayInterval = setInterval(nextSlide, 6000);
+            clearInterval(autoPlayInterval);
+            if (!reducedMotion.matches) autoPlayInterval = setInterval(nextSlide, 6000);
         }
 
         function resetAutoPlay() {
@@ -201,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             startAutoPlay();
         }
 
+        goToSlide(0);
         startAutoPlay();
 
         track.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
@@ -280,8 +283,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
+                if (this.classList.contains('skip-link')) target.focus({ preventScroll: true });
                 target.scrollIntoView({
-                    behavior: 'smooth',
+                    behavior: reducedMotion.matches ? 'instant' : 'smooth',
                     block: 'start'
                 });
             }
@@ -303,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Create two sets of logos for seamless looping
         const renderLogo = (logo) => `
             <div class="logo-item">
-                <img src="${logo.imageUrl}" alt="${logo.name}" title="${logo.name}">
+                <img src="${window.SiteData.escapeHtml(logo.imageUrl)}" alt="${window.SiteData.escapeHtml(logo.name)}" width="120" height="60" loading="lazy" decoding="async">
             </div>
         `;
 

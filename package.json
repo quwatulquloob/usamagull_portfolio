@@ -10,7 +10,10 @@
     "db:init:local": "wrangler d1 execute usama-portfolio-db --local --file=./schema.sql",
     "db:init:remote": "wrangler d1 execute usama-portfolio-db --remote --file=./schema.sql",
     "deploy": "wrangler deploy",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "wrangler deploy --dry-run --outdir .wrangler/build",
+    "check:essentials": "node scripts/check-essentials.mjs",
+    "check:layout": "node scripts/check-layout.cjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250914.0",

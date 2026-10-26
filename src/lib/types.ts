@@ -151,6 +151,8 @@ export interface SiteProfile {
   title: string;
   tagline: string;
   photo: string;
+  photoWidth?: number;
+  photoHeight?: number;
   heroVideoUrl: string;
   /** Brand logo (data URI). Null/absent -> the default "UG" monogram shows. */
   logo?: string | null;
@@ -198,6 +200,9 @@ export interface Project {
   projectUrl: string;
   image: string | null;
   gradient: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  caseStudy?: { problem: string; solution: string; result: string };
 }
 
 export interface Award {

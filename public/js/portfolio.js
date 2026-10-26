@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (matches) {
                     card.classList.remove('card-hidden');
                     card.classList.add('card-visible');
-                    card.style.display = 'block';
+                    card.style.display = 'flex';
                     card.style.transitionDelay = `${visibleCount * 0.06}s`;
                     setTimeout(() => {
                         card.classList.add('visible');
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button class="zoom-close" aria-label="Close image viewer">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
-                <img class="zoom-img" src="" alt="">
+                <img class="zoom-img" alt="" width="800" height="450">
                 <div class="zoom-caption"></div>
             </div>`;
         document.body.appendChild(viewer);
@@ -86,7 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const viewer = document.getElementById('imgZoomViewer');
         const img = viewer.querySelector('.zoom-img');
         const caption = viewer.querySelector('.zoom-caption');
+        img.onload = () => { img.width = img.naturalWidth; img.height = img.naturalHeight; };
         img.src = src;
+        if (img.complete && img.naturalWidth) { img.width = img.naturalWidth; img.height = img.naturalHeight; }
         img.alt = alt || '';
         if (caption) caption.textContent = alt || '';
         viewer.classList.add('open');
@@ -94,7 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden';
     }
 
+    let lightboxOpener = null;
     function openLightbox(card) {
+        lightboxOpener = document.activeElement;
         const thumb = card.querySelector('.portfolio-thumb');
         const data = card.querySelector('.lightbox-data');
 
@@ -108,8 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
             lightboxImage.style.alignItems = '';
             lightboxImage.style.justifyContent = '';
             lightboxImage.style.cursor = 'zoom-in';
+            lightboxImage.tabIndex = 0;
+            lightboxImage.setAttribute('role', 'button');
+            lightboxImage.setAttribute('aria-label', 'View full-size project image');
+            lightboxImage.onkeydown = event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); lightboxImage.click(); } };
             lightboxImage.innerHTML = `
-                <img src="${realImg.src}" alt="${realImg.alt}" class="lb-zoomable" title="Click to view full size">
+                <img src="${realImg.src}" alt="${realImg.alt}" width="${realImg.width || 800}" height="${realImg.height || 450}" class="lb-zoomable" title="Click to view full size">
                 <div class="lb-zoom-badge">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
                     <span>Click image to enlarge</span>
@@ -120,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         } else {
             lightboxImage.onclick = null;
+            lightboxImage.removeAttribute('tabindex'); lightboxImage.removeAttribute('role'); lightboxImage.removeAttribute('aria-label'); lightboxImage.onkeydown = null;
             lightboxImage.style.cursor = 'default';
             const innerIcon = thumb.querySelector('.portfolio-thumb-inner') ? thumb.querySelector('.portfolio-thumb-inner').innerHTML : '';
             lightboxImage.style.display = 'flex';
@@ -134,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display modal
         lightboxModal.classList.add('open');
         lightboxModal.setAttribute('aria-hidden', 'false');
+        lightboxClose?.focus();
         document.body.style.overflow = 'hidden';
     }
 
@@ -141,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!lightboxModal) return;
         lightboxModal.classList.remove('open');
         lightboxModal.setAttribute('aria-hidden', 'true');
+        lightboxOpener?.focus();
         document.body.style.overflow = '';
     }
 
@@ -179,6 +190,13 @@ document.addEventListener('DOMContentLoaded', () => {
         lightboxBackdrop.addEventListener('click', closeLightbox);
     }
 
+    lightboxModal?.addEventListener('keydown', event => {
+        if (event.key !== 'Tab') return;
+        const elements = [...lightboxModal.querySelectorAll('button, a[href], [tabindex="0"]')].filter(el => el.getClientRects().length);
+        const first = elements[0], last = elements.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    });
     // Close on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && lightboxModal && lightboxModal.classList.contains('open')) {

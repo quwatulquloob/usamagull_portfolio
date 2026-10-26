@@ -28,8 +28,8 @@
 .timeline-year { font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .timeline-tag { font-size: 13px; color: var(--text-tertiary); }
 .timeline-tag.highlight { color: var(--ok); }
-.timeline-title { font-size: 1.2rem; margin-bottom: 8px; }
-.timeline-desc { max-width: 36rem; font-size: 15px; color: var(--text-secondary); }
+.timeline-title { grid-column: 2; font-size: 1.2rem; margin-bottom: 8px; }
+.timeline-desc { grid-column: 2; max-width: 36rem; font-size: 15px; color: var(--text-secondary); }
 
 .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 40px; }
 .competency-card { display: flex; flex-direction: column; padding-top: 24px; border-top: 1px solid var(--ink); }
@@ -41,4 +41,4 @@
 .competency-chip { padding: 3px 10px; border-radius: 6px; background: var(--bg-sunken); font-size: 13px; color: var(--text-secondary); }
 
 @media (max-width: 1024px) { .story-grid { grid-template-columns: 1fr; gap: 48px; } .story-card-wrapper { position: static; } .skills-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 680px) { .skills-grid { grid-template-columns: 1fr; } .timeline-card { grid-template-columns: 1fr; row-gap: 10px; } .timeline-meta { grid-row: auto; flex-direction: row; align-items: center; } }
+@media (max-width: 680px) { .skills-grid { grid-template-columns: 1fr; } .timeline-card { grid-template-columns: 1fr; row-gap: 10px; } .timeline-meta { grid-row: auto; flex-direction: row; align-items: center; } .timeline-title, .timeline-desc { grid-column: 1; } }

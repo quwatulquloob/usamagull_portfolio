@@ -1,67 +1,45 @@
-/* Contact form — validates, then posts to local API endpoint.
-   Field ids match contact.html (name, email, serviceSelect, budget, message). */
-(function () {
-    'use strict';
-
+/* Contact form: native constraints + server validation, with explicit delivery states. */
+(() => {
     function init() {
-        var form = document.getElementById('contactForm');
-        var btn = document.getElementById('submitBtn');
-        var status = document.getElementById('formStatus');
-        var service = document.getElementById('serviceSelect');
-        if (!form || !btn || !status) return;
-
-        // Pre-select service from ?service=… (ids like "mlops-deployment" also match "mlops")
-        var param = new URLSearchParams(location.search).get('service');
+        const form = document.getElementById('contactForm');
+        const button = document.getElementById('submitBtn');
+        const status = document.getElementById('formStatus');
+        const service = document.getElementById('serviceSelect');
+        if (!form || !button || !status) return;
+        const param = new URLSearchParams(location.search).get('service');
         if (param && service) {
-            var match = Array.prototype.find.call(service.options, function (o) {
-                return o.value === param || param.indexOf(o.value) === 0;
-            });
-            if (match) service.value = match.value;
+            const option = [...service.options].find(option => option.value && (option.value === param || param.startsWith(option.value)));
+            if (option) service.value = option.value;
         }
-
-        function show(text, type) {
-            status.className = 'form-status ' + type;
-            status.textContent = text;
+        function show(message, type) {
+            status.className = `form-status ${type}`;
+            status.setAttribute('role', type === 'error' ? 'alert' : 'status');
+            status.textContent = message;
             status.hidden = false;
-            status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            status.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'nearest' });
         }
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            var v = function (id) { return (document.getElementById(id).value || '').trim(); };
-            var name = v('name'), email = v('email'), message = v('message');
-            if (!name || !email || !message) return show('Fill in your name, email and project details.', 'error');
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return show('Enter a valid email address.', 'error');
-
-            var label = btn.innerHTML;
-            btn.disabled = true;
-            var span = btn.querySelector('span');
-            if (span) span.textContent = 'Sending…';
-
-            var serviceText = service && service.selectedIndex >= 0 ? service.options[service.selectedIndex].text : '';
-
-            fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: name, email: email, message: message,
-                    service: serviceText,
-                    budget: ''
-                })
-            }).then(function (r) {
-                return r.json();
-            }).then(function (data) {
-                if (!data.ok) throw new Error(data.error || 'bad status');
-                if (data.acknowledgmentSent) {
-                    show('Thanks, ' + name + '. Your inquiry has been submitted. A confirmation email was sent to ' + email + '.', 'success');
-                } else {
-                    show('Thanks, ' + name + '. Your inquiry has been submitted, but we couldn\u2019t send a confirmation email right now.', 'success');
-                }
+        let busy = false;
+        form.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (busy || !form.reportValidity()) return;
+            const values = Object.fromEntries(new FormData(form));
+            for (const key of ['name', 'email', 'message', 'service', 'website']) values[key] = String(values[key] || '').trim();
+            if (values.name.length < 2 || values.message.length < 20) return show('Enter your name and at least 20 characters about your project.', 'error');
+            busy = true; button.disabled = true; form.setAttribute('aria-busy', 'true');
+            const original = button.innerHTML;
+            button.querySelector('span').textContent = 'Sending...';
+            status.hidden = true;
+            try {
+                const response = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values) });
+                const data = await response.json();
+                if (!response.ok || !data.ok) throw new Error(data.error || 'Your inquiry could not be sent. Please try again or email me directly.');
+                show(data.acknowledgmentSent ? 'Your inquiry has been received. A confirmation email has been sent to you.' : 'Your inquiry has been received. A confirmation email is unavailable right now.', 'success');
                 form.reset();
-            }).catch(function (err) {
-                console.error('Contact form error:', err);
-                show('Your message didn\u2019t send. Check your connection and try again, or email me directly.', 'error');
-            }).then(function () { btn.disabled = false; btn.innerHTML = label; });
+            } catch (error) {
+                show(error instanceof TypeError ? 'Connection problem. Please try again or email me directly.' : error.message, 'error');
+            } finally {
+                busy = false; button.disabled = false; button.innerHTML = original; form.removeAttribute('aria-busy');
+            }
         });
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
